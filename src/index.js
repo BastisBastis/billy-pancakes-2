@@ -11,6 +11,7 @@ try {
 
 const config = {
     type: Phaser.AUTO,
+    parent: 'phaserContainer',
     transparent:true,
     scale: {
       mode: Phaser.Scale.FIT,
