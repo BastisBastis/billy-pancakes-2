@@ -36,6 +36,10 @@ loadModel(scene) {
     		gltf.cameras; // Array<THREE.Camera>
     		gltf.asset; // Object
     		
+    		gltf.scene.children[0].translateX(-0.006)
+    		gltf.scene.children[0].translateY(-0.006)
+    		gltf.scene.children[0].translateZ(-0.006)
+    		
     		const colors={
     		  "ArmL":0x006600,
     		  "ArmR":0x006600,
@@ -87,7 +91,12 @@ loadModel(scene) {
     );
   }
   
-  update(delta) {
+  update(delta,data) {
+    if (this.model) {
+      this.model.scene.position.set(data.x,data.y,data.z);
+    this.model.scene.rotation.y=-data.rotation + Math.PI/2
+    }
+    
     if (this.mixer) {
       
       this.mixer.update( delta/1000 );
