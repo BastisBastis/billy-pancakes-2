@@ -33,12 +33,11 @@ export default class Game extends Phaser.Scene {
       else
         this.player.rotation+=turnSpeed;
     }
-    this.player.x+=moveSpeed*Math.cos(this.player.rotation)
-    this.player.z+=moveSpeed*Math.sin(this.player.rotation)
+    this.player.position.x+=moveSpeed*Math.cos(this.player.rotation)
+    this.player.position.z+=moveSpeed*Math.sin(this.player.rotation)
     
-    this.graphics.update(delta,{
-      player:this.player
-    })
+    
+    this.graphics.update(delta)
    
    } catch (er) {console.log(er.message)} 
   }

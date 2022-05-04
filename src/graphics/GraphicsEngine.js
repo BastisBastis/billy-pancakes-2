@@ -35,9 +35,12 @@ this.scene.add(light1)
 
     this.camera.position.z = 10;
     this.camera.position.y = 8;
+    
+    /*
     this.playerModel = new PlayerModel({
       scene:this.scene
     })
+    */
     
     //temp Floor
     var geo = new THREE.PlaneBufferGeometry(100,100,2,2)
@@ -87,7 +90,7 @@ this.scene.add(light1)
   
   update(delta,data) {
     
-    this.playerModel.update(delta,data.player)
+    //this.playerModel.update(delta,data.player)
     
     this.renderer.render( this.scene, this.camera );
     
