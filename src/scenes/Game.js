@@ -51,7 +51,7 @@ export default class Game extends Phaser.Scene {
     })
    
    } catch (er) {
-     //console.log(er.message)
+     console.log(er.message,er.stack)
      } 
   }
 }

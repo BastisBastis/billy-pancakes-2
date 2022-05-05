@@ -1,6 +1,8 @@
 import PlayerModel from "../graphics/PlayerModel"
 import EventCenter from "../helpers/EventCenter"
 
+import PhysicsBody from "../physics/PhysicsBody"
+
 export default class Player {
   
   constructor ({
@@ -21,8 +23,8 @@ export default class Player {
     this._isRunning=false;
     this.turnFactor=0;
     
-    this.runSpeed=0.05;
-    this.turnSpeed=0.05;
+    this.runSpeed=4;
+    this.turnSpeed=0.04;
     
     this.size={
       width:0.8,
@@ -37,7 +39,8 @@ export default class Player {
   
   setupPhysicsBody(physicsEngine,graphicsEngine) {
     
-    this.physicsBody = physicsEngine.addBox(
+    this.physicsBody = PhysicsBody.getBody(
+      physicsEngine.world,
       this.position,
       this.size,
       this.rotation,
@@ -72,16 +75,21 @@ export default class Player {
   
   update(delta) {
     
-    this.physicsBody.velocity.set()
+    //this.physicsBody.angularVelocity=this.turnFactor*this.turnSpeed;
+    this.physicsBody.rotation+=this.turnFactor*this.turnSpeed;
+    this.physicsBody.velocity=this.isRunning?this.runSpeed:0;
     
-    
+    /*
     this.rotation+=this.turnFactor*this.turnSpeed;
     if (this.isRunning) {
       this.position.x+=this.runSpeed*Math.cos(this.rotation)
     this.position.z+=this.runSpeed*Math.sin(this.rotation)
     }
     
+    */
     
+    this.rotation=this.physicsBody.rotation;
+    this.position=this.physicsBody.position;
     
     this.graphics.update(delta,{
       x:this.position.x,
@@ -89,6 +97,8 @@ export default class Player {
       z:this.position.z,
       rotation:this.rotation
     })
+    
+    this.physicsGraphics
   }
   
 }

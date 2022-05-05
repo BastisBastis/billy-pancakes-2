@@ -6,6 +6,8 @@ import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
 import BillyGLTF from '../assets/models/characters/Billy3.glb'
 import PlayerModel from "./PlayerModel"
 
+const orbit=false;
+
 export default class GraphicsEngine {
   
   constructor () {
@@ -30,18 +32,15 @@ this.scene.add(light1)
     this.scene.add( ambLight );
     
     
-    this.controls = new OrbitControls( this.camera, this.renderer.domElement );
+    if (orbit)
+      this.controls = new OrbitControls( this.camera, this.renderer.domElement );
     
 
   this.cameraDistance=10
     
     this.camera.position.y = 10;
     
-    /*
-    this.playerModel = new PlayerModel({
-      scene:this.scene
-    })
-    */
+    
     
     //temp Floor
     var geo = new THREE.PlaneBufferGeometry(40,40,2,2)
@@ -80,8 +79,9 @@ this.scene.add(light1)
     var mesh = new THREE.Mesh(geo, material);
     mesh.rotation.x=Math.PI/2
     this.scene.add(mesh)
-
-    this.controls.update()
+    
+    if (orbit)
+      this.controls.update()
     
     
     } catch (er) {console.log(er.message)}
@@ -112,14 +112,15 @@ this.scene.add(light1)
       playerData.position.z-Math.sin(playerData.rotation)*this.cameraDistance
     )
     
-    //this.camera.lookAt(playerData.position.x,playerData.position.y,playerData.position.z)
+    this.camera.lookAt(playerData.position.x,playerData.position.y,playerData.position.z)
     
     } catch (er) {console.log(er.message)} 
   }
   
   update(delta,data) {
     
-    //this.updateCameraPosition(data.player)
+    if (!orbit)
+      this.updateCameraPosition(data.player)
     
     
     this.renderer.render( this.scene, this.camera );

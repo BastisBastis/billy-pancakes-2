@@ -6,6 +6,9 @@ export default class PhysicsEngine {
     this.world.gravity.set(0, -10, 0)
     
     this.world.allowSleep = true;
+    this.world.broadphase = new CANNON.NaiveBroadphase()
+    this.world.broadphase.useBoundingBoxes=true
+    this.world.tolerance=1
     
     //temp floor 
     const groundShape = new CANNON.Plane()
