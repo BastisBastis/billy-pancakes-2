@@ -33,8 +33,9 @@ this.scene.add(light1)
     this.controls = new OrbitControls( this.camera, this.renderer.domElement );
     
 
-    this.camera.position.z = 10;
-    this.camera.position.y = 8;
+  this.cameraDistance=10
+    
+    this.camera.position.y = 10;
     
     /*
     this.playerModel = new PlayerModel({
@@ -43,7 +44,7 @@ this.scene.add(light1)
     */
     
     //temp Floor
-    var geo = new THREE.PlaneBufferGeometry(100,100,2,2)
+    var geo = new THREE.PlaneBufferGeometry(40,40,2,2)
     var material = new THREE.ShaderMaterial({
       uniforms: {
         color1: {
@@ -86,11 +87,40 @@ this.scene.add(light1)
     } catch (er) {console.log(er.message)}
   }
   
+  addBox(position,size,rotation) {
+    const geo = new THREE.BoxBufferGeometry(size.width,size.height,size.depth);
+    const mat = new THREE.MeshStandardMaterial({color:"blue",wireframe:true})
+    const mesh=new THREE.Mesh(geo,mat);
+    mesh.position.x=position.x
+    mesh.position.y=position.y+size.height/2;
+    mesh.position.z=position.z
+    
+    mesh.setRotationFromAxisAngle=(new THREE.Vector3(0,1,0),rotation)
+    
+    this.scene.add(mesh)
+    console.log(position,size)
+    console.log(mesh)
+    return mesh
+  }
   
+  updateCameraPosition(playerData) {
+    try { 
+    
+    this.camera.position.set(
+      playerData.position.x-Math.cos(playerData.rotation)*this.cameraDistance,
+      this.camera.position.y,
+      playerData.position.z-Math.sin(playerData.rotation)*this.cameraDistance
+    )
+    
+    //this.camera.lookAt(playerData.position.x,playerData.position.y,playerData.position.z)
+    
+    } catch (er) {console.log(er.message)} 
+  }
   
   update(delta,data) {
     
-    //this.playerModel.update(delta,data.player)
+    //this.updateCameraPosition(data.player)
+    
     
     this.renderer.render( this.scene, this.camera );
     

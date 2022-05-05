@@ -5,9 +5,12 @@ import WebFontLoaderPlugin from 'phaser3-rex-plugins/plugins/webfontloader-plugi
 
 
 import Game from "./scenes/Game"
-
+import UI from "./scenes/UI"
 
 try {
+  
+const screenRatio=window.innerHeight/window.innerWidth;
+const gameWidth=1920*0.6
 
 const config = {
     type: Phaser.AUTO,
@@ -15,9 +18,9 @@ const config = {
     transparent:true,
     scale: {
       mode: Phaser.Scale.FIT,
-      autoCenter: Phaser.Scale.CENTER_BOTH,
+      //autoCenter: Phaser.Scale.CENTER_BOTH,
       width: 1920*0.6,
-      height: 1080*0.6
+      height: gameWidth*screenRatio//1080*0.6
     }, 
     physics: {
       default: 'arcade',
@@ -29,6 +32,7 @@ const config = {
   },
     scene: [
       Game,
+      UI
     ],
     plugins: {
       global: [{

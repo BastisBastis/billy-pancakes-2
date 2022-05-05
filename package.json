@@ -25,6 +25,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "cannon-es": "^0.19.0",
     "phaser": "^3.50.0",
     "phaser3-rex-plugins": "^1.1.67",
     "three": "^0.140.0"

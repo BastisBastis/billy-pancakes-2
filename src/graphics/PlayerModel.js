@@ -9,11 +9,34 @@ export default class PlayerModel {
   constructor ({
     graphicsEngine,
     position=new THREE.Vector3(0,0,0),
+    rotation=0,
     onLoaded=()=> false
   }) {
     
+    
     this.loadModel(graphicsEngine.scene,position,rotation)
     
+    this._isRunning=false;
+    
+  }
+  
+  get isRunning() {
+    return this._isRunning;
+  }
+  
+  set isRunning(value) {
+    this._isRunning=value;
+    if (this.animations) {
+      if (value){
+        this.animations.walk.play()
+      }
+        
+      else {
+        this.animations.walk.stop()
+        this.animations.idle.play()
+      }
+        
+    }
   }
   
 loadModel(scene,position,rotation) {
@@ -31,15 +54,13 @@ loadModel(scene,position,rotation) {
          this.model=gltf
     		scene.add( gltf.scene );
          gltf.scene.scale.set(100,100,100)
-    		gltf.animations; // Array<THREE.AnimationClip>
-    		gltf.scene; // THREE.Group
-    		gltf.scenes; // Array<THREE.Group>
-    		gltf.cameras; // Array<THREE.Camera>
-    		gltf.asset; // Object
     		
-    		gltf.scene.children[0].translateX(-0.006)
-    		gltf.scene.children[0].translateY(-0.006)
-    		gltf.scene.children[0].translateZ(-0.006)
+    		gltf.scene.position.set(position.x,position.y,position.z)
+    		gltf.scene.rotation.y=rotation
+    		
+    		gltf.scene.children[0].translateX(-0.005)
+    		gltf.scene.children[0].translateY(-0.0095)
+    		gltf.scene.children[0].translateZ(-0.008)
     		
     		const colors={
     		  "ArmL":0x006600,
@@ -70,7 +91,7 @@ loadModel(scene,position,rotation) {
           jump:this.mixer.clipAction(gltf.animations[1]),
           walk:this.mixer.clipAction(gltf.animations[2]),
         }
-        this.animations.walk.play()
+        this.animations.idle.play()
         
         
         

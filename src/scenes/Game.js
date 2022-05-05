@@ -1,5 +1,8 @@
 import Phaser from "phaser"
 import GraphicsEngine from "../graphics/GraphicsEngine"
+import PhysicsEngine from "../physics/PhysicsEngine"
+
+import Player from '../objects/Player'
 
 
 export default class Game extends Phaser.Scene {
@@ -12,33 +15,43 @@ export default class Game extends Phaser.Scene {
   }
   
   create() {
+    try{
+    
     this.graphics=new GraphicsEngine()
+    this.physicsEngine=new PhysicsEngine()
     
-    this.add.text(100,100, 'hello')
     
-    this.player={x:0,y:0,z:0,rotation:0}
     
+    this.player=new Player({
+      graphicsEngine:this.graphics,
+      physicsEngine:this.physicsEngine
+    })
+    
+    this.scene.launch("ui")
+    
+    } catch (er) {console.log(er.message);console.log(er.stack)}
   }
   
   
   update(time,delta) {
     
     try { 
-    const moveSpeed=0.05;
-    const turnSpeed=0.05;
     
-    if (this.input.activePointer.active && this.input.activePointer.x>0) {
-      if (this.input.activePointer.x<this.cameras.main.centerX) 
-        this.player.rotation-=turnSpeed;
-      else
-        this.player.rotation+=turnSpeed;
-    }
-    this.player.position.x+=moveSpeed*Math.cos(this.player.rotation)
-    this.player.position.z+=moveSpeed*Math.sin(this.player.rotation)
+    this.physicsEngine.update(delta)
+    
+    this.player.update(delta)
     
     
-    this.graphics.update(delta)
+    
+    this.graphics.update(delta,{
+      player:{
+        position:this.player.position,
+        rotation:this.player.rotation
+      }
+    })
    
-   } catch (er) {console.log(er.message)} 
+   } catch (er) {
+     //console.log(er.message)
+     } 
   }
 }

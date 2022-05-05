@@ -1,0 +1,1510 @@
+
+{
+  "header": {
+    "reportVersion": 1,
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20220504.214056.50090.0.001.json",
+    "dumpEventTime": "2022-05-04T21:40:56Z",
+    "dumpEventTimeStamp": "1651693256876",
+    "processId": 50090,
+    "cwd": "/private/var/mobile/Containers/Data/Application/E8D6E266-2E91-4D66-B4D1-74DD4042A018/Documents/apps/MY-NODE-APPC4BDAFA2-BE88-4EAB-8FFD-38DC7BED9E14/src",
+    "commandLine": [
+      "node",
+      "-e",
+      "const fs=require(\"fs\"),net=require(\"net\"),url=require(\"url\"),path=require(\"path\"),{spawn}=require(\"child_process\"),SharedOptions={serverPort:\"4080\",transpilerPath:\"/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/transpiler.js\",langserverPath:\"/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/lang_server.js\",stdinStreamPath:\"/private/var/mobile/Containers/Data/Application/E8D6E266-2E91-4D66-B4D1-74DD4042A018/tmp\",forceStartPath:\"/private/var/mobile/Containers/Data/Application/E8D6E266-2E91-4D66-B4D1-74DD4042A018/tmp/force\",homePath:\"/var/mobile/Containers/Data/Application/E8D6E266-2E91-4D66-B4D1-74DD4042A018/Documents\"},tern=require(SharedOptions.langserverPath),nodeLangserver=tern.createServer(\"/\",!1),reactLangserver=tern.createServer(\"/\",!0);var runners={};const killChildProcess=a=>{runners[a]!==void 0&&(runners[a].kill(\"SIGTERM\"),runners[a]=void 0)},launchChildProcess=(a,b,c,d,e,f)=>{console.log(\"> INITIALIZING CHILD PROCESS AT PORT: \"+b),process.chdir(e);const g=path.join(SharedOptions.stdinStreamPath,`stdin_${b}`);fs.closeSync(fs.openSync(g,\"w\"));const h=fs.openSync(g,\"r\"),i=fs.createReadStream(\"\",{fd:h,autoClose:!1}),j=spawn(c,d,{uid:b,cwd:e,env:f});runners[b]=j,j.stdout.pipe(a),j.stderr.pipe(a),i.on(\"readable\",()=>{const a=()=>{const b=Buffer.alloc(128),c=fs.readSync(h,b,0,128,null);0<c&&j.stdin.write(b),setTimeout(a,200)};a()}),j.on(\"error\",b=>{if(b&&b.stack)a.write(b.stack);else{const b=new Error(\"Unhandled exception\");a.write(b.stack)}}),j.on(\"killed\",()=>{console.log(\"> KILLED RUNNER AT PORT: \"+a.port),a.server.close()}),j.on(\"exit\",()=>{console.log(\"> ENDING RUNNER AT PORT: \"+a.port),j.stdout.unpipe(a),j.stderr.unpipe(a),a.server.close(),a.end(),a.destroy(),a.server=void 0,runners[a.port]=void 0})},launchRunner=(a,b,c,d,e={})=>{var f;f=net.createServer({allowHalfOpen:!0},function(g){console.log(\"> CREATED SOCKET AT PORT: \"+a),g.setEncoding(\"utf8\"),g.writableLength=512,g.server=f,g.port=a,g.on(\"error\",b=>{killChildProcess(a),console.log(b)});try{launchChildProcess(g,a,b,c,d,e)}catch(a){g.write(a.stack)}}),f.listen(a)};process.on(\"uncaughtException\",function(a){console.log(a)}),process.env.HOME=SharedOptions.homePath;const createServer=()=>{const a=http.createServer((b,c)=>{var d=url.parse(b.url),e=d.pathname;if(\"/ping\"===e)c.end();else if(\"/kill\"===e)c.end(),a.close();else if(\"/eval\"===e){const a=new url.URLSearchParams(d.search),b=a.get(\"cmd\");try{new Function(b)()}catch(a){console.log(a)}c.end()}else if(\"/completions\"===e){const a=new url.URLSearchParams(d.search),b=a.get(\"file\"),e=parseInt(a.get(\"pos\"),10),f=\"react\"==a.get(\"mode\")?reactLangserver:nodeLangserver;tern.getCompletions(f,b,e,(a,b)=>null==b?void(c.writeHead(200,{\"Content-type\":\"application/json\"}),c.write(JSON.stringify(a)),c.end()):(c.writeHead(500,{}),void c.end()))}else if(\"/keypair\"===e){const a=require(\"crypto\");a.generateKeyPair(\"ed25519\",{modulusLength:4096,publicKeyEncoding:{type:\"spki\",format:\"pem\"},privateKeyEncoding:{type:\"pkcs8\",format:\"pem\"}},(a,b,d)=>{const e=require(\"sshpk\"),f=e.parseKey(b,\"pem\"),g=f.toString(\"ssh\");c.writeHead(200,{\"Content-type\":\"application/json\"}),c.write(JSON.stringify({privateKey:d,publicKey:g})),c.end()})}});a.listen(parseInt(SharedOptions.serverPort,10))},whatchdog=()=>{fs.existsSync(SharedOptions.forceStartPath)&&(fs.unlinkSync(SharedOptions.forceStartPath),createServer()),setTimeout(whatchdog,2e3)};whatchdog();"
+    ],
+    "nodejsVersion": "v12.16.0",
+    "wordSize": 64,
+    "arch": "arm64",
+    "platform": "ios",
+    "componentVersions": {
+      "node": "12.16.0",
+      "v8": "7.8.279.23-node.31",
+      "uv": "1.34.0",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.15.0",
+      "modules": "72",
+      "nghttp2": "1.40.0",
+      "napi": "5",
+      "llhttp": "2.0.4",
+      "http_parser": "2.9.3",
+      "openssl": "1.1.1d",
+      "cldr": "37.0",
+      "icu": "67.1",
+      "tz": "2019c",
+      "unicode": "13.0",
+      "mobile": "0.3.0"
+    },
+    "release": {
+      "name": "node",
+      "lts": "Erbium",
+      "headersUrl": "https://nodejs.org/download/release/v12.16.0/node-v12.16.0-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v12.16.0/node-v12.16.0.tar.gz"
+    },
+    "osName": "Darwin",
+    "osRelease": "21.4.0",
+    "osVersion": "Darwin Kernel Version 21.4.0: Mon Feb 21 21:27:53 PST 2022; root:xnu-8020.102.3~1/RELEASE_ARM64_T8030",
+    "osMachine": "iPhone12,8",
+    "cpus": [
+      {
+        "model": "D79AP",
+        "speed": 0,
+        "user": 92378100,
+        "nice": 0,
+        "sys": 0,
+        "idle": 220655950,
+        "irq": 0
+      },
+      {
+        "model": "D79AP",
+        "speed": 0,
+        "user": 84339860,
+        "nice": 0,
+        "sys": 0,
+        "idle": 228646360,
+        "irq": 0
+      },
+      {
+        "model": "D79AP",
+        "speed": 0,
+        "user": 70064730,
+        "nice": 0,
+        "sys": 0,
+        "idle": 242921010,
+        "irq": 0
+      },
+      {
+        "model": "D79AP",
+        "speed": 0,
+        "user": 59023060,
+        "nice": 0,
+        "sys": 0,
+        "idle": 253962170,
+        "irq": 0
+      },
+      {
+        "model": "D79AP",
+        "speed": 0,
+        "user": 14247970,
+        "nice": 0,
+        "sys": 0,
+        "idle": 298736370,
+        "irq": 0
+      },
+      {
+        "model": "D79AP",
+        "speed": 0,
+        "user": 13202880,
+        "nice": 0,
+        "sys": 0,
+        "idle": 299781900,
+        "irq": 0
+      }
+    ],
+    "networkInterfaces": [
+      {
+        "name": "lo0",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "127.0.0.1",
+        "netmask": "255.0.0.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "lo0",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "::1",
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "lo0",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "fe80::1",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 1
+      },
+      {
+        "name": "pdp_ip0",
+        "internal": false,
+        "mac": "00:00:00:00:00:00",
+        "address": "100.90.212.201",
+        "netmask": "255.255.255.255",
+        "family": "IPv4"
+      },
+      {
+        "name": "pdp_ip1",
+        "internal": false,
+        "mac": "00:00:00:00:00:00",
+        "address": "fe80::1:1:3bb1:355",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 4
+      },
+      {
+        "name": "pdp_ip1",
+        "internal": false,
+        "mac": "00:00:00:00:00:00",
+        "address": "2a02:1400:c8:775c:18fa:5665:d179:4b2b",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "pdp_ip1",
+        "internal": false,
+        "mac": "00:00:00:00:00:00",
+        "address": "2a02:1400:c8:775c:fcda:7394:c6f8:53c2",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "pdp_ip1",
+        "internal": false,
+        "mac": "00:00:00:00:00:00",
+        "address": "2a02:1400:c8:775c:54fe:265f:4ef:555f",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "pdp_ip1",
+        "internal": false,
+        "mac": "00:00:00:00:00:00",
+        "address": "2a02:1400:c8:775c:fc8c:def6:1724:e54d",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "pdp_ip1",
+        "internal": false,
+        "mac": "00:00:00:00:00:00",
+        "address": "2a02:1400:c8:775c:8976:b830:fb6c:369c",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "anpi0",
+        "internal": false,
+        "mac": "02:00:00:00:00:00",
+        "address": "fe80::487a:1eff:fed9:f52",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 11
+      },
+      {
+        "name": "utun0",
+        "internal": false,
+        "mac": "00:00:00:00:00:00",
+        "address": "fe80::ce55:323e:8224:6cd4",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 17
+      },
+      {
+        "name": "en0",
+        "internal": false,
+        "mac": "02:00:00:00:00:00",
+        "address": "fe80::18ef:a58c:f35f:9094",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 19
+      },
+      {
+        "name": "en0",
+        "internal": false,
+        "mac": "02:00:00:00:00:00",
+        "address": "192.168.1.155",
+        "netmask": "255.255.255.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "awdl0",
+        "internal": false,
+        "mac": "02:00:00:00:00:00",
+        "address": "fe80::4d1:5bff:fe8a:5670",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 20
+      },
+      {
+        "name": "utun1",
+        "internal": false,
+        "mac": "00:00:00:00:00:00",
+        "address": "fe80::3873:8ade:a399:d3b5",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 21
+      },
+      {
+        "name": "utun2",
+        "internal": false,
+        "mac": "00:00:00:00:00:00",
+        "address": "fe80::ce81:b1c:bd2c:69e",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 22
+      },
+      {
+        "name": "llw0",
+        "internal": false,
+        "mac": "02:00:00:00:00:00",
+        "address": "fe80::4d1:5bff:fe8a:5670",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 25
+      },
+      {
+        "name": "utun3",
+        "internal": false,
+        "mac": "00:00:00:00:00:00",
+        "address": "fe80::38e2:a6ca:41b0:114f",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 26
+      },
+      {
+        "name": "ipsec5",
+        "internal": false,
+        "mac": "00:00:00:00:00:00",
+        "address": "fe80::3cb6:8939:2677:1a97",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 39
+      },
+      {
+        "name": "ipsec5",
+        "internal": false,
+        "mac": "00:00:00:00:00:00",
+        "address": "2a02:1400:c8:775c:18fa:5665:d179:4b2b",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "ipsec6",
+        "internal": false,
+        "mac": "00:00:00:00:00:00",
+        "address": "fe80::3cb6:8939:2677:1a97",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 40
+      },
+      {
+        "name": "ipsec6",
+        "internal": false,
+        "mac": "00:00:00:00:00:00",
+        "address": "2a02:1400:c8:775c:18fa:5665:d179:4b2b",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 0
+      }
+    ],
+    "host": "Sebastians-iPhone"
+  },
+  "javascriptStack": {
+    "message": "No stack.",
+    "stack": [
+      "Unavailable."
+    ]
+  },
+  "nativeStack": [
+    {
+      "pc": "0x0000000107d5c94c",
+      "symbol": "report::TriggerNodeReport(v8::Isolate*, node::Environment*, char const*, char const*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, v8::Local<v8::String>) [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000107ca2784",
+      "symbol": "node::OnFatalError(char const*, char const*) [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x000000010758e8d0",
+      "symbol": "v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, bool) [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x000000010758e864",
+      "symbol": "v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, bool) [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x00000001076abaf0",
+      "symbol": "v8::internal::Heap::UpdateSurvivalStatistics(int) [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x000000010770221c",
+      "symbol": "v8::internal::ScavengeVisitor::ScavengeVisitor(v8::internal::Scavenger*) [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x00000001076fb77c",
+      "symbol": "v8::internal::RootScavengeVisitor::VisitRootPointers(v8::internal::Root, char const*, v8::internal::FullObjectSlot, v8::internal::FullObjectSlot) [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x00000001076fe308",
+      "symbol": "v8::internal::ScavengeVisitor::ScavengeVisitor(v8::internal::Scavenger*) [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x00000001076faafc",
+      "symbol": "v8::internal::Scavenger::IterateAndScavengePromotedObject(v8::internal::HeapObject, v8::internal::Map, int) [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x00000001076fa558",
+      "symbol": "v8::internal::Scavenger::Process(v8::internal::OneshotBarrier*) [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x00000001076fcc08",
+      "symbol": "v8::internal::ScavengeVisitor::ScavengeVisitor(v8::internal::Scavenger*) [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x00000001076fcb10",
+      "symbol": "v8::internal::ScavengeVisitor::ScavengeVisitor(v8::internal::Scavenger*) [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x00000001076c5ac0",
+      "symbol": "v8::internal::ItemParallelJob::Task::RunInternal() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x00000001076c5e20",
+      "symbol": "v8::internal::ItemParallelJob::Run() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x00000001076f8cd0",
+      "symbol": "v8::internal::ScavengerCollector::CollectGarbage() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x00000001076ac564",
+      "symbol": "v8::internal::Heap::Scavenge() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x00000001076aa5f4",
+      "symbol": "v8::internal::Heap::PerformGarbageCollection(v8::internal::GarbageCollector, v8::GCCallbackFlags) [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x00000001076a9328",
+      "symbol": "v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags) [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x00000001076b0fc4",
+      "symbol": "v8::internal::Heap::AllocateRawWithLightRetry(int, v8::internal::AllocationType, v8::internal::AllocationOrigin, v8::internal::AllocationAlignment) [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x00000001076b1030",
+      "symbol": "v8::internal::Heap::AllocateRawWithRetryOrFail(int, v8::internal::AllocationType, v8::internal::AllocationOrigin, v8::internal::AllocationAlignment) [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x000000010768fcd8",
+      "symbol": "v8::internal::Factory::NewFillerObject(int, bool, v8::internal::AllocationType, v8::internal::AllocationOrigin) [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x00000001078e4e08",
+      "symbol": "v8::internal::Runtime_AllocateInYoungGeneration(int, unsigned long*, v8::internal::Isolate*) [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e98fec",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e9a14c",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106ef74ec",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e13b48",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e13b48",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e13b48",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e13b48",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e13b48",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e13b48",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e13b48",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e13b48",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e13b48",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e13b48",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e13b48",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e13b48",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e13b48",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e13b48",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e1b680",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e18708",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x0000000106e183ac",
+      "symbol": "v8::internal::Snapshot::DefaultSnapshotBlob() [/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile]"
+    },
+    {
+      "pc": "0x00000001228a8000",
+      "symbol": ""
+    }
+  ],
+  "javascriptHeap": {
+    "totalMemory": 724615168,
+    "totalCommittedMemory": 724211976,
+    "usedMemory": 706516408,
+    "availableMemory": 892063984,
+    "memoryLimit": 1600126976,
+    "heapSpaces": {
+      "read_only_space": {
+        "memorySize": 262144,
+        "committedMemory": 33088,
+        "capacity": 32808,
+        "used": 32808,
+        "available": 0
+      },
+      "new_space": {
+        "memorySize": 33554432,
+        "committedMemory": 33553448,
+        "capacity": 16759296,
+        "used": 16726808,
+        "available": 32488
+      },
+      "old_space": {
+        "memorySize": 551649280,
+        "committedMemory": 551632360,
+        "capacity": 551028624,
+        "used": 551006088,
+        "available": 22536
+      },
+      "code_space": {
+        "memorySize": 212992,
+        "committedMemory": 184992,
+        "capacity": 152224,
+        "used": 152224,
+        "available": 0
+      },
+      "map_space": {
+        "memorySize": 540672,
+        "committedMemory": 412440,
+        "capacity": 259920,
+        "used": 259920,
+        "available": 0
+      },
+      "large_object_space": {
+        "memorySize": 138395648,
+        "committedMemory": 138395648,
+        "capacity": 138338560,
+        "used": 138338560,
+        "available": 0
+      },
+      "code_large_object_space": {
+        "memorySize": 0,
+        "committedMemory": 0,
+        "capacity": 0,
+        "used": 0,
+        "available": 0
+      },
+      "new_large_object_space": {
+        "memorySize": 0,
+        "committedMemory": 0,
+        "capacity": 16759296,
+        "used": 0,
+        "available": 16759296
+      }
+    }
+  },
+  "resourceUsage": {
+    "userCpuSeconds": 138.134,
+    "kernelCpuSeconds": 0,
+    "cpuConsumptionPercent": 10.5045,
+    "maxRss": 852416790528,
+    "pageFaults": {
+      "IORequired": 13393,
+      "IONotRequired": 814084
+    },
+    "fsActivity": {
+      "reads": 0,
+      "writes": 0
+    }
+  },
+  "libuv": [
+  ],
+  "environmentVariables": {
+    "CFFIXED_USER_HOME": "/private/var/mobile/Containers/Data/Application/E8D6E266-2E91-4D66-B4D1-74DD4042A018",
+    "HOME": "/var/mobile/Containers/Data/Application/E8D6E266-2E91-4D66-B4D1-74DD4042A018/Documents",
+    "TMPDIR": "/private/var/mobile/Containers/Data/Application/E8D6E266-2E91-4D66-B4D1-74DD4042A018/tmp/",
+    "XPC_SERVICE_NAME": "UIKitApplication:com.nakiostudio.playdotjs[acd0][rb-legacy]",
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "XPC_FLAGS": "0x0",
+    "LOGNAME": "mobile",
+    "USER": "mobile",
+    "SHELL": "/bin/sh",
+    "__CF_USER_TEXT_ENCODING": "0x1F5:0:0",
+    "NODE_PATH": "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/modules"
+  },
+  "userLimits": {
+    "core_file_size_blocks": {
+      "soft": 0,
+      "hard": "unlimited"
+    },
+    "data_seg_size_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "file_size_blocks": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_locked_memory_bytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_memory_size_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "open_files": {
+      "soft": 1048575,
+      "hard": "unlimited"
+    },
+    "stack_size_bytes": {
+      "soft": 1032192,
+      "hard": 1032192
+    },
+    "cpu_time_seconds": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_user_processes": {
+      "soft": 1333,
+      "hard": 2000
+    },
+    "virtual_memory_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    }
+  },
+  "sharedObjects": [
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/CodeSandbox",
+    "/usr/lib/libc++.1.dylib",
+    "/usr/lib/libiconv.2.dylib",
+    "/usr/lib/libsqlite3.dylib",
+    "/usr/lib/libz.1.dylib",
+    "/System/Library/Frameworks/Accelerate.framework/Accelerate",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/Amplitude.framework/Amplitude",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/Apollo.framework/Apollo",
+    "/System/Library/Frameworks/CFNetwork.framework/CFNetwork",
+    "/System/Library/Frameworks/CoreData.framework/CoreData",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/CoreStore.framework/CoreStore",
+    "/System/Library/Frameworks/CoreTelephony.framework/CoreTelephony",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/Decomposed.framework/Decomposed",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/DoubleConversion.framework/DoubleConversion",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/Down.framework/Down",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/EasyPeasy.framework/EasyPeasy",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/FBLPromises.framework/FBLPromises",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/FileMD5Hash.framework/FileMD5Hash",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/FirebaseCore.framework/FirebaseCore",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/FirebaseCoreDiagnostics.framework/FirebaseCoreDiagnostics",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/FirebaseCrashlytics.framework/FirebaseCrashlytics",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/FirebaseInstallations.framework/FirebaseInstallations",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/FirebaseStorage.framework/FirebaseStorage",
+    "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/Fuse.framework/Fuse",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/GTMSessionFetcher.framework/GTMSessionFetcher",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/GoogleDataTransport.framework/GoogleDataTransport",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/GoogleUtilities.framework/GoogleUtilities",
+    "/System/Library/Frameworks/JavaScriptCore.framework/JavaScriptCore",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/KeychainAccess.framework/KeychainAccess",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/Kingfisher.framework/Kingfisher",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/Onigmo.framework/Onigmo",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/React.framework/React",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/SSZipArchive.framework/SSZipArchive",
+    "/System/Library/Frameworks/Security.framework/Security",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/Starscream.framework/Starscream",
+    "/System/Library/Frameworks/StoreKit.framework/StoreKit",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/SwiftLSPClient.framework/SwiftLSPClient",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/SwiftMsgPack.framework/SwiftMsgPack",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/SwiftPhoenixClient.framework/SwiftPhoenixClient",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/SwiftSocket.framework/SwiftSocket",
+    "/System/Library/Frameworks/SystemConfiguration.framework/SystemConfiguration",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/TextView.framework/TextView",
+    "/System/Library/Frameworks/UIKit.framework/UIKit",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/folly.framework/folly",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/glog.framework/glog",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/nanopb.framework/nanopb",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/react_native_webview.framework/react_native_webview",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/yoga.framework/yoga",
+    "/System/Library/Frameworks/Combine.framework/Combine",
+    "/System/Library/Frameworks/SwiftUI.framework/SwiftUI",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/playdotjs_shared.framework/playdotjs_shared",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/CodeSandboxSDK.framework/CodeSandboxSDK",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeMobile.framework/NodeMobile",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/NodeJS.framework/NodeJS",
+    "/private/var/containers/Bundle/Application/2BA50A54-21B1-41AE-B29C-EFADAFFF558F/CodeSandbox.app/Frameworks/ObjectiveGit.framework/ObjectiveGit",
+    "/usr/lib/libobjc.A.dylib",
+    "/usr/lib/libSystem.B.dylib",
+    "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+    "/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics",
+    "/System/Library/Frameworks/CoreServices.framework/CoreServices",
+    "/System/Library/Frameworks/MessageUI.framework/MessageUI",
+    "/System/Library/Frameworks/QuartzCore.framework/QuartzCore",
+    "/System/Library/Frameworks/WebKit.framework/WebKit",
+    "/usr/lib/swift/libswiftAVFoundation.dylib",
+    "/usr/lib/swift/libswiftAccelerate.dylib",
+    "/usr/lib/swift/libswiftCore.dylib",
+    "/usr/lib/swift/libswiftCoreAudio.dylib",
+    "/usr/lib/swift/libswiftCoreData.dylib",
+    "/usr/lib/swift/libswiftCoreFoundation.dylib",
+    "/usr/lib/swift/libswiftCoreGraphics.dylib",
+    "/usr/lib/swift/libswiftCoreImage.dylib",
+    "/usr/lib/swift/libswiftCoreLocation.dylib",
+    "/usr/lib/swift/libswiftCoreMIDI.dylib",
+    "/usr/lib/swift/libswiftCoreMedia.dylib",
+    "/usr/lib/swift/libswiftDarwin.dylib",
+    "/usr/lib/swift/libswiftDataDetection.dylib",
+    "/usr/lib/swift/libswiftDispatch.dylib",
+    "/usr/lib/swift/libswiftFileProvider.dylib",
+    "/usr/lib/swift/libswiftFoundation.dylib",
+    "/usr/lib/swift/libswiftMetal.dylib",
+    "/usr/lib/swift/libswiftObjectiveC.dylib",
+    "/usr/lib/swift/libswiftPhotos.dylib",
+    "/usr/lib/swift/libswiftQuartzCore.dylib",
+    "/usr/lib/swift/libswiftUIKit.dylib",
+    "/usr/lib/swift/libswiftUniformTypeIdentifiers.dylib",
+    "/usr/lib/swift/libswiftWebKit.dylib",
+    "/usr/lib/swift/libswiftos.dylib",
+    "/usr/lib/swift/libswiftsimd.dylib",
+    "/usr/lib/libc++abi.dylib",
+    "/usr/lib/system/libcache.dylib",
+    "/usr/lib/system/libcommonCrypto.dylib",
+    "/usr/lib/system/libcompiler_rt.dylib",
+    "/usr/lib/system/libcopyfile.dylib",
+    "/usr/lib/system/libcorecrypto.dylib",
+    "/usr/lib/system/libdispatch.dylib",
+    "/usr/lib/system/libdyld.dylib",
+    "/usr/lib/system/libmacho.dylib",
+    "/usr/lib/system/libremovefile.dylib",
+    "/usr/lib/system/libsystem_asl.dylib",
+    "/usr/lib/system/libsystem_blocks.dylib",
+    "/usr/lib/system/libsystem_c.dylib",
+    "/usr/lib/system/libsystem_collections.dylib",
+    "/usr/lib/system/libsystem_configuration.dylib",
+    "/usr/lib/system/libsystem_containermanager.dylib",
+    "/usr/lib/system/libsystem_coreservices.dylib",
+    "/usr/lib/system/libsystem_darwin.dylib",
+    "/usr/lib/system/libsystem_dnssd.dylib",
+    "/usr/lib/system/libsystem_featureflags.dylib",
+    "/usr/lib/system/libsystem_info.dylib",
+    "/usr/lib/system/libsystem_m.dylib",
+    "/usr/lib/system/libsystem_malloc.dylib",
+    "/usr/lib/system/libsystem_networkextension.dylib",
+    "/usr/lib/system/libsystem_notify.dylib",
+    "/usr/lib/system/libsystem_product_info_filter.dylib",
+    "/usr/lib/system/libsystem_sandbox.dylib",
+    "/usr/lib/system/libsystem_kernel.dylib",
+    "/usr/lib/system/libsystem_platform.dylib",
+    "/usr/lib/system/libsystem_pthread.dylib",
+    "/usr/lib/system/libsystem_symptoms.dylib",
+    "/usr/lib/system/libsystem_trace.dylib",
+    "/usr/lib/system/libunwind.dylib",
+    "/usr/lib/system/libxpc.dylib",
+    "/usr/lib/libcharset.1.dylib",
+    "/System/Library/Frameworks/Accelerate.framework/Frameworks/vImage.framework/vImage",
+    "/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/vecLib",
+    "/System/Library/PrivateFrameworks/SoftLinking.framework/SoftLinking",
+    "/usr/lib/libcompression.dylib",
+    "/usr/lib/liblzma.5.dylib",
+    "/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/libvMisc.dylib",
+    "/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/libvDSP.dylib",
+    "/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/libBLAS.dylib",
+    "/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/libLAPACK.dylib",
+    "/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/libLinearAlgebra.dylib",
+    "/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/libSparseBLAS.dylib",
+    "/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/libQuadrature.dylib",
+    "/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/libBNNS.dylib",
+    "/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/libSparse.dylib",
+    "/System/Library/PrivateFrameworks/CoreAutoLayout.framework/CoreAutoLayout",
+    "/usr/lib/libarchive.2.dylib",
+    "/usr/lib/libicucore.A.dylib",
+    "/usr/lib/libxml2.2.dylib",
+    "/usr/lib/liblangid.dylib",
+    "/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit",
+    "/usr/lib/libapple_nghttp2.dylib",
+    "/usr/lib/libnetwork.dylib",
+    "/usr/lib/libenergytrace.dylib",
+    "/usr/lib/libbsm.0.dylib",
+    "/usr/lib/libCoreEntitlements.dylib",
+    "/usr/lib/libcoretls.dylib",
+    "/usr/lib/libcoretls_cfhelpers.dylib",
+    "/usr/lib/libMobileGestalt.dylib",
+    "/System/Library/PrivateFrameworks/IOMobileFramebuffer.framework/IOMobileFramebuffer",
+    "/usr/lib/libpcap.A.dylib",
+    "/usr/lib/libdns_services.dylib",
+    "/System/Library/Frameworks/IOSurface.framework/IOSurface",
+    "/usr/lib/libbz2.1.0.dylib",
+    "/System/Library/PrivateFrameworks/DocumentManager.framework/DocumentManager",
+    "/System/Library/Frameworks/FileProvider.framework/FileProvider",
+    "/System/Library/PrivateFrameworks/UIKitCore.framework/UIKitCore",
+    "/System/Library/PrivateFrameworks/ShareSheet.framework/ShareSheet",
+    "/System/Library/PrivateFrameworks/IconServices.framework/IconServices",
+    "/System/Library/Frameworks/ImageIO.framework/ImageIO",
+    "/System/Library/Frameworks/Network.framework/Network",
+    "/usr/lib/libprequelite.dylib",
+    "/System/Library/PrivateFrameworks/DocumentManagerCore.framework/DocumentManagerCore",
+    "/System/Library/PrivateFrameworks/RunningBoardServices.framework/RunningBoardServices",
+    "/System/Library/Frameworks/UniformTypeIdentifiers.framework/UniformTypeIdentifiers",
+    "/System/Library/PrivateFrameworks/AppSupport.framework/AppSupport",
+    "/System/Library/Frameworks/CoreImage.framework/CoreImage",
+    "/System/Library/PrivateFrameworks/CoreUtils.framework/CoreUtils",
+    "/System/Library/PrivateFrameworks/FrontBoardServices.framework/FrontBoardServices",
+    "/System/Library/Frameworks/CoreText.framework/CoreText",
+    "/System/Library/PrivateFrameworks/UIFoundation.framework/UIFoundation",
+    "/System/Library/Frameworks/PushKit.framework/PushKit",
+    "/System/Library/PrivateFrameworks/XCTTargetBootstrap.framework/XCTTargetBootstrap",
+    "/System/Library/PrivateFrameworks/WebKitLegacy.framework/WebKitLegacy",
+    "/usr/lib/libapp_launch_measurement.dylib",
+    "/System/Library/Frameworks/OpenGLES.framework/OpenGLES",
+    "/System/Library/PrivateFrameworks/AggregateDictionary.framework/AggregateDictionary",
+    "/System/Library/PrivateFrameworks/ManagedConfiguration.framework/ManagedConfiguration",
+    "/System/Library/PrivateFrameworks/PowerLog.framework/PowerLog",
+    "/System/Library/PrivateFrameworks/HangTracer.framework/HangTracer",
+    "/System/Library/PrivateFrameworks/MobileKeyBag.framework/MobileKeyBag",
+    "/System/Library/PrivateFrameworks/SignpostMetrics.framework/SignpostMetrics",
+    "/System/Library/PrivateFrameworks/PointerUIServices.framework/PointerUIServices",
+    "/System/Library/PrivateFrameworks/StudyLog.framework/StudyLog",
+    "/System/Library/PrivateFrameworks/ContextKitExtraction.framework/ContextKitExtraction",
+    "/System/Library/PrivateFrameworks/CoreMaterial.framework/CoreMaterial",
+    "/System/Library/PrivateFrameworks/Pasteboard.framework/Pasteboard",
+    "/System/Library/Frameworks/DataDetection.framework/DataDetection",
+    "/System/Library/PrivateFrameworks/CMPhoto.framework/CMPhoto",
+    "/System/Library/Frameworks/MediaToolbox.framework/MediaToolbox",
+    "/System/Library/PrivateFrameworks/DataDetectorsCore.framework/DataDetectorsCore",
+    "/System/Library/PrivateFrameworks/CoreSVG.framework/CoreSVG",
+    "/System/Library/PrivateFrameworks/CoreAnalytics.framework/CoreAnalytics",
+    "/System/Library/Frameworks/UserNotifications.framework/UserNotifications",
+    "/System/Library/PrivateFrameworks/AssertionServices.framework/AssertionServices",
+    "/System/Library/PrivateFrameworks/BackBoardServices.framework/BackBoardServices",
+    "/System/Library/PrivateFrameworks/BaseBoard.framework/BaseBoard",
+    "/System/Library/PrivateFrameworks/CoreUI.framework/CoreUI",
+    "/System/Library/PrivateFrameworks/GraphicsServices.framework/GraphicsServices",
+    "/System/Library/PrivateFrameworks/MobileAsset.framework/MobileAsset",
+    "/System/Library/PrivateFrameworks/PhysicsKit.framework/PhysicsKit",
+    "/System/Library/PrivateFrameworks/PrototypeTools.framework/PrototypeTools",
+    "/System/Library/PrivateFrameworks/TextInput.framework/TextInput",
+    "/System/Library/PrivateFrameworks/UIKitServices.framework/UIKitServices",
+    "/usr/lib/libAccessibility.dylib",
+    "/System/Library/PrivateFrameworks/AXCoreUtilities.framework/AXCoreUtilities",
+    "/System/Library/Frameworks/MediaAccessibility.framework/MediaAccessibility",
+    "/usr/lib/libperfcheck.dylib",
+    "/System/Library/PrivateFrameworks/perfdata.framework/perfdata",
+    "/usr/lib/libIOReport.dylib",
+    "/System/Library/PrivateFrameworks/ColorSync.framework/ColorSync",
+    "/System/Library/PrivateFrameworks/IOSurfaceAccelerator.framework/IOSurfaceAccelerator",
+    "/System/Library/Frameworks/Metal.framework/Metal",
+    "/usr/lib/libate.dylib",
+    "/usr/lib/libexpat.1.dylib",
+    "/System/Library/PrivateFrameworks/AppleJPEG.framework/AppleJPEG",
+    "/System/Library/PrivateFrameworks/FontServices.framework/libFontParser.dylib",
+    "/System/Library/PrivateFrameworks/FontServices.framework/libhvf.dylib",
+    "/System/Library/PrivateFrameworks/IOAccelerator.framework/IOAccelerator",
+    "/System/Library/Frameworks/OpenGLES.framework/libCoreFSCache.dylib",
+    "/System/Library/PrivateFrameworks/GPUCompiler.framework/Libraries/libGPUCompilerUtils.dylib",
+    "/System/Library/PrivateFrameworks/AppleSauce.framework/AppleSauce",
+    "/System/Library/PrivateFrameworks/FontServices.framework/libGSFontCache.dylib",
+    "/System/Library/PrivateFrameworks/FontServices.framework/libGSFont.dylib",
+    "/System/Library/PrivateFrameworks/OTSVG.framework/OTSVG",
+    "/System/Library/PrivateFrameworks/FontServices.framework/FontServices",
+    "/System/Library/PrivateFrameworks/SpringBoardServices.framework/SpringBoardServices",
+    "/System/Library/PrivateFrameworks/IdleTimerServices.framework/IdleTimerServices",
+    "/System/Library/PrivateFrameworks/BoardServices.framework/BoardServices",
+    "/System/Library/PrivateFrameworks/ProtocolBuffer.framework/ProtocolBuffer",
+    "/System/Library/PrivateFrameworks/MobileInstallation.framework/MobileInstallation",
+    "/System/Library/PrivateFrameworks/MobileSystemServices.framework/MobileSystemServices",
+    "/System/Library/PrivateFrameworks/CoreServicesStore.framework/CoreServicesStore",
+    "/System/Library/PrivateFrameworks/TextureIO.framework/TextureIO",
+    "/System/Library/PrivateFrameworks/InternationalSupport.framework/InternationalSupport",
+    "/System/Library/Frameworks/MobileCoreServices.framework/MobileCoreServices",
+    "/System/Library/PrivateFrameworks/ASEProcessing.framework/ASEProcessing",
+    "/System/Library/PrivateFrameworks/libEDR.framework/libEDR",
+    "/System/Library/PrivateFrameworks/DiagnosticRequest.framework/DiagnosticRequest",
+    "/System/Library/Frameworks/CoreVideo.framework/CoreVideo",
+    "/System/Library/Frameworks/MetalPerformanceShaders.framework/MetalPerformanceShaders",
+    "/System/Library/PrivateFrameworks/CrashReporterSupport.framework/CrashReporterSupport",
+    "/System/Library/PrivateFrameworks/OSAnalytics.framework/OSAnalytics",
+    "/System/Library/PrivateFrameworks/Symbolication.framework/Symbolication",
+    "/System/Library/PrivateFrameworks/CoreSymbolication.framework/CoreSymbolication",
+    "/System/Library/PrivateFrameworks/OSAServicesClient.framework/OSAServicesClient",
+    "/System/Library/PrivateFrameworks/MallocStackLogging.framework/MallocStackLogging",
+    "/System/Library/PrivateFrameworks/CoreBrightness.framework/CoreBrightness",
+    "/System/Library/PrivateFrameworks/AFKUser.framework/AFKUser",
+    "/System/Library/PrivateFrameworks/CoreAccessories.framework/CoreAccessories",
+    "/System/Library/PrivateFrameworks/CPMS.framework/CPMS",
+    "/System/Library/PrivateFrameworks/HID.framework/HID",
+    "/System/Library/Frameworks/OpenGLES.framework/libGFXShared.dylib",
+    "/System/Library/Frameworks/OpenGLES.framework/libGLImage.dylib",
+    "/System/Library/Frameworks/OpenGLES.framework/libCVMSPluginSupport.dylib",
+    "/System/Library/Frameworks/OpenGLES.framework/libCoreVMClient.dylib",
+    "/System/Library/Frameworks/MetalPerformanceShaders.framework/Frameworks/MPSCore.framework/MPSCore",
+    "/System/Library/Frameworks/MetalPerformanceShaders.framework/Frameworks/MPSImage.framework/MPSImage",
+    "/System/Library/Frameworks/MetalPerformanceShaders.framework/Frameworks/MPSNeuralNetwork.framework/MPSNeuralNetwork",
+    "/System/Library/Frameworks/MetalPerformanceShaders.framework/Frameworks/MPSMatrix.framework/MPSMatrix",
+    "/System/Library/Frameworks/MetalPerformanceShaders.framework/Frameworks/MPSRayIntersector.framework/MPSRayIntersector",
+    "/System/Library/Frameworks/MetalPerformanceShaders.framework/Frameworks/MPSNDArray.framework/MPSNDArray",
+    "/System/Library/Frameworks/MetalPerformanceShaders.framework/Frameworks/MPSFunctions.framework/MPSFunctions",
+    "/System/Library/Frameworks/CoreMedia.framework/CoreMedia",
+    "/System/Library/Frameworks/VideoToolbox.framework/VideoToolbox",
+    "/System/Library/PrivateFrameworks/FaceCore.framework/FaceCore",
+    "/System/Library/PrivateFrameworks/GraphVisualizer.framework/GraphVisualizer",
+    "/System/Library/PrivateFrameworks/CMCaptureCore.framework/CMCaptureCore",
+    "/System/Library/PrivateFrameworks/WatchdogClient.framework/WatchdogClient",
+    "/System/Library/Frameworks/CoreAudio.framework/CoreAudio",
+    "/System/Library/PrivateFrameworks/CoreUtilsExtras.framework/CoreUtilsExtras",
+    "/System/Library/PrivateFrameworks/MobileWiFi.framework/MobileWiFi",
+    "/System/Library/PrivateFrameworks/APFS.framework/APFS",
+    "/usr/lib/libutil.dylib",
+    "/System/Library/PrivateFrameworks/CaptiveNetwork.framework/CaptiveNetwork",
+    "/System/Library/PrivateFrameworks/EAP8021X.framework/EAP8021X",
+    "/usr/lib/libcupolicy.dylib",
+    "/usr/lib/libTelephonyUtilDynamic.dylib",
+    "/System/Library/PrivateFrameworks/CommonUtilities.framework/CommonUtilities",
+    "/System/Library/PrivateFrameworks/MSUDataAccessor.framework/MSUDataAccessor",
+    "/usr/lib/libpartition2_dynamic.dylib",
+    "/System/Library/PrivateFrameworks/Bom.framework/Bom",
+    "/System/Library/PrivateFrameworks/AppleFSCompression.framework/AppleFSCompression",
+    "/usr/lib/libParallelCompression.dylib",
+    "/usr/lib/libAudioStatistics.dylib",
+    "/System/Library/PrivateFrameworks/AudioToolboxCore.framework/AudioToolboxCore",
+    "/System/Library/PrivateFrameworks/caulk.framework/caulk",
+    "/System/Library/PrivateFrameworks/ExtensionFoundation.framework/ExtensionFoundation",
+    "/System/Library/Frameworks/CoreMIDI.framework/CoreMIDI",
+    "/usr/lib/libAudioToolboxUtility.dylib",
+    "/System/Library/PrivateFrameworks/PlugInKit.framework/PlugInKit",
+    "/System/Library/PrivateFrameworks/MediaExperience.framework/MediaExperience",
+    "/usr/lib/libCTGreenTeaLogger.dylib",
+    "/System/Library/PrivateFrameworks/CorePhoneNumbers.framework/CorePhoneNumbers",
+    "/System/Library/PrivateFrameworks/WebCore.framework/WebCore",
+    "/System/Library/PrivateFrameworks/WebCore.framework/Frameworks/libANGLE-shared.dylib",
+    "/System/Library/PrivateFrameworks/WebCore.framework/Frameworks/libwebrtc.dylib",
+    "/System/Library/Frameworks/NetworkExtension.framework/NetworkExtension",
+    "/System/Library/PrivateFrameworks/URLFormatting.framework/URLFormatting",
+    "/System/Library/Frameworks/AudioToolbox.framework/AudioToolbox",
+    "/System/Library/PrivateFrameworks/PersistentConnection.framework/PersistentConnection",
+    "/usr/lib/libnetworkextension.dylib",
+    "/System/Library/PrivateFrameworks/TCC.framework/TCC",
+    "/System/Library/PrivateFrameworks/DMCUtilities.framework/DMCUtilities",
+    "/System/Library/Frameworks/Accounts.framework/Accounts",
+    "/System/Library/PrivateFrameworks/DataMigration.framework/DataMigration",
+    "/System/Library/PrivateFrameworks/FeatureFlagsSupport.framework/FeatureFlagsSupport",
+    "/System/Library/PrivateFrameworks/MDMClientLibrary.framework/MDMClientLibrary",
+    "/usr/lib/liblockdown.dylib",
+    "/usr/lib/libmis.dylib",
+    "/System/Library/PrivateFrameworks/UserManagement.framework/UserManagement",
+    "/System/Library/PrivateFrameworks/Catalyst.framework/Catalyst",
+    "/System/Library/PrivateFrameworks/ContextKitCore.framework/ContextKitCore",
+    "/System/Library/PrivateFrameworks/DragUI.framework/DragUI",
+    "/System/Library/PrivateFrameworks/GenerationalStorage.framework/GenerationalStorage",
+    "/System/Library/PrivateFrameworks/SymptomDiagnosticReporter.framework/SymptomDiagnosticReporter",
+    "/System/Library/PrivateFrameworks/DesktopServicesPriv.framework/DesktopServicesPriv",
+    "/System/Library/PrivateFrameworks/CoreNLP.framework/CoreNLP",
+    "/usr/lib/libmecab.dylib",
+    "/usr/lib/libCRFSuite.dylib",
+    "/usr/lib/libgermantok.dylib",
+    "/usr/lib/libThaiTokenizer.dylib",
+    "/System/Library/PrivateFrameworks/CoreAUC.framework/CoreAUC",
+    "/System/Library/Frameworks/CoreHaptics.framework/CoreHaptics",
+    "/System/Library/PrivateFrameworks/AlgosScoreFramework.framework/AlgosScoreFramework",
+    "/System/Library/PrivateFrameworks/StreamingZip.framework/StreamingZip",
+    "/System/Library/PrivateFrameworks/IconFoundation.framework/IconFoundation",
+    "/System/Library/PrivateFrameworks/MobileIcons.framework/MobileIcons",
+    "/usr/lib/swift/libswift_Concurrency.dylib",
+    "/System/Library/Frameworks/Accessibility.framework/Accessibility",
+    "/System/Library/PrivateFrameworks/AXMediaUtilities.framework/AXMediaUtilities",
+    "/System/Library/PrivateFrameworks/AccessibilitySharedSupport.framework/AccessibilitySharedSupport",
+    "/System/Library/PrivateFrameworks/Lexicon.framework/Lexicon",
+    "/System/Library/Frameworks/NaturalLanguage.framework/NaturalLanguage",
+    "/System/Library/PrivateFrameworks/AXAssetLoader.framework/AXAssetLoader",
+    "/System/Library/Frameworks/CoreMotion.framework/CoreMotion",
+    "/System/Library/PrivateFrameworks/Espresso.framework/Espresso",
+    "/System/Library/Frameworks/CoreML.framework/CoreML",
+    "/System/Library/Frameworks/AVFoundation.framework/AVFoundation",
+    "/System/Library/Frameworks/AVFAudio.framework/AVFAudio",
+    "/System/Library/PrivateFrameworks/LinguisticData.framework/LinguisticData",
+    "/System/Library/PrivateFrameworks/CoreEmoji.framework/CoreEmoji",
+    "/System/Library/PrivateFrameworks/LanguageModeling.framework/LanguageModeling",
+    "/System/Library/PrivateFrameworks/Montreal.framework/Montreal",
+    "/System/Library/PrivateFrameworks/DuetActivityScheduler.framework/DuetActivityScheduler",
+    "/System/Library/Frameworks/MLCompute.framework/MLCompute",
+    "/System/Library/Frameworks/CloudKit.framework/CloudKit",
+    "/System/Library/PrivateFrameworks/MIL.framework/MIL",
+    "/System/Library/PrivateFrameworks/MLAssetIO.framework/MLAssetIO",
+    "/System/Library/PrivateFrameworks/CoreDuet.framework/CoreDuet",
+    "/System/Library/PrivateFrameworks/CoreDuetContext.framework/CoreDuetContext",
+    "/System/Library/PrivateFrameworks/AppConduit.framework/AppConduit",
+    "/System/Library/PrivateFrameworks/NanoRegistry.framework/NanoRegistry",
+    "/System/Library/PrivateFrameworks/CoreDuetDebugLogging.framework/CoreDuetDebugLogging",
+    "/System/Library/PrivateFrameworks/ApplePushService.framework/ApplePushService",
+    "/System/Library/Frameworks/Intents.framework/Intents",
+    "/System/Library/PrivateFrameworks/CoreDuetDaemonProtocol.framework/CoreDuetDaemonProtocol",
+    "/System/Library/PrivateFrameworks/ProactiveSupport.framework/ProactiveSupport",
+    "/System/Library/PrivateFrameworks/Rapport.framework/Rapport",
+    "/System/Library/PrivateFrameworks/C2.framework/C2",
+    "/System/Library/Frameworks/CoreLocation.framework/CoreLocation",
+    "/System/Library/PrivateFrameworks/CloudKitDistributedSync.framework/CloudKitDistributedSync",
+    "/System/Library/PrivateFrameworks/ProtectedCloudStorage.framework/ProtectedCloudStorage",
+    "/System/Library/PrivateFrameworks/CoreTime.framework/CoreTime",
+    "/System/Library/PrivateFrameworks/AuthKit.framework/AuthKit",
+    "/System/Library/PrivateFrameworks/RTCReporting.framework/RTCReporting",
+    "/System/Library/PrivateFrameworks/DeviceIdentity.framework/DeviceIdentity",
+    "/System/Library/Frameworks/LocalAuthentication.framework/LocalAuthentication",
+    "/System/Library/PrivateFrameworks/AppleIDAuthSupport.framework/AppleIDAuthSupport",
+    "/System/Library/PrivateFrameworks/PhoneNumbers.framework/PhoneNumbers",
+    "/System/Library/PrivateFrameworks/AAAFoundation.framework/AAAFoundation",
+    "/System/Library/Frameworks/LocalAuthentication.framework/Support/SharedUtils.framework/SharedUtils",
+    "/System/Library/Frameworks/CryptoTokenKit.framework/CryptoTokenKit",
+    "/System/Library/PrivateFrameworks/GeoServices.framework/GeoServices",
+    "/System/Library/PrivateFrameworks/LocationSupport.framework/LocationSupport",
+    "/System/Library/Frameworks/CoreBluetooth.framework/CoreBluetooth",
+    "/System/Library/PrivateFrameworks/GeoServicesCore.framework/GeoServicesCore",
+    "/System/Library/PrivateFrameworks/CoreLocationProtobuf.framework/CoreLocationProtobuf",
+    "/System/Library/PrivateFrameworks/NanoPreferencesSync.framework/NanoPreferencesSync",
+    "/usr/lib/libheimdal-asn1.dylib",
+    "/System/Library/PrivateFrameworks/OctagonTrust.framework/OctagonTrust",
+    "/System/Library/PrivateFrameworks/SecurityFoundation.framework/SecurityFoundation",
+    "/System/Library/PrivateFrameworks/IntentsFoundation.framework/IntentsFoundation",
+    "/System/Library/PrivateFrameworks/InternationalTextSearch.framework/InternationalTextSearch",
+    "/System/Library/Frameworks/MetalPerformanceShadersGraph.framework/MetalPerformanceShadersGraph",
+    "/System/Library/PrivateFrameworks/ANECompiler.framework/ANECompiler",
+    "/System/Library/PrivateFrameworks/AppleNeuralEngine.framework/AppleNeuralEngine",
+    "/usr/lib/libncurses.5.4.dylib",
+    "/System/Library/PrivateFrameworks/ANEServices.framework/ANEServices",
+    "/usr/lib/libsandbox.1.dylib",
+    "/usr/lib/libMatch.1.dylib",
+    "/usr/lib/libcmph.dylib",
+    "/System/Library/PrivateFrameworks/TimeSync.framework/TimeSync",
+    "/System/Library/PrivateFrameworks/MobileBluetooth.framework/MobileBluetooth",
+    "/System/Library/PrivateFrameworks/IOKitten.framework/IOKitten",
+    "/System/Library/PrivateFrameworks/AVFCore.framework/AVFCore",
+    "/System/Library/PrivateFrameworks/AVFCapture.framework/AVFCapture",
+    "/System/Library/PrivateFrameworks/AudioSession.framework/AudioSession",
+    "/System/Library/PrivateFrameworks/Celestial.framework/Celestial",
+    "/System/Library/PrivateFrameworks/AirPlaySync.framework/AirPlaySync",
+    "/System/Library/PrivateFrameworks/CMCapture.framework/CMCapture",
+    "/System/Library/PrivateFrameworks/Quagga.framework/Quagga",
+    "/System/Library/PrivateFrameworks/CMImaging.framework/CMImaging",
+    "/usr/lib/libtailspin.dylib",
+    "/System/Library/PrivateFrameworks/CinematicFraming.framework/CinematicFraming",
+    "/System/Library/PrivateFrameworks/AppC3D.framework/AppC3D",
+    "/System/Library/PrivateFrameworks/AppleCVAPhoto.framework/AppleCVAPhoto",
+    "/System/Library/PrivateFrameworks/MediaSafetyNet.framework/MediaSafetyNet",
+    "/System/Library/PrivateFrameworks/SignpostCollection.framework/SignpostCollection",
+    "/System/Library/PrivateFrameworks/ktrace.framework/ktrace",
+    "/System/Library/PrivateFrameworks/SampleAnalysis.framework/SampleAnalysis",
+    "/System/Library/PrivateFrameworks/kperfdata.framework/kperfdata",
+    "/usr/lib/libdscsym.dylib",
+    "/System/Library/PrivateFrameworks/SignpostSupport.framework/SignpostSupport",
+    "/System/Library/PrivateFrameworks/LoggingSupport.framework/LoggingSupport",
+    "/System/Library/PrivateFrameworks/kperf.framework/kperf",
+    "/System/Library/PrivateFrameworks/Sharing.framework/Sharing",
+    "/System/Library/PrivateFrameworks/IDS.framework/IDS",
+    "/System/Library/PrivateFrameworks/MobileActivation.framework/MobileActivation",
+    "/System/Library/PrivateFrameworks/AppleIDSSOAuthentication.framework/AppleIDSSOAuthentication",
+    "/System/Library/PrivateFrameworks/AppleMediaServices.framework/AppleMediaServices",
+    "/System/Library/PrivateFrameworks/BluetoothManager.framework/BluetoothManager",
+    "/System/Library/PrivateFrameworks/Symptoms.framework/Frameworks/SymptomPresentationFeed.framework/SymptomPresentationFeed",
+    "/usr/lib/libresolv.9.dylib",
+    "/System/Library/PrivateFrameworks/Symptoms.framework/Frameworks/SymptomAnalytics.framework/SymptomAnalytics",
+    "/System/Library/PrivateFrameworks/IMFoundation.framework/IMFoundation",
+    "/System/Library/PrivateFrameworks/IDSFoundation.framework/IDSFoundation",
+    "/System/Library/PrivateFrameworks/FTServices.framework/FTServices",
+    "/System/Library/PrivateFrameworks/Engram.framework/Engram",
+    "/System/Library/PrivateFrameworks/Marco.framework/Marco",
+    "/System/Library/PrivateFrameworks/FTAWD.framework/FTAWD",
+    "/System/Library/PrivateFrameworks/RenderBox.framework/RenderBox",
+    "/System/Library/PrivateFrameworks/AttributeGraph.framework/AttributeGraph",
+    "/System/Library/PrivateFrameworks/AXRuntime.framework/AXRuntime",
+    "/System/Library/PrivateFrameworks/CoreGlyphs.framework/CoreGlyphs",
+    "/System/Library/PrivateFrameworks/IntlPreferences.framework/IntlPreferences",
+    "/System/Library/PrivateFrameworks/RecapPerformanceTesting.framework/RecapPerformanceTesting",
+    "/usr/lib/swift/libswiftCloudKit.dylib",
+    "/usr/lib/swift/libswiftCoreML.dylib",
+    "/usr/lib/swift/libswiftVision.dylib",
+    "/usr/lib/libAXSafeCategoryBundle.dylib",
+    "/System/Library/Frameworks/Vision.framework/Vision",
+    "/System/Library/Frameworks/Vision.framework/libfaceCore.dylib",
+    "/System/Library/PrivateFrameworks/Futhark.framework/Futhark",
+    "/System/Library/PrivateFrameworks/InertiaCam.framework/InertiaCam",
+    "/System/Library/PrivateFrameworks/TextRecognition.framework/TextRecognition",
+    "/System/Library/PrivateFrameworks/DistributedEvaluation.framework/DistributedEvaluation",
+    "/System/Library/PrivateFrameworks/CoreParsec.framework/CoreParsec",
+    "/System/Library/PrivateFrameworks/DifferentialPrivacy.framework/DifferentialPrivacy",
+    "/System/Library/PrivateFrameworks/TrialProto.framework/TrialProto",
+    "/System/Library/PrivateFrameworks/Trial.framework/Trial",
+    "/System/Library/PrivateFrameworks/SearchFoundation.framework/SearchFoundation",
+    "/System/Library/PrivateFrameworks/PegasusAPI.framework/PegasusAPI",
+    "/System/Library/PrivateFrameworks/InternalSwiftProtobuf.framework/InternalSwiftProtobuf",
+    "/usr/lib/swift/libswiftOSLog.dylib",
+    "/System/Library/Frameworks/OSLog.framework/OSLog",
+    "/System/Library/PrivateFrameworks/ProactiveEventTracker.framework/ProactiveEventTracker",
+    "/System/Library/PrivateFrameworks/CVNLP.framework/CVNLP",
+    "/System/Library/Frameworks/Contacts.framework/Contacts",
+    "/System/Library/PrivateFrameworks/AddressBookLegacy.framework/AddressBookLegacy",
+    "/System/Library/PrivateFrameworks/CellularPlanManager.framework/CellularPlanManager",
+    "/System/Library/Frameworks/ClassKit.framework/ClassKit",
+    "/System/Library/PrivateFrameworks/CoreSuggestions.framework/CoreSuggestions",
+    "/System/Library/PrivateFrameworks/ContactsFoundation.framework/ContactsFoundation",
+    "/System/Library/PrivateFrameworks/vCard.framework/vCard",
+    "/System/Library/PrivateFrameworks/DataAccessExpress.framework/DataAccessExpress",
+    "/System/Library/PrivateFrameworks/ContactsMetrics.framework/ContactsMetrics",
+    "/System/Library/PrivateFrameworks/CloudDocs.framework/CloudDocs",
+    "/System/Library/Frameworks/QuickLookThumbnailing.framework/QuickLookThumbnailing",
+    "/System/Library/PrivateFrameworks/AppleAccount.framework/AppleAccount",
+    "/System/Library/PrivateFrameworks/SetupAssistant.framework/SetupAssistant",
+    "/System/Library/PrivateFrameworks/CoreFollowUp.framework/CoreFollowUp",
+    "/System/Library/PrivateFrameworks/SetupAssistantSupport.framework/SetupAssistantSupport",
+    "/System/Library/PrivateFrameworks/MobileBackup.framework/MobileBackup",
+    "/System/Library/PrivateFrameworks/Seeding.framework/Seeding",
+    "/System/Library/PrivateFrameworks/OSASubmissionClient.framework/OSASubmissionClient",
+    "/System/Library/PrivateFrameworks/CacheDelete.framework/CacheDelete",
+    "/System/Library/PrivateFrameworks/FSEvents.framework/FSEvents",
+    "/System/Library/PrivateFrameworks/OSAnalyticsPrivate.framework/OSAnalyticsPrivate",
+    "/System/Library/PrivateFrameworks/RemoteXPC.framework/RemoteXPC",
+    "/System/Library/PrivateFrameworks/RemoteServiceDiscovery.framework/RemoteServiceDiscovery",
+    "/System/Library/Frameworks/CoreSpotlight.framework/CoreSpotlight",
+    "/System/Library/PrivateFrameworks/MetadataUtilities.framework/MetadataUtilities",
+    "/System/Library/PrivateFrameworks/CorePrediction.framework/CorePrediction",
+    "/System/Library/Frameworks/PDFKit.framework/PDFKit",
+    "/System/Library/PrivateFrameworks/SafariSafeBrowsing.framework/SafariSafeBrowsing",
+    "/System/Library/PrivateFrameworks/CoreOptimization.framework/CoreOptimization",
+    "/System/Library/PrivateFrameworks/CorePDF.framework/CorePDF",
+    "/System/Library/PrivateFrameworks/RevealCore.framework/RevealCore",
+    "/System/Library/PrivateFrameworks/CTCarrierSpace.framework/CTCarrierSpace",
+    "/System/Library/PrivateFrameworks/WirelessDiagnostics.framework/WirelessDiagnostics",
+    "/usr/lib/libAWDSupportFramework.dylib",
+    "/usr/lib/libAWDSupport.dylib",
+    "/usr/lib/libprotobuf-lite.dylib",
+    "/usr/lib/libprotobuf.dylib",
+    "/System/Library/PrivateFrameworks/AppStoreFoundation.framework/AppStoreFoundation",
+    "/System/Library/PrivateFrameworks/AppStoreOverlays.framework/AppStoreOverlays",
+    "/System/Library/PrivateFrameworks/Preferences.framework/Preferences",
+    "/System/Library/PrivateFrameworks/StoreServices.framework/StoreServices",
+    "/System/Library/Frameworks/CryptoKit.framework/CryptoKit",
+    "/System/Library/PrivateFrameworks/AppStoreDaemon.framework/AppStoreDaemon",
+    "/System/Library/PrivateFrameworks/NetAppsUtilities.framework/NetAppsUtilities",
+    "/System/Library/PrivateFrameworks/SettingsFoundation.framework/SettingsFoundation",
+    "/System/Library/PrivateFrameworks/LowPowerMode.framework/LowPowerMode",
+    "/System/Library/PrivateFrameworks/Netrb.framework/Netrb",
+    "/System/Library/Frameworks/AppTrackingTransparency.framework/AppTrackingTransparency",
+    "/System/Library/PrivateFrameworks/BiometricKit.framework/BiometricKit",
+    "/System/Library/Frameworks/ExposureNotification.framework/ExposureNotification",
+    "/System/Library/PrivateFrameworks/CryptoKitCBridging.framework/CryptoKitCBridging",
+    "/usr/lib/swift/libswiftCryptoTokenKit.dylib",
+    "/System/Library/Frameworks/Photos.framework/Photos",
+    "/System/Library/PrivateFrameworks/MediaConversionService.framework/MediaConversionService",
+    "/System/Library/PrivateFrameworks/CPAnalytics.framework/CPAnalytics",
+    "/System/Library/PrivateFrameworks/CloudPhotoServices.framework/CloudPhotoServices",
+    "/System/Library/Frameworks/ImageCaptureCore.framework/ImageCaptureCore",
+    "/System/Library/PrivateFrameworks/PhotoFoundation.framework/PhotoFoundation",
+    "/System/Library/PrivateFrameworks/PhotosFormats.framework/PhotosFormats",
+    "/System/Library/PrivateFrameworks/CloudPhotoLibrary.framework/CloudPhotoLibrary",
+    "/System/Library/PrivateFrameworks/CoreMediaStream.framework/CoreMediaStream",
+    "/System/Library/PrivateFrameworks/PhotoLibraryServices.framework/PhotoLibraryServices",
+    "/System/Library/PrivateFrameworks/PhotoLibraryServicesCore.framework/PhotoLibraryServicesCore",
+    "/System/Library/PrivateFrameworks/MMCS.framework/MMCS",
+    "/System/Library/PrivateFrameworks/ChunkingLibrary.framework/ChunkingLibrary",
+    "/System/Library/PrivateFrameworks/AssetCacheServices.framework/AssetCacheServices",
+    "/usr/lib/swift/libswiftDemangle.dylib",
+    "/System/Library/PrivateFrameworks/BiomeStorage.framework/BiomeStorage",
+    "/System/Library/PrivateFrameworks/BiomeStreams.framework/BiomeStreams",
+    "/System/Library/PrivateFrameworks/ToneLibrary.framework/ToneLibrary",
+    "/System/Library/PrivateFrameworks/MediaStream.framework/MediaStream",
+    "/System/Library/PrivateFrameworks/NLP.framework/NLP",
+    "/System/Library/PrivateFrameworks/PhotosImagingFoundation.framework/PhotosImagingFoundation",
+    "/System/Library/PrivateFrameworks/BiomeFoundation.framework/BiomeFoundation",
+    "/System/Library/PrivateFrameworks/BiomeFlexibleStorage.framework/BiomeFlexibleStorage",
+    "/System/Library/PrivateFrameworks/BiomeDSL.framework/BiomeDSL",
+    "/System/Library/PrivateFrameworks/BiomePubSub.framework/BiomePubSub",
+    "/System/Library/PrivateFrameworks/PrivacyAccounting.framework/PrivacyAccounting",
+    "/System/Library/PrivateFrameworks/ContactsAutocompleteUI.framework/ContactsAutocompleteUI",
+    "/System/Library/Frameworks/ContactsUI.framework/ContactsUI",
+    "/System/Library/PrivateFrameworks/Email.framework/Email",
+    "/System/Library/PrivateFrameworks/EmailCore.framework/EmailCore",
+    "/System/Library/PrivateFrameworks/FTClientServices.framework/FTClientServices",
+    "/System/Library/PrivateFrameworks/MailServices.framework/MailServices",
+    "/System/Library/PrivateFrameworks/Message.framework/Message",
+    "/System/Library/PrivateFrameworks/MessageSupport.framework/MessageSupport",
+    "/System/Library/PrivateFrameworks/MIME.framework/MIME",
+    "/System/Library/Frameworks/PencilKit.framework/PencilKit",
+    "/System/Library/Frameworks/VisionKit.framework/VisionKit",
+    "/System/Library/PrivateFrameworks/DoNotDisturb.framework/DoNotDisturb",
+    "/System/Library/PrivateFrameworks/CloudSubscriptionFeatures.framework/CloudSubscriptionFeatures",
+    "/System/Library/PrivateFrameworks/ContactsAutocomplete.framework/ContactsAutocomplete",
+    "/System/Library/PrivateFrameworks/CoreRecents.framework/CoreRecents",
+    "/System/Library/PrivateFrameworks/EmailAddressing.framework/EmailAddressing",
+    "/System/Library/PrivateFrameworks/EmailFoundation.framework/EmailFoundation",
+    "/System/Library/PrivateFrameworks/MailSupport.framework/MailSupport",
+    "/System/Library/PrivateFrameworks/AppSupportUI.framework/AppSupportUI",
+    "/System/Library/PrivateFrameworks/CorePommes.framework/CorePommes",
+    "/System/Library/PrivateFrameworks/CommunicationsFilter.framework/CommunicationsFilter",
+    "/System/Library/PrivateFrameworks/NetworkServiceProxy.framework/NetworkServiceProxy",
+    "/System/Library/PrivateFrameworks/AAAFoundationSwift.framework/AAAFoundationSwift",
+    "/System/Library/PrivateFrameworks/FeatureFlags.framework/FeatureFlags",
+    "/System/Library/Frameworks/GSS.framework/GSS",
+    "/System/Library/PrivateFrameworks/Heimdal.framework/Heimdal",
+    "/System/Library/PrivateFrameworks/CommonAuth.framework/CommonAuth",
+    "/System/Library/PrivateFrameworks/CryptoKitPrivate.framework/CryptoKitPrivate",
+    "/usr/lib/libboringssl.dylib",
+    "/System/Library/PrivateFrameworks/PersonaUI.framework/PersonaUI",
+    "/System/Library/PrivateFrameworks/ContactsDonation.framework/ContactsDonation",
+    "/System/Library/PrivateFrameworks/EmojiFoundation.framework/EmojiFoundation",
+    "/System/Library/PrivateFrameworks/ContactsUICore.framework/ContactsUICore",
+    "/System/Library/PrivateFrameworks/FamilyCircle.framework/FamilyCircle",
+    "/System/Library/PrivateFrameworks/OnBoardingKit.framework/OnBoardingKit",
+    "/System/Library/PrivateFrameworks/TemplateKit.framework/TemplateKit",
+    "/System/Library/PrivateFrameworks/PersonaKit.framework/PersonaKit",
+    "/System/Library/Frameworks/CallKit.framework/CallKit",
+    "/System/Library/PrivateFrameworks/CertUI.framework/CertUI",
+    "/System/Library/PrivateFrameworks/DataAccess.framework/DataAccess",
+    "/System/Library/PrivateFrameworks/EmailDaemon.framework/EmailDaemon",
+    "/System/Library/Frameworks/EventKit.framework/EventKit",
+    "/System/Library/PrivateFrameworks/Notes.framework/Notes",
+    "/System/Library/PrivateFrameworks/CalendarFoundation.framework/CalendarFoundation",
+    "/System/Library/PrivateFrameworks/CalendarDatabase.framework/CalendarDatabase",
+    "/System/Library/PrivateFrameworks/iCalendar.framework/iCalendar",
+    "/System/Library/PrivateFrameworks/CoreDAV.framework/CoreDAV",
+    "/System/Library/PrivateFrameworks/NotesSupport.framework/NotesSupport",
+    "/System/Library/PrivateFrameworks/TelephonyUtilities.framework/TelephonyUtilities",
+    "/System/Library/PrivateFrameworks/IMTransferServices.framework/IMTransferServices",
+    "/System/Library/PrivateFrameworks/IncomingCallFilter.framework/IncomingCallFilter",
+    "/System/Library/PrivateFrameworks/CalDAV.framework/CalDAV",
+    "/System/Library/PrivateFrameworks/CalendarDaemon.framework/CalendarDaemon",
+    "/System/Library/PrivateFrameworks/MailKit.framework/MailKit",
+    "/System/Library/PrivateFrameworks/MaterialKit.framework/MaterialKit",
+    "/System/Library/Frameworks/MetalKit.framework/MetalKit",
+    "/System/Library/PrivateFrameworks/CoreHandwriting.framework/CoreHandwriting",
+    "/System/Library/PrivateFrameworks/BaseBoardUI.framework/BaseBoardUI",
+    "/System/Library/PrivateFrameworks/ProofReader.framework/ProofReader",
+    "/usr/lib/libmecabra.dylib",
+    "/System/Library/PrivateFrameworks/ConstantClasses.framework/ConstantClasses",
+    "/usr/lib/libChineseTokenizer.dylib",
+    "/System/Library/PrivateFrameworks/DocumentCamera.framework/DocumentCamera",
+    "/System/Library/PrivateFrameworks/VisionKitCore.framework/VisionKitCore",
+    "/System/Library/PrivateFrameworks/CameraEditKit.framework/CameraEditKit",
+    "/System/Library/PrivateFrameworks/MediaAnalysisServices.framework/MediaAnalysisServices",
+    "/usr/lib/libobjc-trampolines.dylib",
+    "/System/Library/PrivateFrameworks/AppSSOCore.framework/AppSSOCore",
+    "/System/Library/PrivateFrameworks/CoreServicesInternal.framework/CoreServicesInternal",
+    "/usr/lib/libusrtcp.dylib",
+    "/usr/lib/log/liblog_network.dylib",
+    "/usr/lib/libquic.dylib",
+    "/System/Library/Frameworks/Accelerate.framework/Frameworks/vImage.framework/Libraries/libCGInterfaces.dylib",
+    "/System/Library/CoreServices/RawCamera.bundle/RawCamera",
+    "/System/Library/PrivateFrameworks/AppSSO.framework/AppSSO",
+    "/System/Library/PrivateFrameworks/SharedWebCredentials.framework/SharedWebCredentials",
+    "/System/Library/Frameworks/AVKit.framework/AVKit",
+    "/System/Library/PrivateFrameworks/Pegasus.framework/Pegasus",
+    "/System/Library/PrivateFrameworks/MediaRemote.framework/MediaRemote",
+    "/System/Library/PrivateFrameworks/RemoteTextInput.framework/RemoteTextInput",
+    "/System/Library/PrivateFrameworks/MediaServices.framework/MediaServices",
+    "/System/Library/PrivateFrameworks/WebContentAnalysis.framework/WebContentAnalysis",
+    "/System/Library/PrivateFrameworks/LatentSemanticMapping.framework/LatentSemanticMapping",
+    "/System/Library/PrivateFrameworks/TextInputUI.framework/TextInputUI",
+    "/System/Library/PrivateFrameworks/AssistantServices.framework/AssistantServices",
+    "/System/Library/PrivateFrameworks/SAObjects.framework/SAObjects",
+    "/System/Library/PrivateFrameworks/SiriInstrumentation.framework/SiriInstrumentation",
+    "/System/Library/PrivateFrameworks/SiriAnalytics.framework/SiriAnalytics",
+    "/System/Library/PrivateFrameworks/VoiceServices.framework/VoiceServices",
+    "/System/Library/PrivateFrameworks/FeedbackLogger.framework/FeedbackLogger",
+    "/System/Library/PrivateFrameworks/SiriTTS.framework/SiriTTS",
+    "/usr/lib/libedit.3.dylib",
+    "/System/Library/Extensions/AGXMetalA13.bundle/AGXMetalA13",
+    "/System/Library/PrivateFrameworks/GPURawCounter.framework/GPURawCounter",
+    "/System/Library/PrivateFrameworks/IOGPU.framework/IOGPU"
+  ]
+}
