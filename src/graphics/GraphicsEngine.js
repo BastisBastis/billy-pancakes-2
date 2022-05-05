@@ -95,11 +95,20 @@ this.scene.add(light1)
     mesh.position.y=position.y+size.height/2;
     mesh.position.z=position.z
     
-    mesh.setRotationFromAxisAngle=(new THREE.Vector3(0,1,0),rotation)
+    mesh.setRotationFromAxisAngle(new THREE.Vector3(0,1,0),rotation)
     
     this.scene.add(mesh)
-    console.log(position,size)
-    console.log(mesh)
+    
+    mesh.setRotation=(rot=>{
+      mesh.rotation.y=-rot;
+    })
+    
+    mesh.setPosition=(x,y,z)=>{
+      mesh.position.x=x
+      mesh.position.y=y+size.height/2
+      mesh.position.z=z
+    }
+    
     return mesh
   }
   

@@ -11,10 +11,10 @@ export default class PhysicsEngine {
     this.world.tolerance=1
     
     //temp floor 
-    const groundShape = new CANNON.Plane()
-    const groundBody = new CANNON.Body({ mass: 0 })
+      const groundShape = new CANNON.Box(new CANNON.Vec3(100,10,100))
+    const groundBody = new CANNON.Body({ mass: 0, position:new CANNON.Vec3(0,-10,0) })
     groundBody.addShape(groundShape)
-    groundBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0)
+    //groundBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0)
     this.world.addBody(groundBody)
   }
   

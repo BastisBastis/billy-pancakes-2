@@ -10,19 +10,22 @@ export default class PhysicsBody {
     this.body=body;
     this.rotation=rotation
     world.addBody(body);
+    
+  
   }
   
   static getBody(world,position,size,rotation,isStatic) {
-    //const shape = new CANNON.Box(new CANNON.Vec3(size.width/2, size.height/2, size.depth/2))
-    const shape = new CANNON.Sphere(size.width/2)
+    const shape = new CANNON.Box(new CANNON.Vec3(size.width/2, size.height/2, size.depth/2))
+
     const body = new CANNON.Body({
-      mass: isStatic?0:10,
+      mass: isStatic?0:1,
       position:new CANNON.Vec3(
         position.x,
-        position.y+size.width/2,//size.height/2,
+        position.y+size.height/2,
         position.z)
     })
     body.quaternion.setFromAxisAngle(new CANNON.Vec3(0,1,0),rotation)
+    body.angularDamping=1;
     
     body.addShape(shape)
     
@@ -48,6 +51,7 @@ export default class PhysicsBody {
   */
   
   set velocity(vel) {
+    
     /*if (vel===0) {
       this.body.velocity.set(
       0,
@@ -65,7 +69,7 @@ export default class PhysicsBody {
     this.body.velocity.z=vel*Math.sin(this.rotation)
     
     
-    console.log(this.body.position)
+    
   }
   
   get position() {
@@ -73,7 +77,7 @@ export default class PhysicsBody {
     
     return {
       x:position.x,
-      y:position.y-this.size.width/2,
+      y:position.y-this.size.height/2,
       z:position.z
       }
   }

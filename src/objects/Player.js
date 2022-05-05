@@ -98,7 +98,8 @@ export default class Player {
       rotation:this.rotation
     })
     
-    this.physicsGraphics
+    this.physicsGraphics.setRotation(this.rotation)
+    this.physicsGraphics.setPosition(this.position.x,this.position.y,this.position.z)
   }
   
 }
