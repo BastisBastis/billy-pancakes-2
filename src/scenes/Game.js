@@ -1,9 +1,13 @@
 import Phaser from "phaser"
 import GraphicsEngine from "../graphics/GraphicsEngine"
 import PhysicsEngine from "../physics/PhysicsEngine"
+import CannonDebugger from 'cannon-es-debugger'
 
 import Player from '../objects/Player'
 
+import Platform1 from "../objects/levelObjects/Platform1"
+
+const showDebugPhysics = true;
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -19,8 +23,20 @@ export default class Game extends Phaser.Scene {
     
     this.graphics=new GraphicsEngine()
     this.physicsEngine=new PhysicsEngine()
+    if (showDebugPhysics) {
+      this.physicsDebugger = new CannonDebugger(this.graphics.scene, this.physicsEngine.world.bodies, {
+        //color:"#ff0000"
+        scale:1.01
+      })
+    }
     
-    
+    const platform = new Platform1({
+      graphicsScene:this.graphics.scene,
+      physicsWorld:this.physicsEngine.world,
+      position:{x:4, y:0, z:3},
+      rotation:0,
+      scale
+    })
     
     this.player=new Player({
       graphicsEngine:this.graphics,
@@ -42,7 +58,9 @@ export default class Game extends Phaser.Scene {
     this.player.update(delta)
     
     
-    
+    if (this.showDebugPhysics) {
+      //this.physicsDebugger.update();
+    }
     this.graphics.update(delta,{
       player:{
         position:this.player.position,
