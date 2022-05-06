@@ -22,10 +22,15 @@ export default class UI extends Phaser.Scene {
     
     this.input.on("pointerdown",(e)=>{
       this.touchCounter++;
-      this.touchOrigin={x:e.x,y:e.y}
+      if (this.touchCounter==1) {
+        this.touchOrigin={x:e.x,y:e.y}
       this.updateJoystick({y:false,x:0})
       this.setJoystickVisibility(true)
       EventCenter.emit("controlsUpdated",{y:false,x:0})
+      } else {
+        EventCenter.emit("jump")
+      }
+      
     })
     
     this.input.on("pointerup",(e)=>{

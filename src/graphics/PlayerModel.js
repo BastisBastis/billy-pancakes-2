@@ -2,7 +2,7 @@ import * as THREE from "three"
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 //models
-import BillyGLTF from '../assets/models/characters/Billy3.glb'
+import BillyGLTF from '../assets/models/characters/Billy7.glb'
 
 
 export default class PlayerModel {
@@ -27,7 +27,9 @@ export default class PlayerModel {
   set isRunning(value) {
     this._isRunning=value;
     if (this.animations) {
+      
       if (value){
+        this.animations.idle.stop()
         this.animations.walk.play()
       }
         
@@ -37,6 +39,28 @@ export default class PlayerModel {
       }
         
     }
+  }
+  
+  stopAnimations(){
+    this.animations.forEach((animation)=>{
+      animation.stop()
+    })
+  }
+  
+  jump() {
+    
+    this.animations.jump.reset()
+    this.animations.idle.stop()
+    if (this.isRunning) {
+      this.animations.walk.stop()
+      
+    }
+    this.animations.jump.play()
+    
+    
+    
+    
+    
   }
   
 loadModel(scene,position,rotation) {
@@ -58,9 +82,9 @@ loadModel(scene,position,rotation) {
     		gltf.scene.position.set(position.x,position.y,position.z)
     		gltf.scene.rotation.y=rotation
     		
-    		gltf.scene.children[0].translateX(-0.005)
-    		gltf.scene.children[0].translateY(-0.0095)
-    		gltf.scene.children[0].translateZ(-0.008)
+    		//gltf.scene.children[0].translateX(-0.005)
+    		//gltf.scene.children[0].translateY(-0.0095)
+    		//gltf.scene.children[0].translateZ(-0.008)
     		
     		const colors={
     		  "ArmL":0x006600,
@@ -83,16 +107,21 @@ loadModel(scene,position,rotation) {
           }
           
         });
-        
+                console.log(gltf.animations.length)
         
         this.mixer=new THREE.AnimationMixer(gltf.scene)
         this.animations={
           idle:this.mixer.clipAction(gltf.animations[0]),
           jump:this.mixer.clipAction(gltf.animations[1]),
-          walk:this.mixer.clipAction(gltf.animations[2]),
+          pickup:this.mixer.clipAction(gltf.animations[2]),
+          run:this.mixer.clipAction(gltf.animations[3]),
+          walk:this.mixer.clipAction(gltf.animations[4]),
         }
         this.animations.idle.play()
+        //this.animations.idle.stop()
         
+        this.animations.jump.setLoop(THREE.LoopOnce)
+        this.animations.jump.setEffectiveTimeScale(0.65)
         
         
     		

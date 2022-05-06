@@ -26,6 +26,8 @@ export default class Player {
     this.runSpeed=4;
     this.turnSpeed=0.04;
     
+    this.jumpVelocity=6;
+    
     this.size={
       width:0.8,
       depth:0.8,
@@ -35,6 +37,7 @@ export default class Player {
     this.setupPhysicsBody(physicsEngine,graphicsEngine)
     
     EventCenter.on("controlsUpdated",values=>this.updateControls(values))
+    EventCenter.on("jump",()=>this.jump())
   }
   
   setupPhysicsBody(physicsEngine,graphicsEngine) {
@@ -64,6 +67,13 @@ export default class Player {
     if (value!==this._isRunning) {
       this._isRunning=value;
       this.graphics.isRunning=value;
+    }
+  }
+  
+  jump() {
+    const couldJump = this.physicsBody.jump(this.jumpVelocity);
+    if (couldJump) {
+      this.graphics.jump()
     }
   }
   

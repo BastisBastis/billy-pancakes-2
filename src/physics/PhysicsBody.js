@@ -52,24 +52,18 @@ export default class PhysicsBody {
   
   set velocity(vel) {
     
-    /*if (vel===0) {
-      this.body.velocity.set(
-      0,
-      this.body.velocity.y,
-      0
-    )
-    } else {
-      this.body.applyLocalForce(vel*Math.cos(this.rotation),
-      0,
-      vel*Math.sin(this.rotation))
-    }
-    */
+    
     
     this.body.velocity.x=vel*Math.cos(this.rotation)
     this.body.velocity.z=vel*Math.sin(this.rotation)
     
     
     
+  }
+  
+  jump(vel) {
+    this.body.velocity.y=vel
+    return true
   }
   
   get position() {
