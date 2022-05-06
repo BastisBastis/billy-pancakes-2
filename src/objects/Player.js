@@ -49,7 +49,7 @@ export default class Player {
       this.rotation,
       false
     )
-    if (true) {
+    if (false) {
       this.physicsGraphics=graphicsEngine.addBox(
         this.position,
         this.size,
@@ -108,8 +108,10 @@ export default class Player {
       rotation:this.rotation
     })
     
+    /*
     this.physicsGraphics.setRotation(this.rotation)
     this.physicsGraphics.setPosition(this.position.x,this.position.y,this.position.z)
+    */
   }
   
 }

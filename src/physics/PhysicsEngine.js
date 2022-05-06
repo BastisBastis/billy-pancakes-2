@@ -1,5 +1,7 @@
 import * as CANNON from "cannon-es"
 
+
+
 export default class PhysicsEngine {
   constructor() {
     this.world  = new CANNON.World()
@@ -11,7 +13,7 @@ export default class PhysicsEngine {
     this.world.tolerance=1
     
     //temp floor 
-      const groundShape = new CANNON.Box(new CANNON.Vec3(100,10,100))
+      const groundShape = new CANNON.Box(new CANNON.Vec3(20,10,20))
     const groundBody = new CANNON.Body({ mass: 0, position:new CANNON.Vec3(0,-10,0) })
     groundBody.addShape(groundShape)
     //groundBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0)

@@ -48,6 +48,8 @@ export default class UI extends Phaser.Scene {
     })
     
     this.input.on("pointermove",(e)=>{
+      if (!this.touchOrigin)
+        return false;
       /*
       result ={
         y:true|false should move
