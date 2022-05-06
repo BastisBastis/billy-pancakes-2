@@ -26,7 +26,7 @@ export default class Player {
     this.runSpeed=4;
     this.turnSpeed=0.04;
     
-    this.jumpVelocity=6;
+    this.jumpVelocity=8;
     
     this.size={
       width:0.8,

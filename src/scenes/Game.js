@@ -6,8 +6,9 @@ import CannonDebugger from 'cannon-es-debugger'
 import Player from '../objects/Player'
 
 import Platform1 from "../objects/levelObjects/Platform1"
+import Pallet1 from "../objects/levelObjects/Pallet1"
 
-const showDebugPhysics = true;
+const showDebugPhysics = false;
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -43,6 +44,14 @@ export default class Game extends Phaser.Scene {
       position:{x:0, y:0, z:6},
       rotation:0,
       scale:{xz:1,y:0.5}
+    })
+    
+    const pallet = new Pallet1({
+      graphicsScene:this.graphics.scene,
+      physicsWorld:this.physicsEngine.world,
+      position:{x:-5, y:0, z:0},
+      rotation:0,
+      scale:{xz:1,y:1}
     })
     
     this.player=new Player({

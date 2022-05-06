@@ -2,15 +2,30 @@
 
 export default class LevelObject {
   
-  constructor({
-    size={width:2,height:2,depth:2},
-    model,
-    position={x:0,y:0,z:0},
-    rotation={x:0,y:0,z:0}
-  }) {
+  constructor(position,rotation) {
+    this._position=position;
+    this._rotation=rotation;
+  }
+  
+  get position() {
+    return this._position;
+  }
+  
+  set position(value) {
     
-    
-    
+    this._position=value
+    this.graphics.position=this._position;
+    this.physics.position=this._position;
+  }
+  
+  get rotation() {
+    return this._rotation;
+  }
+  
+  set rotation(value) {
+    this._rotation=value;
+    this.graphics.rotation=value;
+    this.physics.rotation=value;
   }
   
 }
