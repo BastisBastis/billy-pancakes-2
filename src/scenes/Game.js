@@ -33,9 +33,16 @@ export default class Game extends Phaser.Scene {
     const platform = new Platform1({
       graphicsScene:this.graphics.scene,
       physicsWorld:this.physicsEngine.world,
-      position:{x:4, y:0, z:3},
+      position:{x:0, y:0, z:0},
       rotation:0,
-      scale
+      scale:{xz:1,y:1}
+    })
+    const platform2 = new Platform1({
+      graphicsScene:this.graphics.scene,
+      physicsWorld:this.physicsEngine.world,
+      position:{x:0, y:0, z:6},
+      rotation:0,
+      scale:{xz:1,y:0.5}
     })
     
     this.player=new Player({
