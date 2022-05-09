@@ -32,6 +32,10 @@ export default class UI extends Phaser.Scene {
       }
       
     })
+
+    this.input.keyboard.on('keydown-SPACE', function (event) {
+      EventCenter.emit("jump")
+    });
     
     this.input.on("pointerup",(e)=>{
       this.touchCounter--;

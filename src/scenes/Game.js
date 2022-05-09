@@ -7,10 +7,6 @@ import Player from '../objects/Player'
 
 import Level from "../objects/Level"
 
-import Platform1 from "../objects/levelObjects/Platform1"
-import Pallet1 from "../objects/levelObjects/Pallet1"
-import Floor from "../objects/levelObjects/Floor"
-import Wall from "../objects/levelObjects/Wall"
 
 const showDebugPhysics = false;
 

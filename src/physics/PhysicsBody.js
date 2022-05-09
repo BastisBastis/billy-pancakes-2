@@ -11,6 +11,7 @@ export default class PhysicsBody {
     this.rotation=rotation
     world.addBody(body);
     
+    this.jumpTime=0;
   
   }
   
@@ -62,7 +63,8 @@ export default class PhysicsBody {
   }
   
   jump(vel) {
-    this.body.velocity.y=vel
+    this.body.velocity.y=vel;
+    this.jumpTime=1;
     return true
   }
   
@@ -78,7 +80,8 @@ export default class PhysicsBody {
   
   update(delta) {
     if (this.body.velocity.y>0){
-      this.body.applyForce(new CANNON.Vec3(0,10,0),new CANNON.Vec3(0,0,0))
+      this.jumpTime-=delta/1000;
+      this.body.applyForce(new CANNON.Vec3(0,20*this.jumpTime,0),new CANNON.Vec3(0,0,0))
     }
   }
 }
