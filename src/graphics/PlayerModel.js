@@ -22,8 +22,28 @@ export default class PlayerModel {
     
     this._isRunning=false;
     
+    this._movement=0;
     
-    
+  }
+  
+  get movement() {
+    return this._movement;
+  }
+  
+  set movement(value){
+    if (value===this._movement)
+      return false;
+    this._movement=value;
+    if (value===0) {
+      // Idle
+      this.animationManager.play("idle")
+    } else if (value===1) {
+      this.animationManager.play("walk")
+    } else if (value===2) {
+      this.animationManager.play("run")
+    } else {
+      console.log("Unrecognized movement type: "+value)
+    }
   }
   
   get isRunning() {
@@ -33,23 +53,16 @@ export default class PlayerModel {
   set isRunning(value) {
     this._isRunning=value;
     if (this.animationManager) {
-      
       if (value){
         this.animationManager.play("run")
-        //this.animations.idle.stop()
-        //this.animations.walk.play()
       }
-        
       else {
         this.animationManager.play("idle")
-        /*
-        this.animations.walk.stop()
-        this.animations.idle.play()
-        */
       }
-        
     }
   }
+  
+  
   
   stopAnimations(){
     this.animations.forEach((animation)=>{

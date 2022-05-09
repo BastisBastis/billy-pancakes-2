@@ -21,6 +21,8 @@ export default class Player {
     this.rotation=rotation;
     
     this._isRunning=false;
+    this._isWalking=false;
+    this._speed=0;
     this.turnFactor=0;
     
     this.runSpeed=10;
@@ -63,6 +65,28 @@ export default class Player {
     }
   }
   
+  get isWalking() {
+    return this._isWalking;
+  }
+  
+  set isWalking(value) {
+    if (value!==this._isWalking) {
+      this._isWalking=value;
+      this.graphics.isWalking=value;
+    }
+  }
+  
+  set speed(value) {
+    this._speed=value;
+    
+    this.graphics.movement= Math.ceil(value*2)
+    
+  }
+  
+  get speed() {
+    return this._speed;
+  }
+  
   jump() {
     console.log(this.position)
     const couldJump = this.physicsBody.jump(this.jumpVelocity);
@@ -72,25 +96,18 @@ export default class Player {
   }
   
   updateControls(values){
-    this.isRunning=values.y;
+    this.speed=values.y;
     this.turnFactor=values.x;
     
   }
   
   update(delta) {
     
-    //this.physicsBody.angularVelocity=this.turnFactor*this.turnSpeed;
-    this.physicsBody.rotation+=this.turnFactor*this.turnSpeed;
-    this.physicsBody.velocity=this.isRunning?this.runSpeed:0;
-    this.physicsBody.update(delta)
-    /*
-    this.rotation+=this.turnFactor*this.turnSpeed;
-    if (this.isRunning) {
-      this.position.x+=this.runSpeed*Math.cos(this.rotation)
-    this.position.z+=this.runSpeed*Math.sin(this.rotation)
-    }
     
-    */
+    this.physicsBody.rotation+=this.turnFactor*this.turnSpeed*(1-this.speed/2);
+    this.physicsBody.velocity=this.speed*this.runSpeed;
+    this.physicsBody.update(delta)
+    
     
     this.rotation=this.physicsBody.rotation;
     this.position=this.physicsBody.position;
@@ -103,10 +120,7 @@ export default class Player {
     })
     
     
-    /*
-    this.physicsGraphics.setRotation(this.rotation)
-    this.physicsGraphics.setPosition(this.position.x,this.position.y,this.position.z)
-    */
+    
   }
   
 }
