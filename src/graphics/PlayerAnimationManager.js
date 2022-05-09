@@ -10,7 +10,7 @@ export default class PlayerAnimationManager {
       picking:false
     }
     
-    this.jumpTimeFactor=0.65;
+    this.jumpTimeFactor=0.5;
     
     this.animations.idle.play()
     this.currentAnimation="idle"
@@ -21,6 +21,7 @@ export default class PlayerAnimationManager {
     this.animations.jump.setEffectiveTimeScale(this.jumpTimeFactor)
     
     this.fadeTime=0.2;
+    this.jumpFadeOutTime=0.5
     
     this.animationTimeoutId=false;
   }
@@ -75,18 +76,18 @@ export default class PlayerAnimationManager {
       this.nextAnimation=this.currentAnimation;
       this.currentAnimation="jump";
       
-      console.log(this.nextAnimation)
+      //console.log(this.nextAnimation)
       this.animationTimeoutId=setTimeout(()=>{
         this.states.jumping=false
-        console.log(this.nextAnimation)
+        //console.log(this.nextAnimation)
         this.animations[this.nextAnimation].reset()
         this.animations[this.nextAnimation].play()
-        this.animations.jump.crossFadeTo(this.animations[this.nextAnimation],this.fadeTime)
+        this.animations.jump.crossFadeTo(this.animations[this.nextAnimation],this.jumpFadeOutTime)
         
         
         this.currentAnimation=this.nextAnimation;
         this.nextAnimation=false;
-      },(this.animations.jump._clip.duration/this.jumpTimeFactor-this.fadeTime)*1000)
+      },(this.animations.jump._clip.duration/this.jumpTimeFactor-this.jumpFadeOutTime)*1000)
     }
   }
 }

@@ -79,9 +79,10 @@ export default class PhysicsBody {
   }
   
   update(delta) {
-    if (this.body.velocity.y>0){
-      this.jumpTime-=delta/1000;
+    if (this.body.velocity.y>0.2){
+      this.jumpTime = Math.max(this.jumpTime-delta/1000,0);
       this.body.applyForce(new CANNON.Vec3(0,20*this.jumpTime,0),new CANNON.Vec3(0,0,0))
+      console.log(this.jumpTime)
     }
   }
 }

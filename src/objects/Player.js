@@ -23,7 +23,7 @@ export default class Player {
     this._isRunning=false;
     this.turnFactor=0;
     
-    this.runSpeed=8;
+    this.runSpeed=10;
     this.turnSpeed=0.04;
     
     this.jumpVelocity=10;

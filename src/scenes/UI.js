@@ -76,8 +76,8 @@ export default class UI extends Phaser.Scene {
   
   createJoystick() {
     const cam = this.cameras.main
-    const joystickWidth=200;
-    const joystickHeight=80;
+    const joystickWidth=180;
+    const joystickHeight=180;
     this.joystickBg=this.add.rectangle(cam.width-100-joystickWidth,100,joystickWidth,joystickHeight,0xffffff).setStrokeStyle(4,0x000000).setOrigin(0,0);
     
     const markerWidth=30;
