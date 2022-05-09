@@ -75,4 +75,10 @@ export default class PhysicsBody {
       z:position.z
       }
   }
+  
+  update(delta) {
+    if (this.body.velocity.y>0){
+      this.body.applyForce(new CANNON.Vec3(0,10,0),new CANNON.Vec3(0,0,0))
+    }
+  }
 }

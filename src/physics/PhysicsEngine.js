@@ -5,7 +5,7 @@ import * as CANNON from "cannon-es"
 export default class PhysicsEngine {
   constructor() {
     this.world  = new CANNON.World()
-    this.world.gravity.set(0, -10, 0)
+    this.world.gravity.set(0, -20, 0)
     
     this.world.allowSleep = true;
     this.world.defaultContactMaterial.friction=0;
@@ -18,7 +18,7 @@ export default class PhysicsEngine {
     const groundBody = new CANNON.Body({ mass: 0, position:new CANNON.Vec3(0,-10,0) })
     groundBody.addShape(groundShape)
     //groundBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0)
-    this.world.addBody(groundBody)
+    //this.world.addBody(groundBody)
   }
   
   addBox(position,size,rotation,isStatic=false) {

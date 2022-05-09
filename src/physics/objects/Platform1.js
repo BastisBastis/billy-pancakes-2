@@ -3,9 +3,9 @@ import * as CANNON from "cannon-es"
 export default class Platform1Physics {
     constructor (world, position, rotation, scale={xz:1, y:1}) {
         
-        const size = {width:6*scale.xz, height:6*scale.y, depth:6*scale.xz}
-        const legRadius=0.25*scale.xz
-        const roofHeight=0.5*scale.xz
+        const size = {width:8*scale.xz, height:8*scale.y, depth:8*scale.xz}
+        const legRadius=0.33*scale.xz
+        const roofHeight=0.66*scale.y
         
         this.body = new CANNON.Body({
             mass:0,

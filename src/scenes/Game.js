@@ -5,8 +5,12 @@ import CannonDebugger from 'cannon-es-debugger'
 
 import Player from '../objects/Player'
 
+import Level from "../objects/Level"
+
 import Platform1 from "../objects/levelObjects/Platform1"
 import Pallet1 from "../objects/levelObjects/Pallet1"
+import Floor from "../objects/levelObjects/Floor"
+import Wall from "../objects/levelObjects/Wall"
 
 const showDebugPhysics = false;
 
@@ -31,32 +35,13 @@ export default class Game extends Phaser.Scene {
       })
     }
     
-    const platform = new Platform1({
-      graphicsScene:this.graphics.scene,
-      physicsWorld:this.physicsEngine.world,
-      position:{x:0, y:0, z:0},
-      rotation:0,
-      scale:{xz:1,y:1}
-    })
-    const platform2 = new Platform1({
-      graphicsScene:this.graphics.scene,
-      physicsWorld:this.physicsEngine.world,
-      position:{x:0, y:0, z:6},
-      rotation:0,
-      scale:{xz:1,y:0.5}
-    })
-    
-    const pallet = new Pallet1({
-      graphicsScene:this.graphics.scene,
-      physicsWorld:this.physicsEngine.world,
-      position:{x:-5, y:0, z:0},
-      rotation:0,
-      scale:{xz:1,y:1}
-    })
+    this.level= Level.testLevel(this.graphics,this.physicsEngine)
     
     this.player=new Player({
       graphicsEngine:this.graphics,
-      physicsEngine:this.physicsEngine
+      physicsEngine:this.physicsEngine,
+      position:this.level.playerStartPosition,
+      rotation:this.level.playerStartRotation
     })
     
     this.scene.launch("ui")

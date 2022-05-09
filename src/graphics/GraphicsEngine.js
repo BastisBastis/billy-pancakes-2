@@ -21,27 +21,30 @@ export default class GraphicsEngine {
     
     this.renderer = new THREE.WebGLRenderer({canvas})
     this.renderer.setSize(window.innerWidth,window.innerHeight)
-    
+    this.renderer.shadowMap.enabled = true;
     this.scene.background = new THREE.Color( 0x87CEFA );
     
+    
+    /*
     const light1 = new THREE.PointLight(0xcdcdcd, 2)
 light1.position.set(2.5, 2.5, 2.5)
 this.scene.add(light1)
     
     const ambLight = new THREE.AmbientLight( 0x808080 ); // soft white light
     this.scene.add( ambLight );
+    */
     
-    
-    if (orbit)
+    if (orbit){
       this.controls = new OrbitControls( this.camera, this.renderer.domElement );
-    
+      this.renderer.domElement.style.zIndex=10
+    }
 
-  this.cameraDistance=10
+  this.cameraDistance=18
     
     this.camera.position.y = 10;
     
     
-    
+    /*
     //temp Floor
     var geo = new THREE.PlaneBufferGeometry(40,40,2,2)
     var material = new THREE.ShaderMaterial({
@@ -78,7 +81,9 @@ this.scene.add(light1)
     });
     var mesh = new THREE.Mesh(geo, material);
     mesh.rotation.x=Math.PI/2
-    this.scene.add(mesh)
+    //this.scene.add(mesh)
+    
+    */
     
     if (orbit)
       this.controls.update()
@@ -117,9 +122,17 @@ this.scene.add(light1)
     
     this.camera.position.set(
       playerData.position.x-Math.cos(playerData.rotation)*this.cameraDistance,
-      this.camera.position.y,
+      playerData.position.y+10,
       playerData.position.z-Math.sin(playerData.rotation)*this.cameraDistance
     )
+    
+    /*
+    this.camera.position.set(
+      playerData.position.x-15,
+      playerData.position.y+15,
+      playerData.position.z-15 
+    )
+    */
     
     this.camera.lookAt(playerData.position.x,playerData.position.y,playerData.position.z)
     

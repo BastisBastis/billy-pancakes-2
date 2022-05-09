@@ -5,6 +5,10 @@ import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
 import BillyGLTF from '../assets/models/characters/Billy7.glb'
 
 
+//helpers
+import PlayerAnimationManager from "./PlayerAnimationManager"
+
+
 export default class PlayerModel {
   constructor ({
     graphicsEngine,
@@ -18,6 +22,8 @@ export default class PlayerModel {
     
     this._isRunning=false;
     
+    
+    
   }
   
   get isRunning() {
@@ -26,16 +32,20 @@ export default class PlayerModel {
   
   set isRunning(value) {
     this._isRunning=value;
-    if (this.animations) {
+    if (this.animationManager) {
       
       if (value){
-        this.animations.idle.stop()
-        this.animations.walk.play()
+        this.animationManager.play("run")
+        //this.animations.idle.stop()
+        //this.animations.walk.play()
       }
         
       else {
+        this.animationManager.play("idle")
+        /*
         this.animations.walk.stop()
         this.animations.idle.play()
+        */
       }
         
     }
@@ -48,7 +58,9 @@ export default class PlayerModel {
   }
   
   jump() {
+    this.animationManager.play("jump")
     
+    /*
     this.animations.jump.reset()
     this.animations.idle.stop()
     if (this.isRunning) {
@@ -57,7 +69,7 @@ export default class PlayerModel {
     }
     this.animations.jump.play()
     
-    
+    */
     
     
     
@@ -77,14 +89,12 @@ loadModel(scene,position,rotation) {
     	  try { 
          this.model=gltf
     		scene.add( gltf.scene );
-         gltf.scene.scale.set(100,100,100)
+         gltf.scene.scale.set(133,133,133)
     		
     		gltf.scene.position.set(position.x,position.y,position.z)
     		gltf.scene.rotation.y=rotation
     		
-    		//gltf.scene.children[0].translateX(-0.005)
-    		//gltf.scene.children[0].translateY(-0.0095)
-    		//gltf.scene.children[0].translateZ(-0.008)
+    		
     		
     		const colors={
     		  "ArmL":0x006600,
@@ -99,6 +109,11 @@ loadModel(scene,position,rotation) {
     		  "FootR":0x000000,
     		}
     		gltf.scene.traverse((object) => {
+    		  if (object.isMesh) {
+    		    object.castShadow=true;
+    		    object.receiveShadow=true;
+    		    object.frustumCulled=false
+    		  }
           const material = object.material;
           
           if (material) {
@@ -107,7 +122,7 @@ loadModel(scene,position,rotation) {
           }
           
         });
-                console.log(gltf.animations.length)
+
         
         this.mixer=new THREE.AnimationMixer(gltf.scene)
         this.animations={
@@ -117,11 +132,11 @@ loadModel(scene,position,rotation) {
           run:this.mixer.clipAction(gltf.animations[3]),
           walk:this.mixer.clipAction(gltf.animations[4]),
         }
-        this.animations.idle.play()
-        //this.animations.idle.stop()
         
-        this.animations.jump.setLoop(THREE.LoopOnce)
-        this.animations.jump.setEffectiveTimeScale(0.65)
+        
+        
+        
+        this.animationManager = new PlayerAnimationManager(this.animations)
         
         
     		
@@ -130,7 +145,7 @@ loadModel(scene,position,rotation) {
     	// called while loading is progressing
     	function ( xhr ) {
     
-    		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+    		//console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
     
     	},
     	// called when loading has errors

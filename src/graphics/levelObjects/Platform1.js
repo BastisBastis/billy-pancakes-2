@@ -28,14 +28,21 @@ export default class Platform1Graphics {
                 console.log(size)
                 */
 
-                gltf.scene.scale.set(6*scale.xz,6*scale.y,6*scale.xz)
-                gltf.scene.position.set(position.x,position.y+3*scale.y,position.z)
+                gltf.scene.scale.set(8*scale.xz,8*scale.y,8*scale.xz)
+                gltf.scene.position.set(position.x,position.y+4*scale.y,position.z)
                 gltf.scene.rotation.y=rotation
+                
+                gltf.scene.traverse(object=>{
+                  if (object.isMesh) {
+                    object.castShadow=true;
+                    object.receiveShadow=true;
+                  }
+                })
             } catch (er) {console.log(er.message)} 
             },
             // called while loading is progressing
             function ( xhr ) {
-                console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+                //console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
             },
             // called when loading has errors
             function ( error ) {

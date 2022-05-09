@@ -26,16 +26,24 @@ export default class Pallet1Graphics {
                 let size = bbox.getSize(new THREE.Vector3()); // HEREyou get the size
                 //scene.add(helper);
                 //console.log(size)
-                const itemScale=3;
+                const itemScale=4;
                 
                 gltf.scene.scale.set(itemScale*scale.xz,itemScale*scale.y,itemScale*scale.xz)
                 gltf.scene.position.set(position.x,position.y+itemScale*size.y*scale.y/2,position.z)
                 gltf.scene.rotation.y=rotation
+                
+                gltf.scene.traverse(object=>{
+                  if (object.isMesh) {
+                    object.castShadow=true;
+                    object.receiveShadow=true;
+                  }
+                })
+                
             } catch (er) {console.log(er.message)} 
             },
             // called while loading is progressing
             function ( xhr ) {
-                console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+                //console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
             },
             // called when loading has errors
             function ( error ) {

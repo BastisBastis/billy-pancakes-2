@@ -23,15 +23,15 @@ export default class Player {
     this._isRunning=false;
     this.turnFactor=0;
     
-    this.runSpeed=4;
+    this.runSpeed=8;
     this.turnSpeed=0.04;
     
-    this.jumpVelocity=8;
+    this.jumpVelocity=10;
     
     this.size={
-      width:0.8,
-      depth:0.8,
-      height:4.2
+      width:1,
+      depth:1,
+      height:5.6
     }
     
     this.setupPhysicsBody(physicsEngine,graphicsEngine)
@@ -49,14 +49,7 @@ export default class Player {
       this.rotation,
       false
     )
-    if (false) {
-      this.physicsGraphics=graphicsEngine.addBox(
-        this.position,
-        this.size,
-        this.rotation
-        
-      );
-    }
+    
   }
   
   get isRunning() {
@@ -71,6 +64,7 @@ export default class Player {
   }
   
   jump() {
+    console.log(this.position)
     const couldJump = this.physicsBody.jump(this.jumpVelocity);
     if (couldJump) {
       this.graphics.jump()
@@ -88,7 +82,7 @@ export default class Player {
     //this.physicsBody.angularVelocity=this.turnFactor*this.turnSpeed;
     this.physicsBody.rotation+=this.turnFactor*this.turnSpeed;
     this.physicsBody.velocity=this.isRunning?this.runSpeed:0;
-    
+    this.physicsBody.update(delta)
     /*
     this.rotation+=this.turnFactor*this.turnSpeed;
     if (this.isRunning) {
@@ -107,6 +101,7 @@ export default class Player {
       z:this.position.z,
       rotation:this.rotation
     })
+    
     
     /*
     this.physicsGraphics.setRotation(this.rotation)
