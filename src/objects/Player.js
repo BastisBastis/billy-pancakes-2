@@ -96,8 +96,10 @@ export default class Player {
   }
   
   updateControls(values){
-    this.speed=values.y;
-    this.turnFactor=values.x;
+    if (!isNaN(values.y))
+      this.speed=values.y;
+    if (!isNaN(values.x))
+      this.turnFactor=values.x;
     
   }
   
