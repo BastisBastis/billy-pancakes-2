@@ -88,7 +88,6 @@ export default class Player {
   }
   
   jump() {
-    console.log(this.position)
     const couldJump = this.physicsBody.jump(this.jumpVelocity);
     if (couldJump) {
       this.graphics.jump()

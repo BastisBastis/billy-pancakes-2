@@ -39,6 +39,6 @@ export default class PhysicsEngine {
   
   
   update(delta) {
-    this.world.fixedStep();
+    this.world.fixedStep(1/60, delta/1000);
   }
 }

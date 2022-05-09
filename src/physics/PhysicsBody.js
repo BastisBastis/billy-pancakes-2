@@ -12,6 +12,8 @@ export default class PhysicsBody {
     world.addBody(body);
     
     this.jumpTime=0;
+
+    this.setupJumpingTester();
   
   }
   
@@ -63,9 +65,14 @@ export default class PhysicsBody {
   }
   
   jump(vel) {
-    this.body.velocity.y=vel;
-    this.jumpTime=1;
-    return true
+    if (this.canJump) {
+      this.body.velocity.y=vel;
+      this.jumpTime=1;
+      this.canJump=false;
+      return true
+    }
+    return false;
+    
   }
   
   get position() {
@@ -77,12 +84,41 @@ export default class PhysicsBody {
       z:position.z
       }
   }
+
+  setupJumpingTester() {
+    // Jumping
+  const contactNormal = new CANNON.Vec3(); // Normal in the contact, pointing *out* of whatever the player touched
+  const upAxis = new CANNON.Vec3( 0, 1, 0 );
+  this.canJump=true;
+  this.body.addEventListener( "collide", (e)=>{
+    
+    const contact = e.contact;
+
+    // contact.bi and contact.bj are the colliding bodies, and contact.ni is the collision normal.
+    // We do not yet know which one is which! Let's check.
+
+    if ( contact.bi.id == this.body.id ) {
+      contact.ni.negate( contactNormal );
+    } // bi is the player body, flip the contact normal
+    else {
+      contactNormal.copy( contact.ni ); // bi is something else. Keep the normal as it is
+    }
+
+    // If contactNormal.dot(upAxis) is between 0 and 1, we know that the contact normal is somewhat in the up direction.
+    if ( contactNormal.dot( upAxis ) > 0.5) {
+      
+      // Use a "good" threshold value between 0 and 1 here!
+      this.canJump = true;
+      
+    }
+    
+  });
+  }
   
   update(delta) {
     if (this.body.velocity.y>0.2){
       this.jumpTime = Math.max(this.jumpTime-delta/1000,0);
       this.body.applyForce(new CANNON.Vec3(0,20*this.jumpTime,0),new CANNON.Vec3(0,0,0))
-      console.log(this.jumpTime)
     }
   }
 }
