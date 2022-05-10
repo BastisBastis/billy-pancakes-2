@@ -6,11 +6,13 @@ import Floor from "./levelObjects/Floor"
 import Platform1 from "./levelObjects/Platform1"
 import Pallet1 from "./levelObjects/Pallet1"
 import PalletStack from "./levelObjects/PalletStack"
+import Ramp from "./levelObjects/Ramp"
 
 const objectTypes={
   platform:Platform1,
   pallet:Pallet1,
-  palletStack:PalletStack
+  palletStack:PalletStack,
+  ramp:Ramp
 }
 
 export default class Level {
@@ -94,7 +96,7 @@ export default class Level {
         */
         
         new objectTypes[object.type]({
-          graphicsScene:this.graphicsEngine.scene,
+          graphicsScene:this.graphicsEngine,
           physicsWorld:this.physicsEngine.world,
           ...object
         })
@@ -159,23 +161,61 @@ export default class Level {
           rotation:0
         },
         {
-          type:"pallet",
-          position:{x:0,y:16,z:36},
+          type:"platform",
+          position:{x:16,y:0,z:36},
           scale:{xz:1,y:1},
           rotation:0
+        },
+        {
+          type:"platform",
+          position:{x:16,y:8,z:36},
+          scale:{xz:1,y:1},
+          rotation:0
+        },
+        {
+          type:"palletStack",
+          position:{x:-25,y:0,z:-14},
+          scale:{xz:1,y:1},
+          rotation:2,
+          count:2
         },
         {
           type:"palletStack",
           position:{x:8,y:0,z:24},
           scale:{xz:1,y:1},
           rotation:0,
-          count:10
+          count:4
+        },
+        {
+          type:"palletStack",
+          position:{x:12,y:0,z:28},
+          scale:{xz:1,y:1},
+          rotation:0,
+          count:9
+        },
+        {
+          type:"ramp",
+          position:{x:0,y:0,z:4},
+          scale:{xz:1,y:1},
+          rotation:-Math.PI/2,
+        },
+        {
+          type:"ramp",
+          position:{x:0,y:4,z:12},
+          scale:{xz:1,y:1},
+          rotation:-Math.PI/2,
+        },
+        {
+          type:"ramp",
+          position:{x:0,y:8,z:20},
+          rotation:-Math.PI/2,
         },
       ],
       lighting:[
         {
           type:"ambient",
           options:{
+            //color:0xdddddd
             color:0x707070
           }
         },/*
@@ -195,6 +235,7 @@ export default class Level {
         {
           type:"point",
           options:{
+            //color:0xffffff,
             color:0x707060,
             position:{
               x:10,
@@ -206,7 +247,7 @@ export default class Level {
         
         
       ],
-      playerStartPosition:{x:-30,y:0,z:-30},
+      playerStartPosition:{x:0,y:0,z:0},
       playerStartRotation:Math.PI/4
     })
   }

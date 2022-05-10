@@ -9,7 +9,8 @@ export default class PalletStack  extends LevelObject {
     position,
     rotation, 
     scale={xz:1, y:1},
-    count=4
+    count=4,
+    rotationRandomness=0.2
     
     }) {
       super(position,rotation)
@@ -24,7 +25,7 @@ export default class PalletStack  extends LevelObject {
           graphicsScene:graphicsScene, 
     physicsWorld:physicsWorld, 
     position:pos,
-    rotation:rotation, 
+    rotation:rotation+Math.random()*rotationRandomness-rotationRandomness/2, 
     scale:scale
         }))
       }

@@ -1,8 +1,8 @@
 import * as THREE from "three"
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
-import gltfURL from "../../assets/models/objects/Pallet1.glb"
+import gltfURL from "../../assets/models/objects/Ramp.glb"
 
-export default class Pallet1Graphics {
+export default class RampGraphics {
     constructor(graphicsEngine, position, rotation,scale={xz:1, y:1}) {
       
         graphicsEngine.addObject(this);
@@ -28,21 +28,17 @@ export default class Pallet1Graphics {
                 let size = bbox.getSize(new THREE.Vector3()); // HEREyou get the size
                 //scene.add(helper);
                 //console.log(size)
-                const itemScale=4;
+                const itemScaleXz=8;
+                const itemScaleY=7.5;
                 
-                gltf.scene.scale.set(itemScale*scale.xz,itemScale*scale.y,itemScale*scale.xz)
-                gltf.scene.position.set(position.x,position.y+itemScale*size.y*scale.y/2,position.z)
+                gltf.scene.scale.set(itemScaleXz*scale.xz,itemScaleY*scale.y,itemScaleXz*scale.xz)
+                gltf.scene.position.set(position.x,position.y+itemScaleY*size.y*scale.y/2,position.z)
                 gltf.scene.rotation.y=rotation
-                var newMaterial = new THREE.MeshStandardMaterial({color: 0xba8c63,metalness:0, flatShading:true});
+                
                 gltf.scene.traverse(object=>{
                   if (object.isMesh) {
-                    object.geometry.computeVertexNormals()
                     object.castShadow=true;
                     object.receiveShadow=true;
-                    object.material=newMaterial
-                    //object.material.roughness=0.6;
-                    //object.material.emissive=0x00ff00
-                    //console.log(object.material)
                   }
                 })
                 
@@ -58,10 +54,11 @@ export default class Pallet1Graphics {
             }
         );
       }
-      
+    
     testObstruction(raycaster) {
           
     }
+    
     
     set position(position) {
         this.model.scene.position.set(position.x, position.y, position.z);

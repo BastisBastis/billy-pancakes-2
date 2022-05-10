@@ -106,7 +106,7 @@ loadModel(scene,position,rotation) {
     		
     		gltf.scene.position.set(position.x,position.y,position.z)
     		gltf.scene.rotation.y=rotation
-    		
+    		scene.player=gltf.scene
     		
     		
     		const colors={
@@ -123,6 +123,7 @@ loadModel(scene,position,rotation) {
     		}
     		gltf.scene.traverse((object) => {
     		  if (object.isMesh) {
+    		    object.geometry.computeVertexNormals()
     		    object.castShadow=true;
     		    object.receiveShadow=true;
     		    object.frustumCulled=false

@@ -1,19 +1,18 @@
 import * as THREE from "three"
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
-import gltfURL from "../../assets/models/objects/Platform1.glb"
 
 export default class Platform1Graphics {
-    constructor(graphicsEngine, position, rotation,scale={xz:1, y:1}) {
+    constructor(graphicsEngine, position, rotation,scale={xz:1, y:1}, gltfURL,itemScale,onLoad) {
       
         graphicsEngine.addObject(this);
         this.meshes=[]
-        this.loadModel(graphicsEngine.scene, position, rotation, scale);
+        this.loadModel(graphicsEngine.scene, position, rotation, scale,gltfURL,itemScale,onLoad);
         
         this.hideCounter =0;
         
     }
 
-    loadModel(scene,position,rotation, scale) {
+    loadModel(scene,position,rotation, scale,gltfURL,itemScale,onLoad) {
         const loader = new GLTFLoader();
         // Load a glTF resource
         loader.load(
@@ -25,28 +24,27 @@ export default class Platform1Graphics {
              this.model=gltf
                 scene.add( gltf.scene );
 
-                /*
+                
                 let bbox = new THREE.Box3().setFromObject(gltf.scene);
-                let helper = new THREE.Box3Helper(bbox, new THREE.Color(0, 255, 0));
-                helper.position.set(position.x, position.y, position.z)
+                
                 let size = bbox.getSize(new THREE.Vector3()); // HEREyou get the size
-                scene.add(helper);
-                console.log(size)
-                */
+                
+                
+                
 
-                gltf.scene.scale.set(8*scale.xz,8*scale.y,8*scale.xz)
-                gltf.scene.position.set(position.x,position.y+4*scale.y,position.z)
+                gltf.scene.scale.set(itemScale*scale.xz,itemScale*scale.y,itemScale*scale.xz)
+                gltf.scene.position.set(position.x,position.y+size.height/2*itemScale*scale.y,position.z)
                 gltf.scene.rotation.y=rotation
-                var newMaterial = new THREE.MeshStandardMaterial({color: 0x252530,metalness:0.1, flatShading:true});
+                
                 gltf.scene.traverse(object=>{
                   if (object.isMesh) {
                     this.meshes.push(object)
                     object.geometry.computeVertexNormals()
                     object.castShadow=true;
                     object.receiveShadow=true;
-                    object.material=newMaterial
                   }
                 })
+                onLoad(gltf)
             } catch (er) {console.log(er.message)} 
             },
             // called while loading is progressing

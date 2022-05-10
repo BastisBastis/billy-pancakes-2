@@ -25,14 +25,7 @@ export default class GraphicsEngine {
     this.scene.background = new THREE.Color( 0x87CEFA );
     
     
-    /*
-    const light1 = new THREE.PointLight(0xcdcdcd, 2)
-light1.position.set(2.5, 2.5, 2.5)
-this.scene.add(light1)
     
-    const ambLight = new THREE.AmbientLight( 0x808080 ); // soft white light
-    this.scene.add( ambLight );
-    */
     
     if (orbit){
       this.controls = new OrbitControls( this.camera, this.renderer.domElement );
@@ -43,6 +36,7 @@ this.scene.add(light1)
     
     this.camera.position.y = 10;
     
+    this.playerPosition=new THREE.Vector3()
     
     /*
     //temp Floor
@@ -88,6 +82,15 @@ this.scene.add(light1)
     if (orbit)
       this.controls.update()
     
+    this.findObstructionRays=[
+      new THREE.Raycaster(),
+      new THREE.Raycaster(),
+      
+    ];
+    
+    
+    this.raycaster = new THREE.Raycaster()
+    this.objects=[]
     
     } catch (er) {console.log(er.message)}
   }
@@ -117,6 +120,10 @@ this.scene.add(light1)
     return mesh
   }
   
+  addObject(obj) {
+    this.objects.push(obj)
+  }
+  
   updateCameraPosition(playerData) {
     try { 
     
@@ -135,11 +142,83 @@ this.scene.add(light1)
     */
     
     this.camera.lookAt(playerData.position.x,playerData.position.y,playerData.position.z)
+    //console.log(this.camera.target)
     
     } catch (er) {console.log(er.message)} 
   }
   
   update(delta,data) {
+    if (data.player && this.scene.player) {
+      
+      const playerPos=this.scene.player.position;
+      const camPos=new THREE.Vector3()
+      this.camera.getWorldPosition(camPos)
+      
+      const playerTop=playerPos.y+6;
+      const playerBottom=playerPos.y-0;
+      
+      const playerTarget1=playerPos.clone()
+      playerTarget1.y=playerTop;
+      
+      const playerTarget2=playerPos.clone()
+      playerTarget2.y=playerBottom;
+
+      const dir1 = playerTarget1.clone().sub(camPos).normalize()
+      
+      const dir2 = playerTarget2.clone().sub(camPos).normalize()
+      
+      const maxDistance = camPos.distanceTo(playerPos)
+      
+      this.findObstructionRays[0].set(camPos,dir1)
+      this.findObstructionRays[1].set(camPos,dir2)
+      
+      this.objects.forEach(obj=>{
+        obj.testObstruction(this.findObstructionRays,maxDistance)
+      })
+    }
+      
+      /*
+      this.playerPosition = new THREE.Vector3(data.player.position.x,data.player.position.y,data.player.position.z)
+      const playerPos2= new THREE.Vector3()
+      this.scene.player.getWorldPosition(playerPos2)
+      
+    
+      const camPos1=this.camera.position
+      
+      
+      
+      const dir1 = camPos1.clone().sub(this.playerPosition).normalize()
+      const dir2 = this.playerPosition.clone().sub(camPos1).normalize()
+      
+      const dir3 = camPos2.clone().sub(playerPos2).normalize()
+      const dir4 = this.playerPosition.clone().sub(camPos2).normalize()
+      
+      
+      
+      const dir5=new THREE.Vector3()
+      this.camera.getWorldDirection(dir5)//.normalize()
+      
+      //console.log(dir5)
+      
+      const maxDistance = this.camera.position.distanceTo(this.playerPosition)
+      //
+      
+      this.raycaster.set(camPos1,dir2)
+      //this.raycaster.set(camWorldPos,camDir)
+      
+      try { 
+      if (this.arrow)
+        this.scene.remove ( this.arrow );
+        this.arrow = new THREE.ArrowHelper( dir5, this.scene.player.position, 100, Math.random() * 0xffffff );
+        this.scene.add( this.arrow );
+
+      } catch (er) {console.log(er.message)} 
+      
+      this.objects.forEach(obj=>{
+        obj.testObstruction(this.raycaster,maxDistance)
+      })
+    }
+    */
     
     if (!orbit)
       this.updateCameraPosition(data.player)
