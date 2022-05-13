@@ -1,12 +1,32 @@
 import * as THREE from "three"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
+import {OBJExporter} from 'three/examples/jsm/exporters/OBJExporter.js'
 
-//models
+
 import BillyGLTF from '../assets/models/characters/Billy3.glb'
 import PlayerModel from "./PlayerModel"
 
+import NavMeshManager from "./NavMeshManager"
+
 const orbit=false;
+
+
+function download(filename, text) {
+    var pom = document.createElement('a');
+    pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    pom.setAttribute('download', filename);
+
+    if (document.createEvent) {
+        var event = document.createEvent('MouseEvents');
+        event.initEvent('click', true, true);
+        pom.dispatchEvent(event);
+    }
+    else {
+        pom.click();
+    }
+}
+
 
 export default class GraphicsEngine {
   
@@ -92,9 +112,219 @@ export default class GraphicsEngine {
     this.raycaster = new THREE.Raycaster()
     this.objects=[]
     
+    //setTimeout(()=>this.export(),2000)
+    
+    //this.navmeshtest2()
+    this.navMeshManager= new NavMeshManager(this.scene)
+    
     } catch (er) {console.log(er.message)}
   }
+  /*
   
+  navmeshtest2() {
+    var plane, vertices = [], planeShape;
+        var planeMaterial = new THREE.MeshLambertMaterial({color: 0xff00ff});
+
+        vertices.push(
+            new THREE.Vector3(-15,-15,0),
+            new THREE.Vector3(15,-15,0),
+            new THREE.Vector3(15,15,0),
+            new THREE.Vector3(-15,15,0)
+        );
+
+        planeShape = new THREE.Shape(vertices);
+
+        plane = new THREE.Mesh( new THREE.ShapeGeometry(planeShape), planeMaterial);
+        plane.position.y=8
+
+        this.scene.add(plane);
+
+        var holes = [
+            new THREE.Vector3(-7,-7,0),
+            new THREE.Vector3(7,-7,0),
+            new THREE.Vector3(7,7,0),
+            new THREE.Vector3(-7,7,0)
+        ]
+
+        hole = new THREE.Path();
+        hole.fromPoints(holes);
+
+        var shape = new THREE.Shape(plane.geometry.vertices);
+        shape.holes = [hole];
+        var points = shape.extractPoints();
+
+        plane.geometry.faces = [];
+
+        var triangles = THREE.ShapeUtils.triangulateShape ( points.shape, points.holes );
+
+        plane.geometry.vertices.push(
+            new THREE.Vector3(-7,-7,0),
+            new THREE.Vector3(7,-7,0),
+            new THREE.Vector3(7,7,0),
+            new THREE.Vector3(-7,7,0)
+        );
+        
+        
+        
+        for( var i = 0; i < triangles.length; i++ ){
+            plane.geometry.faces.push( new THREE.Face3( triangles[i][0], triangles[i][1], triangles[i][2] ));
+        }
+  }
+  
+  navmeshtest() {
+    const material=new THREE.MeshLambertMaterial({color:0x00ffaa})
+    
+    const floorShapePoints=[
+      new THREE.Vector2(-20,-12),
+      new THREE.Vector2( 4,-12),
+      new THREE.Vector2( 4, 4),
+      new THREE.Vector2(-4, 4),
+      new THREE.Vector2(-4, -4),
+      new THREE.Vector2(-20,-4),
+    ]
+    
+    const floorShape= new THREE.Shape(floorShapePoints);
+    
+    const holePoints=[
+      new THREE.Vector2(-2,-2),
+      new THREE.Vector2( 0,-2),
+      new THREE.Vector2( 0, 0),
+      new THREE.Vector2(-2, 0),
+    ]
+    
+    const holeShape=new THREE.Shape(holePoints)
+    
+    
+    
+    floorShape.holes.push(holeShape);
+    const hole=new THREE.Path()
+    hole.fromPoints(holePoints)
+    const flSh=new THREE.Shape(floorShapePoints)
+    flSh.holes=[hole]
+    const pts=flSh.extractPoints()
+    
+    const verts=THREE.ShapeUtils.triangulateShape(floorShapePoints,[holePoints])
+    
+    let vs=[]
+    
+    verts.forEach(v=>{
+      vs=[
+        ...vs,
+        ...v
+      ]
+    })
+    const vertices = new Float32Array( vs );
+    
+    
+    
+    const newGeo = new THREE.BufferGeometry()
+    newGeo.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) )
+    
+    const m=new THREE.Mesh(newGeo,material)
+    
+    this.scene.add(m)
+    
+    
+    
+    const floorGeo=new THREE.ShapeBufferGeometry(floorShape)
+    
+    const rampHeight=4;
+    const rampLength=Math.sqrt(16+64);
+    const rampShape=new THREE.Shape([
+      new THREE.Vector2(-4,-rampLength/2),
+      new THREE.Vector2( 4,-rampLength/2),
+      new THREE.Vector2( 4, rampLength/2),
+      new THREE.Vector2(-4, rampLength/2),
+    ])
+    //const rampGeo=new THREE.PlaneBufferGeometry(8,rampLength,2,2)//new THREE.ShapeBufferGeometry(rampShape)
+    //rampGeo.rotateX(26*Math.PI/180)
+    //rampGeo.translate(0,8,2)
+    
+    //floorGeo.merge(rampGeo)
+    //THREE.GeometryUtils.merge(floorGeo,rampGeo);
+    
+    
+    
+    const tl={x:-4,y:12,z: 4}
+    const tr={x: 4,y:12,z: 4}
+    const bl={x:-4,y:4 ,z: 0}
+    const br={x: 4,y:4 ,z: 0}
+    
+    const vertices = new Float32Array( [
+	 bl.x, bl.y,  bl.z,
+	 br.x, br.y,  br.z,
+	 tr.x,  tr.y, tr.z,
+
+	 tr.x,  tr.y,  tr.z,
+	 tl.x,  tl.y,  tl.z,
+	 bl.x,  bl.y,  bl.z
+] );
+
+    const rampGeo = new THREE.BufferGeometry
+    rampGeo.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) )
+    
+    //floorGeo.merge(rampGeo)
+    
+    
+    const floorMesh=new THREE.Mesh(floorGeo,material);
+    rampGeo.computeVertexNormals()
+    rampGeo.computeBoundingSphere()
+    
+    //floorMesh.updateMatrix()
+    
+    //rampGeo.merge(floorGeo)
+    
+    const vs = []
+    //floorGeo.attributes.copyVector3sArray(vs)
+    
+   
+    
+   
+    
+    
+    const rampMesh=new THREE.Mesh(rampGeo,material);
+    
+    const singleGeo=new THREE.BufferGeometry()
+    
+    
+    
+    //singleGeo.merge(floorMesh.geometry)
+    //singleGeo.merge(rampMesh.geometry)
+    
+    const mesh=new THREE.Mesh(rampGeo,material)
+    
+    mesh.position.x=0
+    mesh.position.y=0.1;
+    mesh.position.z=-4
+    //mesh.rotation.x=-Math.PI/2
+    //mesh.rotation.z=-Math.PI
+    
+    
+    
+    //mesh.add()
+    //mesh.add(rampMesh)
+    
+    this.navmesh=mesh;
+    //this.mesh.rotation.x=Math.PI/2;
+    //this.mesh.rotation.y=rotation;
+    //this.mesh.receiveShadow=true;
+    //this.mesh.position.set(position.x,position.y,position.z)
+    this.scene.add(mesh)
+    
+    //this.export(mesh)
+    
+    
+  }
+  
+  
+  export(mesh) {
+    try { 
+    const exporter = new OBJExporter()
+    download("scene.obj",exporter.parse(mesh))
+    
+    } catch (er) {console.log(er.message)} 
+  }
+  */
   addBox(position,size,rotation) {
     const geo = new THREE.BoxBufferGeometry(size.width,size.height,size.depth);
     const mat = new THREE.MeshStandardMaterial({color:"blue",wireframe:true})
@@ -122,6 +352,7 @@ export default class GraphicsEngine {
   
   addObject(obj) {
     this.objects.push(obj)
+    
   }
   
   updateCameraPosition(playerData) {
@@ -142,7 +373,7 @@ export default class GraphicsEngine {
     */
     
     this.camera.lookAt(playerData.position.x,playerData.position.y,playerData.position.z)
-    //console.log(this.camera.target)
+    
     
     } catch (er) {console.log(er.message)} 
   }
@@ -167,7 +398,7 @@ export default class GraphicsEngine {
       
       const dir2 = playerTarget2.clone().sub(camPos).normalize()
       
-      const maxDistance = camPos.distanceTo(playerPos)
+      const maxDistance = camPos.distanceTo(playerPos)-0.2
       
       this.findObstructionRays[0].set(camPos,dir1)
       this.findObstructionRays[1].set(camPos,dir2)
@@ -198,7 +429,7 @@ export default class GraphicsEngine {
       const dir5=new THREE.Vector3()
       this.camera.getWorldDirection(dir5)//.normalize()
       
-      //console.log(dir5)
+      
       
       const maxDistance = this.camera.position.distanceTo(this.playerPosition)
       //

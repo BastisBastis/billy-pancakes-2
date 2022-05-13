@@ -8,7 +8,7 @@ export default class PhysicsBody {
     body.sleepTimeLimit = 30.5 // Body falls asleep after 1s of sleepiness
     
     this.body=body;
-    this.rotation=rotation
+    this._rotation=rotation
     world.addBody(body);
     
     this.jumpTime=0;
@@ -62,6 +62,16 @@ export default class PhysicsBody {
     
     
     
+  }
+  
+  set rotation(value) {
+    this._rotation=value
+    
+    this.body.quaternion.setFromAxisAngle(new CANNON.Vec3(0,1,0),-value)
+  }
+  
+  get rotation(){
+    return this._rotation;
   }
   
   jump(vel) {

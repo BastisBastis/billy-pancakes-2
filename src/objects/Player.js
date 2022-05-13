@@ -112,7 +112,7 @@ export default class Player {
     
     this.rotation=this.physicsBody.rotation;
     this.position=this.physicsBody.position;
-    
+        
     this.graphics.update(delta,{
       x:this.position.x,
       y:this.position.y,

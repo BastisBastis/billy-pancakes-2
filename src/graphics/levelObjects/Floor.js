@@ -3,7 +3,7 @@ import * as THREE from "three"
 export default class FloorGraphics {
   
   constructor(scene,size,position,color="gray") {
-    console.log(size,position)
+    
     const geo = new THREE.BoxBufferGeometry(size.x,size.y,size.z)
     const material=new THREE.MeshLambertMaterial({color:color})
     

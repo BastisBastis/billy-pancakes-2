@@ -2,18 +2,39 @@ import * as THREE from "three"
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
 import gltfURL from "../../assets/models/objects/Platform1.glb"
 
-export default class Platform1Graphics {
+import LevelObjectGraphics from "./LevelObject"
+
+export default class Platform1Graphics extends LevelObjectGraphics {
     constructor(graphicsEngine, position, rotation,scale={xz:1, y:1}) {
       
+        super(
+          graphicsEngine,
+          position,
+          rotation,
+          scale,
+          gltfURL,
+          8,
+          (gltf)=>{
+            var newMaterial = new THREE.MeshStandardMaterial({
+              color: 0x252530,
+              //color:0x00ff00,
+              metalness:0.1, 
+              flatShading:true});
+            this.meshes.forEach(mesh=>{
+              mesh.material=newMaterial
+            })
+          }
+        )
+      /*
         graphicsEngine.addObject(this);
         this.meshes=[]
         this.loadModel(graphicsEngine.scene, position, rotation, scale);
         
         this.hideCounter =0;
-        
+      */
     }
 
-    loadModel(scene,position,rotation, scale) {
+    jloadModel(scene,position,rotation, scale) {
         const loader = new GLTFLoader();
         // Load a glTF resource
         loader.load(
@@ -60,7 +81,7 @@ export default class Platform1Graphics {
         );
       }
       
-    testObstruction(raycasters,maxDistance) {
+    jtestObstruction(raycasters,maxDistance) {
       if (this.model) {
         let obstructionCount=0;
         raycasters.forEach((ray,i)=>{
@@ -101,7 +122,7 @@ export default class Platform1Graphics {
       
     }
     
-    set position(position) {
+    set jposition(position) {
         this.model.scene.position.set(position.x, position.y, position.z);
     }
 }

@@ -3,10 +3,14 @@ import Light from "../graphics/Light"
 import Wall from "./levelObjects/Wall"
 import Floor from "./levelObjects/Floor"
 
+//Level objects
 import Platform1 from "./levelObjects/Platform1"
 import Pallet1 from "./levelObjects/Pallet1"
 import PalletStack from "./levelObjects/PalletStack"
 import Ramp from "./levelObjects/Ramp"
+
+//Enemies
+import Muncher1 from "./enemies/Muncher1"
 
 const objectTypes={
   platform:Platform1,
@@ -40,6 +44,15 @@ export default class Level {
     
     this.playerStartPosition=playerStartPosition;
     this.playerStartRotation=playerStartRotation;
+    
+    this.enemies=[
+      new Muncher1({
+        graphicsEngine:graphicsEngine,
+        physicsEngine:physicsEngine,
+        position:{x:34,y:0,z:0},
+        rotation:0
+      })
+    ]
   }
   
   setupWalls(size) {
@@ -109,7 +122,7 @@ export default class Level {
   
   setupLighting(lights) {
     lights.forEach(light=>{
-      console.log(light)
+      
       Light.addLight({
         scene:this.graphicsEngine.scene,
         lightType:light.type,

@@ -1,8 +1,8 @@
 import * as THREE from "three"
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
 
-export default class Platform1Graphics {
-    constructor(graphicsEngine, position, rotation,scale={xz:1, y:1}, gltfURL,itemScale,onLoad) {
+export default class LevelObjectGraphics {
+    constructor(graphicsEngine, position, rotation,scale, gltfURL,itemScale,onLoad) {
       
         graphicsEngine.addObject(this);
         this.meshes=[]
@@ -14,6 +14,7 @@ export default class Platform1Graphics {
 
     loadModel(scene,position,rotation, scale,gltfURL,itemScale,onLoad) {
         const loader = new GLTFLoader();
+        
         // Load a glTF resource
         loader.load(
             // resource URL
@@ -24,7 +25,7 @@ export default class Platform1Graphics {
              this.model=gltf
                 scene.add( gltf.scene );
 
-                
+                //console.log(gltfURL)
                 let bbox = new THREE.Box3().setFromObject(gltf.scene);
                 
                 let size = bbox.getSize(new THREE.Vector3()); // HEREyou get the size
@@ -33,7 +34,7 @@ export default class Platform1Graphics {
                 
 
                 gltf.scene.scale.set(itemScale*scale.xz,itemScale*scale.y,itemScale*scale.xz)
-                gltf.scene.position.set(position.x,position.y+size.height/2*itemScale*scale.y,position.z)
+                gltf.scene.position.set(position.x,position.y+size.y/2*itemScale*scale.y,position.z)
                 gltf.scene.rotation.y=rotation
                 
                 gltf.scene.traverse(object=>{
@@ -77,7 +78,7 @@ export default class Platform1Graphics {
         
         this.meshes.forEach(mesh=>{
           mesh.material.transparent=true
-          mesh.material.opacity=0.5;
+          mesh.material.opacity=0.3;
           
         })
       } else {

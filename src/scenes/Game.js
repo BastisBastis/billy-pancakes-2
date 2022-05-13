@@ -32,6 +32,7 @@ export default class Game extends Phaser.Scene {
     }
     
     this.level= Level.testLevel(this.graphics,this.physicsEngine)
+    this.enemies=this.level.enemies;
     
     this.player=new Player({
       graphicsEngine:this.graphics,
@@ -58,11 +59,17 @@ export default class Game extends Phaser.Scene {
     if (this.showDebugPhysics) {
       //this.physicsDebugger.update();
     }
+    
+    //console.log(this.player.position)
     this.graphics.update(delta,{
       player:{
         position:this.player.position,
         rotation:this.player.rotation
       }
+    })
+    
+    this.enemies.forEach(enemy=>{
+      enemy.update(delta)
     })
    
    } catch (er) {

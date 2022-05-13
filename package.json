@@ -29,6 +29,7 @@
     "cannon-es-debugger": "^0.1.4",
     "phaser": "^3.50.0",
     "phaser3-rex-plugins": "^1.1.67",
-    "three": "^0.140.0"
+    "three": "^0.140.0",
+    "three-pathfinding": "^1.1.0"
   }
 }
