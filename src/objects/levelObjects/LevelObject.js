@@ -5,6 +5,7 @@ export default class LevelObject {
   constructor(position,rotation) {
     this._position=position;
     this._rotation=rotation;
+    this.navVertCollections=[]
   }
   
   get position() {

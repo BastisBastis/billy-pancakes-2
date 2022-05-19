@@ -9,6 +9,7 @@ export default class PhysicsEngine {
     
     this.world.allowSleep = true;
     this.world.defaultContactMaterial.friction=0;
+    //this.world.iterations=100
     //this.world.broadphase = new CANNON.NaiveBroadphase()
     //this.world.broadphase.useBoundingBoxes=true
     //this.world.tolerance=1
@@ -39,6 +40,7 @@ export default class PhysicsEngine {
   
   
   update(delta) {
-    this.world.fixedStep(1/60, delta/1000);
+    //this.world.fixedStep(1/60, delta/1000);
+    this.world.fixedStep();
   }
 }

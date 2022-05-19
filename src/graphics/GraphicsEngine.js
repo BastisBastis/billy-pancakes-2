@@ -115,7 +115,7 @@ export default class GraphicsEngine {
     //setTimeout(()=>this.export(),2000)
     
     //this.navmeshtest2()
-    this.navMeshManager= new NavMeshManager(this.scene)
+    //this.navMeshManager= new NavMeshManager(this.scene)
     
     } catch (er) {console.log(er.message)}
   }

@@ -7,10 +7,12 @@ export default class PlayerAnimationManager {
       running:false,
       walking:false,
       jumping:false,
-      picking:false
+      picking:false,
+      kicking:false
     }
     
     this.jumpTimeFactor=0.5;
+    this.kickTimeFactor=1.8
     
     this.animations.idle.play()
     this.currentAnimation="idle"
@@ -19,6 +21,8 @@ export default class PlayerAnimationManager {
         
     this.animations.jump.setLoop(THREE.LoopOnce)
     this.animations.jump.setEffectiveTimeScale(this.jumpTimeFactor)
+    this.animations.kick.setLoop(THREE.LoopOnce)
+    this.animations.kick.setEffectiveTimeScale(this.kickTimeFactor)
     
     this.fadeTime=0.2;
     this.jumpFadeOutTime=0.5
@@ -58,7 +62,7 @@ export default class PlayerAnimationManager {
         this.states.walking=false
       }
       
-      if (!this.states.jumping && !this.states.picking) {
+      if (!this.states.jumping && !this.states.kicking) {
         this.animations[animation].reset()
         this.animations[animation].play()
         this.animations[this.currentAnimation].crossFadeTo(this.animations[animation],this.fadeTime)
@@ -68,12 +72,20 @@ export default class PlayerAnimationManager {
         this.nextAnimation=animation
       }
     } else if (animation==="jump") {
-      this.states.jumping=true;
+      if (this.animationTimeoutId)
+        clearTimeout(this.animationTimeoutId)
+        
+      
       this.animations.jump.reset()
       this.animations.jump.play()
       this.animations[this.currentAnimation].crossFadeTo(this.animations.jump,this.fadeTime)
       
-      this.nextAnimation=this.currentAnimation;
+      if (!this.states.kicking)
+        this.nextAnimation=this.currentAnimation;
+        
+      this.states.kicking=false;
+      this.states.jumping=true;
+      
       this.currentAnimation="jump";
       
       //console.log(this.nextAnimation)
@@ -88,6 +100,35 @@ export default class PlayerAnimationManager {
         this.currentAnimation=this.nextAnimation;
         this.nextAnimation=false;
       },(this.animations.jump._clip.duration/this.jumpTimeFactor-this.jumpFadeOutTime)*1000)
+    } 
+    
+    else if (animation==="kick") {
+      if (this.animationTimeoutId)
+        clearTimeout(this.animationTimeoutId)
+        
+      
+      this.animations.kick.reset()
+      this.animations.kick.play()
+      this.animations[this.currentAnimation].crossFadeTo(this.animations.kick,this.fadeTime)
+      
+      if (!this.states.jumping)
+        this.nextAnimation=this.currentAnimation;
+      this.currentAnimation="kick";
+      this.states.jumping=false;
+      this.states.kicking=true;
+      
+      //console.log(this.nextAnimation)
+      this.animationTimeoutId=setTimeout(()=>{
+        this.states.kicking=false
+        //console.log(this.nextAnimation)
+        this.animations[this.nextAnimation].reset()
+        this.animations[this.nextAnimation].play()
+        this.animations.kick.crossFadeTo(this.animations[this.nextAnimation],this.fadeTime)
+        
+        
+        this.currentAnimation=this.nextAnimation;
+        this.nextAnimation=false;
+      },(this.animations.kick._clip.duration/this.kickTimeFactor-this.fadeTime)*1000)
     }
   }
 }

@@ -2,8 +2,8 @@ import * as THREE from "three"
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 //models
-import BillyGLTF from '../assets/models/characters/Billy7.glb'
-
+//import BillyGLTF from '../assets/models/characters/Billy7.glb'
+import BillyGLTF from '../assets/models/characters/Billy15.glb'
 
 //helpers
 import PlayerAnimationManager from "./PlayerAnimationManager"
@@ -23,6 +23,13 @@ export default class PlayerModel {
     this._isRunning=false;
     
     this._movement=0;
+    
+  
+  
+  }
+  
+  getRelativePosition(pos) {
+    return this.model.scene.worldToLocal(new THREE.Vector3(pos.x,pos.y,pos.z))
     
   }
   
@@ -68,6 +75,10 @@ export default class PlayerModel {
     this.animations.forEach((animation)=>{
       animation.stop()
     })
+  }
+  
+  kick() {
+    this.animationManager.play("kick")
   }
   
   jump() {
@@ -142,9 +153,10 @@ loadModel(scene,position,rotation) {
         this.animations={
           idle:this.mixer.clipAction(gltf.animations[0]),
           jump:this.mixer.clipAction(gltf.animations[1]),
-          pickup:this.mixer.clipAction(gltf.animations[2]),
-          run:this.mixer.clipAction(gltf.animations[3]),
-          walk:this.mixer.clipAction(gltf.animations[4]),
+          kick:this.mixer.clipAction(gltf.animations[2]),
+          pickup:this.mixer.clipAction(gltf.animations[3]),
+          run:this.mixer.clipAction(gltf.animations[4]),
+          walk:this.mixer.clipAction(gltf.animations[5]),
         }
         
         

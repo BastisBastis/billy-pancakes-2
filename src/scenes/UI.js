@@ -29,7 +29,10 @@ export default class UI extends Phaser.Scene {
       this.setJoystickVisibility(true)
       EventCenter.emit("controlsUpdated",{y:0,x:0})
       } else {
-        EventCenter.emit("jump")
+        if (e.y<this.cameras.main.centerY)
+          EventCenter.emit("jump")
+        else
+          EventCenter.emit("tryKick")
       }
       
     })

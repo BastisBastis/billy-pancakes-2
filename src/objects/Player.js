@@ -3,6 +3,8 @@ import EventCenter from "../helpers/EventCenter"
 
 import PhysicsBody from "../physics/PhysicsBody"
 
+const mod = (a, n) => (a % n + n) % n
+
 export default class Player {
   
   constructor ({
@@ -36,19 +38,38 @@ export default class Player {
       height:5.6
     }
     
+    this.attraction=20
+    
     this.setupPhysicsBody(physicsEngine,graphicsEngine)
     
     EventCenter.on("controlsUpdated",values=>this.updateControls(values))
     EventCenter.on("jump",()=>this.jump())
+    EventCenter.on("tryKick",()=>this.kick())
+    
+  }
+  
+  kick() {
+    this.graphics.kick()
+    const force=15
+    const height=20
+    EventCenter.emit("kick",{
+      dir:{
+        x:Math.cos(this.rotation)*force,
+        y:height,
+        z:Math.sin(this.rotation)*force
+      },
+      checkKickRange:(pos)=>this.checkKickRange(pos)
+    })
   }
   
   setupPhysicsBody(physicsEngine,graphicsEngine) {
     
-    this.physicsBody = PhysicsBody.getBody(
+    this.physicsBody = new PhysicsBody(
       physicsEngine.world,
       this.position,
       this.size,
       this.rotation,
+      false,
       false
     )
     
@@ -81,6 +102,57 @@ export default class Player {
     
     this.graphics.movement= Math.ceil(value*2)
     
+  }
+  
+  checkKickRange(pos) {
+    try { 
+    
+    const angleToTarget=Math.atan2(pos.z-this.position.z,pos.x-this.position.x)
+    let dRot=Math.abs(angleToTarget-this.rotation)
+    dRot=mod((dRot + Math.PI) , Math.PI*2) - Math.PI
+    
+    
+    const dx=pos.x-this.position.x;
+    const dy=pos.y-this.position.y;
+    const dz=pos.z-this.position.z
+    
+    const dist = Math.sqrt(dx*dx+dz*dz)
+    
+    
+    if (
+      dRot<Math.PI &&
+      dist<1 &&
+      Math.abs(dy)<1
+    )
+      return true
+    
+    console.log(`dRot ${dRot} < Math.PI = ${dRot<Math.PI}
+    dist ${dist} < 1 = ${dist<1}
+    dy ${Math.abs(dy)}<1 = ${Math.abs(dy)<1}
+    `)
+    return false
+    /*
+    console.log(pos)
+    const relativePos1=this.physicsBody.getRelativePosition(pos)
+    const relativePos2=this.graphics.getRelativePosition(pos)
+    console.log("rel pos:",relativePos1,relativePos2)
+    //x and z are switched
+    
+    const relativePos=relativePos2
+    if (
+      relativePos.x>0 &&
+      relativePos.x<4 &&
+      relativePos.y>-4 &&
+      relativePos.y<2 &&
+      relativePos.z>-3 &&
+      relativePos.z<3
+    )
+      return true
+      
+      */
+    return false
+    
+    } catch (er) {console.log(er.message)} 
   }
   
   get speed() {
@@ -119,7 +191,7 @@ export default class Player {
       z:this.position.z,
       rotation:this.rotation
     })
-    
+    EventCenter.emit("updatePlayerPosition",{position:this.position})
     
     
   }

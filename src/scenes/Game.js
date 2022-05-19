@@ -8,7 +8,7 @@ import Player from '../objects/Player'
 import Level from "../objects/Level"
 
 
-const showDebugPhysics = false;
+const showDebugPhysics = false
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -40,6 +40,8 @@ export default class Game extends Phaser.Scene {
       position:this.level.playerStartPosition,
       rotation:this.level.playerStartRotation
     })
+    
+    this.level.attractions.push(this.player)
     
     this.scene.launch("ui")
     
@@ -77,3 +79,4 @@ export default class Game extends Phaser.Scene {
      } 
   }
 }
+
