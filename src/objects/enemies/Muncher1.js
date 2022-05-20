@@ -94,8 +94,11 @@ export default class Muncher1 {
   
   
   setCurrentTarget() {
-    if (!this.finalTarget)
-      return false;
+    if (!this.finalTarget) {
+      
+      return false
+    }
+      
     const path=this.pathfinder.getNextTarget(this.dummyPos,this.finalTarget)
     
     if (path) {
@@ -103,6 +106,7 @@ export default class Muncher1 {
       //console.log(path)
       // this.pathHelper.setPath( path );
     } else {
+      
       /*const closestPlayerNode = this.pathfinder.pathfinder.getClosestNode( playerPosition, "level", groupID );
 				const clamped = new THREE.Vector3();
 				*/
@@ -166,6 +170,8 @@ export default class Muncher1 {
   }
   
   setTrapped() {
+    if (!this.trapped)
+      EventCenter.emit("enemyTrapped")
     this.trapped=true;
   }
   
@@ -178,8 +184,11 @@ export default class Muncher1 {
   }
   
   updateDummyPosition() {
-    if (!this.currentTarget) 
+    if (!this.currentTarget) {
+        
       return false
+    }
+      
     const moveSpeed=this.moveSpeed
     this.dir=new THREE.Vector3(
       this.currentTarget.x-this.dummyPos.x,
@@ -189,6 +198,7 @@ export default class Muncher1 {
     this.dummyPos.x+=this.dir.x*moveSpeed;
     this.dummyPos.y+=this.dir.y*moveSpeed;
     this.dummyPos.z+=this.dir.z*moveSpeed;
+    //console.log(this.currentTarget,this.dummyPos,this.finalTarget)
     
     //console.log(this.dummyPos)
   }
@@ -225,19 +235,19 @@ export default class Muncher1 {
 
     
     if (this.trapped) {
+      
       this.physicsBody.stop()
       this.rotation.y+=0.04
       this.graphics.rotation=this.rotation
     } else {
       
-      if (this.kickRangeTimer>0) {
-        this.kickRangeTimer--;
-      }
+      
       
       this.graphics.position=this.physicsBody.position
       //this.graphics.position=this.dummyPos
       
       if (!this.physicsBody.canJump)
+      
         return false;
         
       if (this.flying) {
@@ -252,7 +262,7 @@ export default class Muncher1 {
       
       if (!this.finalTarget) {
         this.physicsBody.stop()
-        //console.log(1)
+        //console.log(Math.random())
         return false
       }
       

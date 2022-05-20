@@ -17,6 +17,8 @@ import Muncher1 from "./enemies/Muncher1"
 import NavMeshManager from "../helpers/NavMeshManager"
 import Pathfinder from "../helpers/Pathfinder"
 
+import Levels from "../assets/data/Levels"
+
 const objectTypes={
   platform:Platform1,
   pallet:Pallet1,
@@ -39,7 +41,8 @@ export default class Level {
     playerStartPosition,
     playerStartRotation,
     tileSize=8,
-    tileHeight=8
+    tileHeight=8,
+    enemies
   }) {
     this.graphicsEngine=graphicsEngine;
     this.physicsEngine=physicsEngine;
@@ -91,15 +94,21 @@ export default class Level {
   
     
     this.enemies=[
-      new Muncher1({
+    ]
+    enemies.forEach(enemy=>{
+      this.enemies.push(new Muncher1({
         graphicsEngine:graphicsEngine,
         physicsEngine:physicsEngine,
-        position:{x:34,y:0,z:30},
-        rotation:0,
+        position:{
+          x:enemy.position.x*this.tileSize,
+          y:enemy.position.y*this.tileHeight,
+          z:enemy.position.z*this.tileSize
+        },
+        rotation:enemy.rotation,
         pathfinder:this.pathfinder,
         attractions:this.attractions
-      })
-    ]
+      }))
+    })
   }
   
   setupWalls(size) {
@@ -182,6 +191,10 @@ export default class Level {
           object.position.z=(object.position.z+0.5)*this.tileSize
         }
         
+       if (object.type=="carrotBarrel") {
+         object.index=this.attractions.length
+       }
+        
         const item=new objectTypes[object.type]({
           graphicsScene:this.graphicsEngine,
           physicsWorld:this.physicsEngine.world,
@@ -234,6 +247,14 @@ export default class Level {
         lightType:light.type,
         options:light.options
       })
+    })
+  }
+  
+  static fromIndex(graphicsEngine,physicsEngine,index) {
+    return new Level({
+      graphicsEngine:graphicsEngine,
+      physicsEngine:physicsEngine,
+      ...Levels[index]
     })
   }
   
@@ -336,6 +357,10 @@ export default class Level {
         {
           type:"carrotBarrel",
           position:{x:9,y:0,z:6},
+        },
+        {
+          type:"carrotBarrel",
+          position:{x:2,y:0,z:4},
         },
       ],
       lighting:[

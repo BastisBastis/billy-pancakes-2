@@ -40,8 +40,9 @@ export default class CarrotBarrel extends LevelObject {
   destroy() {
     this.attraction=-10;
     this.graphics.destroy()
-    EventCenter.emit("updateAttractionPosition",{
-        destroyed:true
+    EventCenter.emit("destroyAttraction",{
+        
+        index:this.index
       })
   }
   

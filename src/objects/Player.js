@@ -26,6 +26,7 @@ export default class Player {
     this._isWalking=false;
     this._speed=0;
     this.turnFactor=0;
+    this.isPlayer=true
     
     this.runSpeed=10;
     this.turnSpeed=0.04;
@@ -38,7 +39,7 @@ export default class Player {
       height:5.6
     }
     
-    this.attraction=20
+    this.attraction=30
     
     this.rabiesCount=0;
     
@@ -56,10 +57,7 @@ export default class Player {
     EventCenter.emit("updateRabiesCount",{rabiesCount:this.rabiesCount/100})
     
     if (this.rabiesCount>100) {
-      EventCenter.emit("gameover",{
-        win:false,
-        reason:1
-      })
+      EventCenter.emit("death")
     }
   }
   

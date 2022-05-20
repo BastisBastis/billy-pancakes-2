@@ -14,14 +14,16 @@ const showDebugPhysics = false
 
 export default class Game extends Phaser.Scene {
   constructor() {
-    super({key:"Game"});
+    super({key:"game"});
   }
   
   preload() {
     
   }
   
-  create() {
+  create({
+    levelIndex=0
+  }) {
     try{
     
     this.graphics=new GraphicsEngine()
@@ -33,7 +35,9 @@ export default class Game extends Phaser.Scene {
       })
     }
     
-    this.level= Level.testLevel(this.graphics,this.physicsEngine)
+    //this.level= Level.testLevel(this.graphics,this.physicsEngine)
+    this.level= Level.fromIndex(this.graphics,this.physicsEngine,levelIndex)
+    
     this.enemies=this.level.enemies;
     
     this.player=new Player({
@@ -43,14 +47,64 @@ export default class Game extends Phaser.Scene {
       rotation:this.level.playerStartRotation
     })
     
+    this.barrelCount=this.level.attractions.length;
+    this.destroyedBarrels=0;
+    this.enemiesTrapped=0;
+    
     this.level.attractions.push(this.player)
+    
+    EventCenter.on("death",()=>{
+      EventCenter.emit("gameover",{
+          win:false,
+          reason:1,
+          levelIndex:levelIndex
+        })
+    })
+    
+    EventCenter.on("destroyAttraction",data=>{
+      this.destroyedBarrels++;
+      if (this.destroyedBarrels>=this.barrelCount) {
+        EventCenter.emit("gameover",{
+          win:false,
+          reason:0,
+          levelIndex:levelIndex
+        })
+      }
+    })
+    
+    EventCenter.on("enemyTrapped",()=>{
+      this.enemiesTrapped++;
+      if (this.enemiesTrapped>=this.level.enemies.length) {
+        let score=0;
+        this.level.attractions.forEach(att=>{
+          if (att.isPlayer) {
+            score+=100-att.rabiesCount
+            
+          } else {
+            score+=att.carrotCount
+            
+          }
+        })
+        EventCenter.emit("gameover",{
+          win:true,
+          score:Math.floor(score),
+          levelIndex:levelIndex
+        })
+      }
+      
+    })
+    
     
     this.scene.launch("ui",{
       attractions:this.level.attractions
     })
     
     EventCenter.on("gameover",data=>{
+      EventCenter.removeAllListeners()
+      this.scene.stop("ui");
+      
       this.scene.start("gameover",data)
+      this.scene.stop("game");
     })
     
     } catch (er) {console.log(er.message);console.log(er.stack)}

@@ -114,7 +114,7 @@ export default class UI extends Phaser.Scene {
     
     
     EventCenter.on("updateRabiesCount",data=>{
-      console.log(data.rabiesCount)
+      //console.log(data.rabiesCount)
       fill.width=barWidth*data.rabiesCount
     })
   }
@@ -122,19 +122,19 @@ export default class UI extends Phaser.Scene {
   setupAttractionLabels() {
     const labels=[]
     this.attractions.filter(att=>!att.isPlayer).forEach(attraction=>{
-      
-    })
-    const label=this.add.text(50,50,"",{
+      const label=this.add.text(50,50,"",{
       fontSize:48
     }).setOrigin(0.5,0.5)
+      labels.push(label)
+    })
     
+    EventCenter.on("destroyAttraction",data=>{
+      labels[data.index].destroy()
+    })
     
     EventCenter.on("updateAttractionPosition",data=>{
+      const label=labels[data.index]
       
-      if (data.destroyed) {
-        label.destroy()
-        return false
-      }
       const cam = this.cameras.main
       label.x=cam.width*(0.5+data.position.x/2)
       label.y=cam.height*(0.5-data.position.y/2)
