@@ -60,7 +60,7 @@ export default class Muncher1Graphics {
                 this.mixer=new THREE.AnimationMixer(gltf.scene)
         this.anim=this.mixer.clipAction(gltf.animations[0])
           this.anim.play()
-          console.log(gltf.animations.length)
+          
                 
             } catch (er) {console.log(er.message)} 
             },

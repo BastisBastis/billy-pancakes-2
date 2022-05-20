@@ -40,12 +40,27 @@ export default class Player {
     
     this.attraction=20
     
+    this.rabiesCount=0;
+    
     this.setupPhysicsBody(physicsEngine,graphicsEngine)
     
     EventCenter.on("controlsUpdated",values=>this.updateControls(values))
     EventCenter.on("jump",()=>this.jump())
     EventCenter.on("tryKick",()=>this.kick())
     
+  }
+  
+  getAttacked(delta) {
+    this.rabiesCount+=delta/100;
+    //console.log(this.rabiesCount)
+    EventCenter.emit("updateRabiesCount",{rabiesCount:this.rabiesCount/100})
+    
+    if (this.rabiesCount>100) {
+      EventCenter.emit("gameover",{
+        win:false,
+        reason:1
+      })
+    }
   }
   
   kick() {
@@ -121,35 +136,19 @@ export default class Player {
     
     if (
       dRot<Math.PI &&
-      dist<1 &&
+      dist<3 &&
       Math.abs(dy)<1
     )
       return true
     
+    /*
     console.log(`dRot ${dRot} < Math.PI = ${dRot<Math.PI}
     dist ${dist} < 1 = ${dist<1}
     dy ${Math.abs(dy)}<1 = ${Math.abs(dy)<1}
     `)
+    */
     return false
-    /*
-    console.log(pos)
-    const relativePos1=this.physicsBody.getRelativePosition(pos)
-    const relativePos2=this.graphics.getRelativePosition(pos)
-    console.log("rel pos:",relativePos1,relativePos2)
-    //x and z are switched
     
-    const relativePos=relativePos2
-    if (
-      relativePos.x>0 &&
-      relativePos.x<4 &&
-      relativePos.y>-4 &&
-      relativePos.y<2 &&
-      relativePos.z>-3 &&
-      relativePos.z<3
-    )
-      return true
-      
-      */
     return false
     
     } catch (er) {console.log(er.message)} 

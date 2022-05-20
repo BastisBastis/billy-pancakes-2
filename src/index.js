@@ -9,8 +9,7 @@ import WebFontLoaderPlugin from 'phaser3-rex-plugins/plugins/webfontloader-plugi
 
 import Game from "./scenes/Game"
 import UI from "./scenes/UI"
-
-console.log("guh")
+import GameOver from "./scenes/GameOver"
 
 
 try {
@@ -38,7 +37,8 @@ const config = {
   },
     scene: [
       Game,
-      UI
+      UI,
+      GameOver
     ],
     plugins: {
       global: [{

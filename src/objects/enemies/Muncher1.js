@@ -96,7 +96,7 @@ export default class Muncher1 {
   setCurrentTarget() {
     if (!this.finalTarget)
       return false;
-    const path=this.pathfinder.getNextTarget(this.position,this.finalTarget)
+    const path=this.pathfinder.getNextTarget(this.dummyPos,this.finalTarget)
     
     if (path) {
       this.currentTarget=path
@@ -115,9 +115,9 @@ export default class Muncher1 {
   }
   
   get distToTarget() {
-    const dx=this.currentTarget.x-this.position.x;
-    const dy=this.currentTarget.y-this.position.y;
-    const dz=this.currentTarget.z-this.position.z;
+    const dx=this.finalTarget.x-this.position.x;
+    const dy=this.finalTarget.y-this.position.y;
+    const dz=this.finalTarget.z-this.position.z;
     return Math.sqrt(
       dx*dx+
       dy*dy+
@@ -216,6 +216,7 @@ export default class Muncher1 {
       this.finalTarget=false;
     } else {
       this.setFinalTarget(bestTarget.position);
+      this.targetObject=bestTarget
     }
   }
   
@@ -246,15 +247,19 @@ export default class Muncher1 {
       }
       
       this.pickTarget()
-      this.position=this.dummyPos;
+      this.position=this.physicsBody.position;
+      this.physicsBody.moveTo(this.dummyPos)
       
       if (!this.finalTarget) {
         this.physicsBody.stop()
+        //console.log(1)
         return false
       }
       
-      if (this.distToTarget<1) {
+      if (this.distToTarget<3) {
         //Nibble at target
+        //console.log(1)
+        this.targetObject.getAttacked(delta)
         this.physicsBody.stop()
         return false
       }
@@ -275,7 +280,7 @@ export default class Muncher1 {
       
       
       //this.physicsBody.position=this.position
-      this.physicsBody.moveTo(this.position)
+      
       
       //this.physicsBody.update(delta)
     

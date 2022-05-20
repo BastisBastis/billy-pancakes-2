@@ -335,7 +335,7 @@ export default class Level {
         },
         {
           type:"carrotBarrel",
-          position:{x:8,y:0,z:5},
+          position:{x:9,y:0,z:6},
         },
       ],
       lighting:[

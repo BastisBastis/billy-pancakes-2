@@ -7,6 +7,8 @@ import Player from '../objects/Player'
 
 import Level from "../objects/Level"
 
+import EventCenter from "../helpers/EventCenter"
+
 
 const showDebugPhysics = false
 
@@ -43,7 +45,13 @@ export default class Game extends Phaser.Scene {
     
     this.level.attractions.push(this.player)
     
-    this.scene.launch("ui")
+    this.scene.launch("ui",{
+      attractions:this.level.attractions
+    })
+    
+    EventCenter.on("gameover",data=>{
+      this.scene.start("gameover",data)
+    })
     
     } catch (er) {console.log(er.message);console.log(er.stack)}
   }
@@ -72,6 +80,12 @@ export default class Game extends Phaser.Scene {
     
     this.enemies.forEach(enemy=>{
       enemy.update(delta)
+    })
+    
+    this.level.attractions.forEach(attraction=>{
+      if (!attraction.isPlayer) {
+        attraction.update(delta)
+      }
     })
    
    } catch (er) {

@@ -2,15 +2,7 @@ import * as THREE from "three"
 
 const getFace=(tl,tr,bl,br)=>{
   
-  console.log([
-  	 br.x, br.y,  br.z,
-  	 bl.x, bl.y,  bl.z,
-  	 tr.x, tr.y, tr.z,
   
-  	 tl.x, tl.y,  tl.z,
-  	 tr.x, tr.y,  tr.z,
-  	 bl.x, bl.y,  bl.z
-    ])
   
   return [
   	 br.x, br.y,  br.z,

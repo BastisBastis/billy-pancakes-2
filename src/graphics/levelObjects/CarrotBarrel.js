@@ -2,11 +2,18 @@ import * as THREE from "three"
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
 import gltfURL from "../../assets/models/objects/CarrotBarrel1.glb"
 
+import EventCenter from "../../helpers/EventCenter"
+
+
 export default class CarrotBarrelGraphics {
-    constructor(graphicsEngine, position, rotation,scale={xz:1, y:1}) {
+    constructor(graphicsEngine, position, rotation,scale={xz:1, y:1},index,parent) {
+      this.graphicsEngine=graphicsEngine
       
         graphicsEngine.addObject(this);
         this.loadModel(graphicsEngine.scene, position, rotation, scale);
+        this.index=index;
+        this.parent=parent;
+        this.destroyed=false;
     }
 
     loadModel(scene,position,rotation, scale) {
@@ -29,6 +36,7 @@ export default class CarrotBarrelGraphics {
                 //scene.add(helper);
                 //console.log(size,position)
                 const itemScale=4;
+                this.height=size.y*itemScale
                 
                 gltf.scene.scale.set(itemScale*scale.xz,itemScale*scale.y,itemScale*scale.xz)
                 gltf.scene.position.set(position.x,position.y+itemScale*size.y*scale.y*0.3,position.z)
@@ -61,11 +69,48 @@ export default class CarrotBarrelGraphics {
         );
       }
       
-    testObstruction(raycaster) {
-          
-    }
+  destroy() {
+    this.destroyed=true;
+    this.model.scene.removeFromParent()
+  }
+  
+  testObstruction(ray) {
+    
+  }
+  
+   get position() {
+     return {
+       x:this.model.scene.position.x,
+       y:this.model.scene.position.y,
+       z:this.model.scene.position.z,
+     }
+   }
     
     set position(position) {
         this.model.scene.position.set(position.x, position.y, position.z);
+    }
+    
+    update(delta) {
+      
+      if (!this.model || this.destroyed) {
+        return false
+      }
+      
+      
+      
+      const canvasPos=this.graphicsEngine.getCanvasPosition({
+        x:this.position.x,
+          y:this.position.y+this.height*0.8,
+        z:this.position.z
+      })
+      EventCenter.emit("updateAttractionPosition",{
+        index:this.index,
+        position:{
+          x:canvasPos.x,
+          y:canvasPos.y
+        },
+        distance:canvasPos.dist,
+        count:this.parent.carrotCount
+      })
     }
 }

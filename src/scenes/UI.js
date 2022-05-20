@@ -8,8 +8,10 @@ export default class UI extends Phaser.Scene {
     super("ui")
   }
   
-  create () {
+  create (data) {
     try { 
+    
+    this.attractions=data.attractions
     
     //Create UI elements
     this.createJoystick()
@@ -20,6 +22,10 @@ export default class UI extends Phaser.Scene {
     const forwardThreshold=5;
     const maxY=100;
     const maxTurn=75;
+    
+    
+    this.setupAttractionLabels()
+    this.setupHealth()
     
     this.input.on("pointerdown",(e)=>{
       this.touchCounter++;
@@ -95,6 +101,47 @@ export default class UI extends Phaser.Scene {
     
     
     } catch (er) {console.log(er.message)} 
+  }
+  
+  setupHealth() {
+    const cam = this.cameras.main
+    const barWidth=300;
+    const barHeight=50;
+    this.add.text(30,40,"Rabidity:",{fontSize:48}).setOrigin(0,0.5)
+    
+    const fill=this.add.rectangle(30,80,0,barHeight,0x9090ff).setOrigin(0,0);
+    const frame=this.add.rectangle(30,80,barWidth,barHeight,0xffffff,0).setStrokeStyle(4,0x000000).setOrigin(0,0);
+    
+    
+    EventCenter.on("updateRabiesCount",data=>{
+      console.log(data.rabiesCount)
+      fill.width=barWidth*data.rabiesCount
+    })
+  }
+  
+  setupAttractionLabels() {
+    const labels=[]
+    this.attractions.filter(att=>!att.isPlayer).forEach(attraction=>{
+      
+    })
+    const label=this.add.text(50,50,"",{
+      fontSize:48
+    }).setOrigin(0.5,0.5)
+    
+    
+    EventCenter.on("updateAttractionPosition",data=>{
+      
+      if (data.destroyed) {
+        label.destroy()
+        return false
+      }
+      const cam = this.cameras.main
+      label.x=cam.width*(0.5+data.position.x/2)
+      label.y=cam.height*(0.5-data.position.y/2)
+      label.text="Carrots: "+(Math.ceil(data.count))
+      
+      label.setFontSize(Math.min(Math.max(100-data.distance,40),90)/100*60)
+    })
   }
   
   createJoystick() {
