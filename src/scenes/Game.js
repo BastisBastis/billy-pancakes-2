@@ -22,7 +22,7 @@ export default class Game extends Phaser.Scene {
   }
   
   create({
-    levelIndex=0
+    levelIndex=1
   }) {
     try{
     
@@ -99,13 +99,16 @@ export default class Game extends Phaser.Scene {
       attractions:this.level.attractions
     })
     
-    EventCenter.on("gameover",data=>{
-      EventCenter.removeAllListeners()
-      this.scene.stop("ui");
-      
-      this.scene.start("gameover",data)
-      this.scene.stop("game");
+    EventCenter.once("gameover",data=>{
+      setTimeout(()=>{
+        EventCenter.removeAllListeners()
+        this.scene.stop("ui");
+        
+        this.scene.start("gameover",data)
+        this.scene.stop("game");
+      },1500)
     })
+      
     
     } catch (er) {console.log(er.message);console.log(er.stack)}
   }
@@ -143,7 +146,7 @@ export default class Game extends Phaser.Scene {
     })
    
    } catch (er) {
-   console.log(er.message,er.stack)
+   //console.log(er.message,er.stack)
      } 
   }
 }

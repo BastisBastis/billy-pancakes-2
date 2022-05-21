@@ -5,7 +5,7 @@ import * as CANNON from "cannon-es"
 export default class PhysicsEngine {
   constructor() {
     this.world  = new CANNON.World()
-    this.world.gravity.set(0, -25, 0)
+    this.world.gravity.set(0, -50, 0)
     
     this.world.allowSleep = true;
     this.world.defaultContactMaterial.friction=0;

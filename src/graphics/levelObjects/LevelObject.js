@@ -1,6 +1,8 @@
 import * as THREE from "three"
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
 
+
+
 export default class LevelObjectGraphics {
     constructor(graphicsEngine, position, rotation,scale, gltfURL,itemScale,onLoad) {
       
@@ -60,10 +62,13 @@ export default class LevelObjectGraphics {
       }
       
     testObstruction(raycasters,maxDistance) {
+      try { 
+      
       if (this.model) {
         let obstructionCount=0;
         raycasters.forEach((ray,i)=>{
           const rayHits=ray.intersectObjects(this.meshes)
+          
           
           
           rayHits.forEach(rayHit=>{
@@ -75,10 +80,15 @@ export default class LevelObjectGraphics {
       if (obstructionCount>0) {
         this.hideCounter=2;
         
+        //console.log(this.meshes.length)
         
         this.meshes.forEach(mesh=>{
+          //console.log("hufe")
           mesh.material.transparent=true
           mesh.material.opacity=0.3;
+          //mesh.material.color=0x00ffff
+          mesh.material.needsUpdate=true
+          //console.log(mesh.material.color)
           
         })
       } else {
@@ -89,6 +99,7 @@ export default class LevelObjectGraphics {
             this.meshes.forEach(mesh=>{
           mesh.material.opacity=1;
           mesh.material.transparent=false
+          mesh.material.needsUpdate=true
           
         })
           }
@@ -97,7 +108,7 @@ export default class LevelObjectGraphics {
         
       }
       
-      
+      } catch (er) {console.log(er.message)} 
     }
     
     set position(position) {

@@ -157,10 +157,10 @@ export default class GraphicsEngine {
     
     pos.project(this.camera)
     
-    
+    //console.log(pos.z)
     
     return {
-      x:pos.x,
+      x:pos.z>1?10:pos.x,
       y:pos.y,
       dist:dist
     }

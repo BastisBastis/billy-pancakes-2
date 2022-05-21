@@ -100,11 +100,11 @@ export default class PhysicsBody {
   
   set velocity(vel) {
     
-    
-    
     this.body.velocity.x=vel*Math.cos(this.rotation)
+    
     this.body.velocity.z=vel*Math.sin(this.rotation)
     
+    //this.body.applyForce(new CANNON.Vec3(vel*Math.cos(this.rotation),0,vel*Math.sin(this.rotation)),new CANNON.Vec3(0,0,0))
     
     
   }
@@ -161,9 +161,12 @@ export default class PhysicsBody {
 
   setVelocity(dir) {
     //console.log(dir)
+    
     this.body.velocity.x=dir.x;
     this.body.velocity.y=dir.y;
     this.body.velocity.z=dir.z
+    
+    
   }
   setupJumpingTester() {
     // Jumping
@@ -207,6 +210,10 @@ export default class PhysicsBody {
     if (this.body.velocity.y>0.2){
       this.jumpTime = Math.max(this.jumpTime-delta/1000,0);
       this.body.applyForce(new CANNON.Vec3(0,40*this.jumpTime,0),new CANNON.Vec3(0,0,0))
+    }
+    
+    if (!this.canJump) {
+      this.body.applyForce(new CANNON.Vec3(0,25,0),new CANNON.Vec3(0,0,0))
     }
   }
 }

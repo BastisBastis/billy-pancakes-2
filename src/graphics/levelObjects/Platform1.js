@@ -15,11 +15,12 @@ export default class Platform1Graphics extends LevelObjectGraphics {
           gltfURL,
           8,
           (gltf)=>{
-            var newMaterial = new THREE.MeshStandardMaterial({
+            var newMaterial = new THREE.MeshPhongMaterial({
               color: 0x252530,
-              //color:0x00ff00,
+              //color:0x0000ff,
               metalness:0.1, 
-              flatShading:true});
+              flatShading:true
+            });
             this.meshes.forEach(mesh=>{
               mesh.material=newMaterial
             })
@@ -80,7 +81,7 @@ export default class Platform1Graphics extends LevelObjectGraphics {
             }
         );
       }
-      
+      /*
     jtestObstruction(raycasters,maxDistance) {
       if (this.model) {
         let obstructionCount=0;
@@ -101,6 +102,7 @@ export default class Platform1Graphics extends LevelObjectGraphics {
         this.meshes.forEach(mesh=>{
           mesh.material.transparent=true
           mesh.material.opacity=0.5;
+          
           
         })
       } else {
@@ -125,4 +127,6 @@ export default class Platform1Graphics extends LevelObjectGraphics {
     set jposition(position) {
         this.model.scene.position.set(position.x, position.y, position.z);
     }
+    
+    */
 }

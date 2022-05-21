@@ -2,10 +2,46 @@ import Phaser from "phaser"
 
 import EventCenter from "../helpers/EventCenter"
 
+
+import RoundRectangle from 'phaser3-rex-plugins/plugins/roundrectangle.js';
+
+
 export default class UI extends Phaser.Scene {
   
   constructor() {
     super("ui")
+  }
+  
+  preload() {
+    /*
+    this.label=this.add.text(
+      cam.centerX,
+      y,
+      labelString,
+      {
+        fontFamily:"Acme",
+        fill:"black",
+        stroke:"white",
+        strokeThickness:15,
+        fontSize:58+"px",
+        fontStyle:"italic",
+        wordWrap:{
+          width:cam.width*0.8
+        }
+      }).setOrigin(0.5,0).setPadding(50)
+      */
+      
+    this.load.rexWebFont({
+      google: {
+        families: ['Acme']
+      },
+    });
+    this.load.on('webfontactive', function (fileObj, familyName) {
+      //console.log('font-active: ' + familyName)
+    });
+    this.load.on('webfontinactive', function (fileObj, familyName) {
+      //console.log('font-inactive: ' + familyName)
+    })
   }
   
   create (data) {
@@ -14,7 +50,7 @@ export default class UI extends Phaser.Scene {
     this.attractions=data.attractions
     
     //Create UI elements
-    this.createJoystick()
+    
     
     this.input.addPointer(1)
     this.touchOrigin=null;
@@ -26,6 +62,7 @@ export default class UI extends Phaser.Scene {
     
     this.setupAttractionLabels()
     this.setupHealth()
+    this.createJoystick()
     
     this.input.on("pointerdown",(e)=>{
       this.touchCounter++;
@@ -107,7 +144,13 @@ export default class UI extends Phaser.Scene {
     const cam = this.cameras.main
     const barWidth=300;
     const barHeight=50;
-    this.add.text(30,40,"Rabidity:",{fontSize:48}).setOrigin(0,0.5)
+    this.add.text(30,40,"Rabidity:",{
+      fontFamily:"Acme",
+      fill:"black",
+      stroke:"white",
+      strokeThickness:14,
+      fontSize:64
+    }).setOrigin(0,0.5)
     
     const fill=this.add.rectangle(30,80,0,barHeight,0x9090ff).setOrigin(0,0);
     const frame=this.add.rectangle(30,80,barWidth,barHeight,0xffffff,0).setStrokeStyle(4,0x000000).setOrigin(0,0);
@@ -123,7 +166,11 @@ export default class UI extends Phaser.Scene {
     const labels=[]
     this.attractions.filter(att=>!att.isPlayer).forEach(attraction=>{
       const label=this.add.text(50,50,"",{
-      fontSize:48
+      fontFamily:"Acme",
+      fill:"black",
+      stroke:"white",
+      strokeThickness:12,
+      fontSize:64
     }).setOrigin(0.5,0.5)
       labels.push(label)
     })
@@ -140,7 +187,7 @@ export default class UI extends Phaser.Scene {
       label.y=cam.height*(0.5-data.position.y/2)
       label.text="Carrots: "+(Math.ceil(data.count))
       
-      label.setFontSize(Math.min(Math.max(100-data.distance,40),90)/100*60)
+      label.setFontSize(Math.min(Math.max(100-data.distance,40),90)/100*80)
     })
   }
   
@@ -148,15 +195,19 @@ export default class UI extends Phaser.Scene {
     const cam = this.cameras.main
     const joystickWidth=180;
     const joystickHeight=180;
-    this.joystickBg=this.add.rectangle(cam.width-100-joystickWidth,100,joystickWidth,joystickHeight,0xffffff).setStrokeStyle(4,0x000000).setOrigin(0,0);
     
     const markerWidth=30;
     const markerHeight=30;
-    this.joystickMarker=this.add.rectangle(
+    const markerRadius=15
+    
+    this.joystickBg=new RoundRectangle(this,cam.width-100-joystickWidth,100,joystickWidth,joystickHeight,markerRadius,0xffffff,0.6).setStrokeStyle(4,0x000000).setOrigin(0,0);
+    this.add.existing(this.joystickBg)
+    
+    
+    this.joystickMarker=this.add.circle(
       this.joystickBg.x+joystickWidth/2,
       this.joystickBg.y+joystickHeight-markerHeight/2,
-      markerWidth,
-      markerHeight,
+      markerRadius,
       0x000
     ).setOrigin(0.5,0.5)
     
@@ -166,8 +217,8 @@ export default class UI extends Phaser.Scene {
   updateJoystick(data){
     this.joystickBg.fillColor=data.y>0?
       (data.y>0.5?
-        0x00ff00:
-        0xffff00):
+        0x006600:
+        0x888800):
       0xffffff;
     //this.joystickMarker.y=this.joystickBg.y+ (data.y?0:this.joystickMarker.height);
     

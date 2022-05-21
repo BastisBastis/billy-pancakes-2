@@ -160,11 +160,11 @@ const Levels=[
         {
           type:"carrotBarrel",
           position:{x:9,y:0,z:6},
-        },
+        },/*
         {
           type:"carrotBarrel",
           position:{x:2,y:0,z:4},
-        },
+        },*/
       ],
       lighting:[
         {

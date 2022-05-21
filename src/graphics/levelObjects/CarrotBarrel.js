@@ -4,6 +4,8 @@ import gltfURL from "../../assets/models/objects/CarrotBarrel1.glb"
 
 import EventCenter from "../../helpers/EventCenter"
 
+import LevelObjectGraphics from "./LevelObject"
+
 
 export default class CarrotBarrelGraphics {
     constructor(graphicsEngine, position, rotation,scale={xz:1, y:1},index,parent) {
@@ -74,7 +76,7 @@ export default class CarrotBarrelGraphics {
     this.model.scene.removeFromParent()
   }
   
-  testObstruction(ray) {
+  testObstruction(ray,md) {
     
   }
   

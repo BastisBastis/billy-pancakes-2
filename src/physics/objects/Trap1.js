@@ -26,19 +26,24 @@ export default class Trap1Physics {
             position:new CANNON.Vec3(position.x, position.y, position.z)
         });
         
+        this.wallBody=new CANNON.Body({
+            mass:0,
+            position:new CANNON.Vec3(position.x, position.y, position.z)
+        });
+        
         const wd=size.y/10
         const floorShape=new CANNON.Box(new CANNON.Vec3(size.x/2, 0.2, size.z/2))
         this.floorBody.addShape(floorShape)
         const wallShape1=new CANNON.Box(new CANNON.Vec3(size.x/2, size.y/4, wd))
         const wallShape2=new CANNON.Box(new CANNON.Vec3(wd, size.y/4, size.z/2))
         
-        this.floorBody.addShape(wallShape1,new CANNON.Vec3(0, size.y/4, size.z/2+wd))
-        this.floorBody.addShape(wallShape1,new CANNON.Vec3(0, size.y/4, -size.z/2-wd))
-        this.floorBody.addShape(wallShape2,new CANNON.Vec3(size.x/2+wd, size.y/4, 0))
-        this.floorBody.addShape(wallShape2,new CANNON.Vec3(-size.x/2-wd, size.y/4, 0))
+        this.wallBody.addShape(wallShape1,new CANNON.Vec3(0, size.y/4, size.z/2+wd))
+        this.wallBody.addShape(wallShape1,new CANNON.Vec3(0, size.y/4, -size.z/2-wd))
+        this.wallBody.addShape(wallShape2,new CANNON.Vec3(size.x/2+wd, size.y/4, 0))
+        this.wallBody.addShape(wallShape2,new CANNON.Vec3(-size.x/2-wd, size.y/4, 0))
         
         world.addBody(this.floorBody)
-        
+        world.addBody(this.wallBody)
         
     this.floorBody.addEventListener( "collide", (e)=>{
     
