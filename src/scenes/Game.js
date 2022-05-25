@@ -10,6 +10,8 @@ import Level from "../objects/Level"
 import EventCenter from "../helpers/EventCenter"
 
 
+
+
 const showDebugPhysics = false
 
 export default class Game extends Phaser.Scene {
