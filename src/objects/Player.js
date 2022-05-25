@@ -50,7 +50,7 @@ export default class Player {
     EventCenter.on("controlsUpdated",values=>this.updateControls(values))
     EventCenter.on("jump",()=>this.jump())
     EventCenter.on("tryKick",()=>this.kick())
-    
+    EventCenter.on("turn", data=>this.turn(data.delta))
   }
   
   destroy() {
@@ -58,6 +58,10 @@ export default class Player {
     this.physicsBody=null;
   }
   
+  turn(delta) {
+    this.physicsBody.rotation+=delta/100;
+  }
+
   getAttacked(delta) {
     this.rabiesCount+=delta/100;
     //console.log(this.rabiesCount)
@@ -89,6 +93,8 @@ export default class Player {
     )
     
   }
+
+  
   
   setupPhysicsBody(physicsEngine,graphicsEngine) {
     

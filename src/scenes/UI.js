@@ -5,6 +5,7 @@ import EventCenter from "../helpers/EventCenter"
 
 import RoundRectangle from 'phaser3-rex-plugins/plugins/roundrectangle.js';
 
+import DeviceChecker from "../helpers/DeviceChecker"
 
 export default class UI extends Phaser.Scene {
   
@@ -47,6 +48,8 @@ export default class UI extends Phaser.Scene {
   create (data) {
     try { 
     
+    this.mouseControl=!DeviceChecker.touch;
+
     this.attractions=data.attractions
     
     //Create UI elements
@@ -65,8 +68,20 @@ export default class UI extends Phaser.Scene {
     this.setupAttractionLabels()
     this.setupHealth()
     this.createJoystick()
+
+    this.setupMouseControls()
     
     this.input.on("pointerdown",(e)=>{
+      if (this.mouseControl) {
+        console.log("mouse")
+        if (!this.input.mouse.locked) {
+          this.input.mouse.requestPointerLock()
+        } else {
+          EventCenter.emit("tryKick");
+        }
+        return false
+      }
+        
       this.touchCounter++;
       if (this.touchCounter==1) {
         this.touchOrigin={x:e.x,y:e.y+maxY/8*3}
@@ -106,6 +121,12 @@ export default class UI extends Phaser.Scene {
     })
 
     this.input.on("pointerup",(e)=>{
+      if (this.mouseControl) {
+  
+        
+        return false;
+      }
+        
       this.touchCounter--;
       if (this.touchCounter<1) {
         try { 
@@ -120,6 +141,13 @@ export default class UI extends Phaser.Scene {
     })
     
     this.input.on("pointermove",(e)=>{
+      if (this.mouseControl) {
+        if (this.input.mouse.locked) {
+          EventCenter.emit("turn", {delta:e.movementX})
+        }
+        
+        return false;
+      }
       if (!this.touchOrigin)
         return false;
       /*
@@ -159,6 +187,29 @@ export default class UI extends Phaser.Scene {
     
     
     } catch (er) {console.log(er.message)} 
+  }
+
+  setupMouseControls() {
+    this.input.mouse.enabled=true;
+    
+    this.input.mouse.onMouseDown=(e)=>{
+      if (!this.mouseControl) {
+        this.mouseControl=true
+      }
+      if (!this.input.mouse.locked) {
+        this.input.mouse.requestPointerLock()
+      }
+      EventCenter.emit("tryKick")
+    }
+
+    this.input.on("mousemove", e=>{
+      if (this.input.mouse.locked) {
+        console.log(e.movement)
+      }
+    })
+
+
+    console.log(this.input.mouse)
   }
   
   setupLabel(labels) {

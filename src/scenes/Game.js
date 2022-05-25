@@ -123,7 +123,7 @@ export default class Game extends Phaser.Scene {
           delete this.physicsDebugger
         delete this.player
         delete this.enemies
-        
+        this.input.mouse.releasePointerLock()
         
         this.scene.get("ui").close()
         this.scene.stop("ui");
