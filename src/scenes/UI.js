@@ -102,22 +102,31 @@ export default class UI extends Phaser.Scene {
     });
 
     this.input.keyboard.on('keydown-A', e=>{
-      EventCenter.emit("controlsUpdated",{x:-1})
+      EventCenter.emit("strafe",{x:-1})
     })
     this.input.keyboard.on('keydown-D', e=>{
-      EventCenter.emit("controlsUpdated",{x:1})
+      EventCenter.emit("strafe",{x:1})
     })
     this.input.keyboard.on('keyup-A', e=>{
-      EventCenter.emit("controlsUpdated",{x:0})
+      EventCenter.emit("strafe",{dir:0})
     })
     this.input.keyboard.on('keyup-D', e=>{
-      EventCenter.emit("controlsUpdated",{x:0})
+      EventCenter.emit("strafe",{dir:0})
     })
     this.input.keyboard.on('keydown-W',e=>{
       EventCenter.emit("controlsUpdated",{y:1})
     })
     this.input.keyboard.on('keyup-W',e=>{
       EventCenter.emit("controlsUpdated",{y:0})
+    })
+    this.input.keyboard.on('keydown-S',e=>{
+      EventCenter.emit("controlsUpdated",{y:-0.5})
+    })
+    this.input.keyboard.on('keyup-S',e=>{
+      EventCenter.emit("controlsUpdated",{y:0})
+    })
+    this.input.keyboard.on('keydown-F', e=>{
+      EventCenter.emit("tryKick")
     })
 
     this.input.on("pointerup",(e)=>{
