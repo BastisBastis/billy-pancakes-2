@@ -15,7 +15,8 @@ export default class Ramp extends LevelObject {
       
     }
   
-  setNavVerts(pos) {
+  setNavVerts(pos,rot) {
+    console.log(rot)
     const w=8
     
       let tl={
@@ -37,6 +38,19 @@ export default class Ramp extends LevelObject {
         x:pos.x+w/2,
         y:pos.y+0,
         z:pos.z-w/2
+      }
+      
+      
+      
+      if (rot==Math.PI) {
+        
+        
+      } else if (rot==-Math.PI/2) {
+        
+      } else if (rot==0) {
+        
+        tl.y=pos.y
+        br.y=pos.y+4
       }
       
       const rampVerts=[

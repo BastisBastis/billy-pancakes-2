@@ -23,6 +23,8 @@ export default class RampPhysics {
         this.body.addShape(roofShape, new CANNON.Vec3(0,0, 0), new CANNON.Quaternion().setFromAxisAngle(new CANNON.Vec3(-1,0,0),26*Math.PI/180))
         
         this.body.addShape(legShape, new CANNON.Vec3(0,-size.height/2+legHeight/2,size.depth*0.4))
+        
+        this.body.quaternion.setFromAxisAngle(new CANNON.Vec3(0,1,0),rotation+Math.PI/2)
         /*
         this.body.addShape(legShape, new CANNON.Vec3(-size.width/2+legRadius, 0, -size.depth/2+legRadius))
         this.body.addShape(legShape, new CANNON.Vec3( size.width/2-legRadius, 0, -size.depth/2+legRadius))

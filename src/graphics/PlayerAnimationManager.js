@@ -1,11 +1,12 @@
 import * as THREE from "three"
 
 export default class PlayerAnimationManager {
-  constructor(animations) {
+  constructor(animations,start="idle") {
     this.animations=animations;
     this.states={
       running:false,
       walking:false,
+      backing:false,
       jumping:false,
       picking:false,
       kicking:false
@@ -14,8 +15,8 @@ export default class PlayerAnimationManager {
     this.jumpTimeFactor=0.5;
     this.kickTimeFactor=1.8
     
-    this.animations.idle.play()
-    this.currentAnimation="idle"
+    this.animations[start].play()
+    this.currentAnimation=start
     this._nextAnimation=false;
         
         
@@ -43,7 +44,8 @@ export default class PlayerAnimationManager {
       //Idle === not moving
       this.states.running=false;
       this.states.walking=false;
-      if (!this.states.jumping && !this.states.picking) {
+      this.states.backing=false;
+      if (!this.states.jumping && !this.states.kicking) {
         this.animations.idle.reset()
         this.animations.idle.play()
         
@@ -53,13 +55,19 @@ export default class PlayerAnimationManager {
       } else {
         this.nextAnimation="idle"
       }
-    } else if (animation==="run"||animation==="walk") {
+    } else if (animation==="run"||animation==="walk" || animation==="back") {
       if (animation==="walk") {
         this.states.running=false;
         this.states.walking=true;
-      } else {
+        this.states.backing=false
+      } else if (animation==="run"){
         this.states.running=true;
         this.states.walking=false
+        this.states.backing=false
+      } else if (animation==="back"){
+        this.states.running=false;
+        this.states.walking=false;
+        this.states.backing=true
       }
       
       if (!this.states.jumping && !this.states.kicking) {

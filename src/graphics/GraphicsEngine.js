@@ -35,7 +35,14 @@ export default class GraphicsEngine {
      
   try {
     
-    const canvas = document.querySelector('#threeCanvas');
+    //const canvas = document.querySelector('#threeCanvas');
+    
+    const canvas = document.createElement("canvas")
+    canvas.style.cssText="position:absolute; top:0; left:0; width:100vw; height:100vh; z-index=1;"
+    
+    //position:absolute; top:0; left:0; width:100vw; height:100vh; z-index=100"
+    document.body.appendChild(canvas)
+    
     this.scene = new THREE.Scene()
     this.camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.001,10000)
     
@@ -58,46 +65,8 @@ export default class GraphicsEngine {
     
     this.playerPosition=new THREE.Vector3()
     
-    /*
-    //temp Floor
-    var geo = new THREE.PlaneBufferGeometry(40,40,2,2)
-    var material = new THREE.ShaderMaterial({
-      uniforms: {
-        color1: {
-          value: new THREE.Color("black")
-        },
-        color2: {
-          value: new THREE.Color("pink")
-        }
-      },
-      vertexShader: `
-        varying vec2 vUv;
     
-        void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
-        }
-      `,
-      fragmentShader: `
-        uniform vec3 color1;
-        uniform vec3 color2;
-      
-        varying vec2 vUv;
-        
-        void main() {
-          
-          gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
-        }
-      `,
-      wireframe: false,
-      side:2
-      
-    });
-    var mesh = new THREE.Mesh(geo, material);
-    mesh.rotation.x=Math.PI/2
-    //this.scene.add(mesh)
     
-    */
     
     if (orbit)
       this.controls.update()
@@ -117,6 +86,7 @@ export default class GraphicsEngine {
     //this.navmeshtest2()
     //this.navMeshManager= new NavMeshManager(this.scene)
     
+    //this.test()
     } catch (er) {console.log(er.message)}
   }
   
@@ -166,6 +136,10 @@ export default class GraphicsEngine {
     }
   }
   
+  setCameraPosition(x,y,z) {
+    this.camera.position.set(x,y,z)
+  }
+  
   updateCameraPosition(playerData) {
     try { 
     
@@ -187,6 +161,23 @@ export default class GraphicsEngine {
     
     
     } catch (er) {console.log(er.message)} 
+  }
+  
+  test() {
+    console.log(this)
+    if (this.scene.player)
+      console.log(this.scene.player.position)
+    setTimeout(()=>this.test(),1000)
+  }
+  
+  destroy() {
+    
+    this.renderer.domElement.remove()
+    this.scene=null;
+    this.renderer=null;
+    this.camera=null;
+    this.objects=null;
+    delete this
   }
   
   update(delta,data) {
@@ -221,7 +212,7 @@ export default class GraphicsEngine {
       
       
     
-    if (!orbit)
+    if (!orbit && data.player)
       this.updateCameraPosition(data.player)
     
     

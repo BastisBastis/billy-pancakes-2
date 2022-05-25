@@ -3,7 +3,7 @@ import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 //models
 //import BillyGLTF from '../assets/models/characters/Billy7.glb'
-import BillyGLTF from '../assets/models/characters/Billy15.glb'
+import BillyGLTF from '../assets/models/characters/Billy16.glb'
 
 //helpers
 import PlayerAnimationManager from "./PlayerAnimationManager"
@@ -24,7 +24,7 @@ export default class PlayerModel {
     
     this._movement=0;
     
-  
+  this.queuedMovement="idle"
   
   }
   
@@ -38,6 +38,16 @@ export default class PlayerModel {
   }
   
   set movement(value){
+    if (!this.animationManager) {
+      
+      this.queuedMovement={
+        "-1":"back",
+        0:"idle",
+        1:"walk",
+        2:"run"
+      }[value]
+      return false
+    }
     if (value===this._movement)
       return false;
     this._movement=value;
@@ -48,6 +58,8 @@ export default class PlayerModel {
       this.animationManager.play("walk")
     } else if (value===2) {
       this.animationManager.play("run")
+    } else if (value===-1) {
+      this.animationManager.play("back")
     } else {
       console.log("Unrecognized movement type: "+value)
     }
@@ -139,7 +151,37 @@ loadModel(scene,position,rotation) {
     		    object.receiveShadow=true;
     		    object.frustumCulled=false
     		  }
+    		  
+    		  
+    		  if (object.userData.name==="Ctrl_Head") {
+    		    
+    		    const geo=new THREE.SphereBufferGeometry(0.0014,16,16);
+    		    const mat= new THREE.MeshPhongMaterial({color:"blue"})
+    		    
+    		    const x=0.0008
+    		    const y=0.0065
+    		    const z=0.0025
+    		    const eye1=new THREE.Mesh(geo,mat)
+    		    eye1.position.y=y
+    		    eye1.position.x=x
+    		    eye1.position.z=z
+    		    eye1.castShadow=false
+    		    const eye2=new THREE.Mesh(geo,mat)
+    		    eye2.position.y=y
+    		    eye2.position.x=-x
+    		    eye2.position.z=z
+    		    eye2.castShadow=false
+    		    object.add(eye1)
+    		    object.add(eye2)
+    		    console.log("plupp!")
+    		  }
+    		  
+    		  
+    		  
+    		  
           const material = object.material;
+          
+          
           
           if (material) {
             
@@ -151,18 +193,19 @@ loadModel(scene,position,rotation) {
         
         this.mixer=new THREE.AnimationMixer(gltf.scene)
         this.animations={
-          idle:this.mixer.clipAction(gltf.animations[0]),
-          jump:this.mixer.clipAction(gltf.animations[1]),
-          kick:this.mixer.clipAction(gltf.animations[2]),
-          pickup:this.mixer.clipAction(gltf.animations[3]),
-          run:this.mixer.clipAction(gltf.animations[4]),
-          walk:this.mixer.clipAction(gltf.animations[5]),
+          back:this.mixer.clipAction(gltf.animations[0]),
+          idle:this.mixer.clipAction(gltf.animations[1]),
+          jump:this.mixer.clipAction(gltf.animations[2]),
+          kick:this.mixer.clipAction(gltf.animations[3]),
+          pickup:this.mixer.clipAction(gltf.animations[4]),
+          run:this.mixer.clipAction(gltf.animations[5]),
+          walk:this.mixer.clipAction(gltf.animations[6]),
         }
         
         
         
         
-        this.animationManager = new PlayerAnimationManager(this.animations)
+        this.animationManager = new PlayerAnimationManager(this.animations,this.queuedMovement)
         
         
     		

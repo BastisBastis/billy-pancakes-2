@@ -9,6 +9,10 @@ import LevelObjectGraphics from "./LevelObject"
 
 export default class CarrotBarrelGraphics {
     constructor(graphicsEngine, position, rotation,scale={xz:1, y:1},index,parent) {
+      
+      this.meshes=[]
+      this.hideCounter=0
+      
       this.graphicsEngine=graphicsEngine
       
         graphicsEngine.addObject(this);
@@ -52,7 +56,7 @@ export default class CarrotBarrelGraphics {
                     //object.material=newMaterial
                     object.material.roughness=0.9;
                     object.material.metalness=0;
-                    
+                    this.meshes.push(object)
                     //object.material.emissive=0x00ff00
                     //console.log(object.material)
                   }
@@ -76,9 +80,55 @@ export default class CarrotBarrelGraphics {
     this.model.scene.removeFromParent()
   }
   
-  testObstruction(ray,md) {
-    
-  }
+  testObstruction(raycasters,maxDistance) {
+      try { 
+      
+      if (this.model) {
+        let obstructionCount=0;
+        raycasters.forEach((ray,i)=>{
+          const rayHits=ray.intersectObjects(this.meshes)
+          
+          
+          
+          rayHits.forEach(rayHit=>{
+            
+            obstructionCount+=rayHit.distance<maxDistance?1:0;
+          })
+        })
+        
+      if (obstructionCount>0) {
+        this.hideCounter=2;
+        
+        //console.log(this.meshes.length)
+        
+        this.meshes.forEach(mesh=>{
+          //console.log("hufe")
+          mesh.material.transparent=true
+          mesh.material.opacity=0.3;
+          //mesh.material.color=0x00ffff
+          mesh.material.needsUpdate=true
+          //console.log(mesh.material.color)
+          
+        })
+      } else {
+        
+        if (this.hideCounter>0) {
+          this.hideCounter--;
+          if (this.hideCounter==0) {
+            this.meshes.forEach(mesh=>{
+          mesh.material.opacity=1;
+          mesh.material.transparent=false
+          mesh.material.needsUpdate=true
+          
+        })
+          }
+        }
+      }
+        
+      }
+      
+      } catch (er) {console.log(er.message)} 
+    }
   
    get position() {
      return {

@@ -59,6 +59,8 @@ export default class UI extends Phaser.Scene {
     const maxY=100;
     const maxTurn=75;
     
+    this.setupLabel(data.labels)
+    
     
     this.setupAttractionLabels()
     this.setupHealth()
@@ -67,8 +69,8 @@ export default class UI extends Phaser.Scene {
     this.input.on("pointerdown",(e)=>{
       this.touchCounter++;
       if (this.touchCounter==1) {
-        this.touchOrigin={x:e.x,y:e.y}
-      this.updateJoystick({y:0,x:0})
+        this.touchOrigin={x:e.x,y:e.y+maxY/8*3}
+      this.updateJoystick({y:1/8*3,x:0})
       this.setJoystickVisibility(true)
       EventCenter.emit("controlsUpdated",{y:0,x:0})
       } else {
@@ -108,7 +110,7 @@ export default class UI extends Phaser.Scene {
       if (this.touchCounter<1) {
         try { 
         this.touchOrigin=null
-        this.updateJoystick({y:0,x:0})
+        this.updateJoystick({y:1/8*3,x:0})
         this.setJoystickVisibility(false)
         EventCenter.emit("controlsUpdated",{y:0,x:0})
         
@@ -127,11 +129,30 @@ export default class UI extends Phaser.Scene {
       }
       
       */
-      const result={
-        y:Math.max(Math.min(this.touchOrigin.y-e.y,maxY),0)/maxY,
-        x:Math.max(Math.min(e.x-this.touchOrigin.x,maxTurn),-maxTurn)/maxTurn
+      
+      const yFrac=Math.max(Math.min(this.touchOrigin.y-e.y,maxY),0)/maxY
+      const xFrac=Math.max(Math.min(e.x-this.touchOrigin.x,maxTurn),-maxTurn)/maxTurn
+      
+      let yResult;
+      if (yFrac>0&&yFrac<0.5){
+        yResult=0;
+      } else if (yFrac===0) {
+        yResult=yFrac*2-0.5
+      } else {
+        yResult=yFrac*2-1
       }
-      this.updateJoystick(result)
+      
+      
+      
+      const result={
+        
+        y:yResult,
+        x:xFrac
+      }
+      
+      
+      
+      this.updateJoystick({y:yFrac,x:xFrac})
       EventCenter.emit("controlsUpdated",result)
     })
     
@@ -140,20 +161,47 @@ export default class UI extends Phaser.Scene {
     } catch (er) {console.log(er.message)} 
   }
   
+  setupLabel(labels) {
+    this.label=this.add.text(this.cameras.main.centerX,this.cameras.main.height-50,"", {
+        fontFamily:"Acme",
+        fill:"black",
+        stroke:"white",
+        strokeThickness:this.cameras.main.height*0.02,
+        align:"center",
+        fontSize:this.cameras.main.height*0.06,
+        //fontStyle:"italic",
+        wordWrap:{
+          width:this.cameras.main.width*0.8
+        }
+      }).setOrigin(0.5,1).setPadding(50)
+      
+    this.timeouts=[]
+    
+    labels.forEach(label=>{
+      this.timeouts.push(setTimeout(()=>{
+        this.label.text=label.string
+        this.timeouts.push(setTimeout(()=>{
+          if (this.label.text==label.string)
+            this.label.text=""
+        },label.duration))
+      },label.start))
+    })
+  }
+  
   setupHealth() {
     const cam = this.cameras.main
     const barWidth=300;
-    const barHeight=50;
-    this.add.text(30,40,"Rabidity:",{
+    const barHeight=cam.height*0.07;
+    const label=this.add.text(30,cam.height*0.03,"Rabidity:",{
       fontFamily:"Acme",
       fill:"black",
       stroke:"white",
       strokeThickness:14,
-      fontSize:64
-    }).setOrigin(0,0.5)
+      fontSize:30+cam.height*0.03
+    }).setOrigin(0,0)
     
-    const fill=this.add.rectangle(30,80,0,barHeight,0x9090ff).setOrigin(0,0);
-    const frame=this.add.rectangle(30,80,barWidth,barHeight,0xffffff,0).setStrokeStyle(4,0x000000).setOrigin(0,0);
+    const fill=this.add.rectangle(30, label.getBottomCenter().y ,0,barHeight,0x9090ff).setOrigin(0,0);
+    const frame=this.add.rectangle(30, label.getBottomCenter().y ,barWidth,barHeight,0xffffff,0).setStrokeStyle(4,0x000000).setOrigin(0,0);
     
     
     EventCenter.on("updateRabiesCount",data=>{
@@ -169,8 +217,8 @@ export default class UI extends Phaser.Scene {
       fontFamily:"Acme",
       fill:"black",
       stroke:"white",
-      strokeThickness:12,
-      fontSize:64
+      strokeThickness:this.cameras.main.height*0.01,
+      fontSize:this.cameras.main.height*0.08
     }).setOrigin(0.5,0.5)
       labels.push(label)
     })
@@ -187,7 +235,7 @@ export default class UI extends Phaser.Scene {
       label.y=cam.height*(0.5-data.position.y/2)
       label.text="Carrots: "+(Math.ceil(data.count))
       
-      label.setFontSize(Math.min(Math.max(100-data.distance,40),90)/100*80)
+      label.setFontSize(Math.min(Math.max(100-data.distance,40),90)/100*this.cameras.main.height*0.065)
     })
   }
   
@@ -215,15 +263,17 @@ export default class UI extends Phaser.Scene {
   }
   
   updateJoystick(data){
-    this.joystickBg.fillColor=data.y>0?
-      (data.y>0.5?
+    this.joystickBg.fillColor=data.y>0.5?
+      (data.y>0.75?
         0x006600:
         0x888800):
-      0xffffff;
+      (data.y>0?0xffffff:0x660000);
     //this.joystickMarker.y=this.joystickBg.y+ (data.y?0:this.joystickMarker.height);
+    
     
     const originY=this.joystickBg.y+this.joystickBg.height-this.joystickMarker.height/2;
     const maxDeltaY=this.joystickBg.height-this.joystickMarker.height
+    
     this.joystickMarker.y=originY-maxDeltaY*data.y
     
     const originX=this.joystickBg.x+this.joystickBg.width/2;
@@ -234,6 +284,13 @@ export default class UI extends Phaser.Scene {
   setJoystickVisibility(value){
     this.joystickBg.visible=value;
     this.joystickMarker.visible=value;
+  }
+  
+  close() {
+    this.attractions=null
+    this.timeouts.forEach(to=>{
+      clearTimeout(to)
+    })
   }
   
   update(time,delta) {

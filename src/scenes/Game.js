@@ -22,10 +22,12 @@ export default class Game extends Phaser.Scene {
   }
   
   create({
-    levelIndex=1
+    levelIndex=0
   }) {
-    try{
     
+    
+    try{
+    //console.log("li",levelIndex)
     this.graphics=new GraphicsEngine()
     this.physicsEngine=new PhysicsEngine()
     if (showDebugPhysics) {
@@ -85,28 +87,50 @@ export default class Game extends Phaser.Scene {
             
           }
         })
-        EventCenter.emit("gameover",{
-          win:true,
-          score:Math.floor(score),
-          levelIndex:levelIndex
-        })
+        setTimeout(()=>{
+          EventCenter.emit("gameover",{
+            win:true,
+            score:Math.floor(score),
+            levelIndex:levelIndex
+          })
+        },1500)
+        
       }
       
     })
     
     
     this.scene.launch("ui",{
-      attractions:this.level.attractions
+      attractions:this.level.attractions,
+      labels:this.level.labels
     })
     
     EventCenter.once("gameover",data=>{
       setTimeout(()=>{
+        try { 
         EventCenter.removeAllListeners()
-        this.scene.stop("ui");
+        EventCenter.off()
+        this.registry.destroy()
+        this.graphics.destroy()
+        this.player.destroy()
+        this.level.destroy()
+        delete this.level
+        delete this.graphics
+        delete this.physicsEngine
+        if (this.physicsDebugger)
+          delete this.physicsDebugger
+        delete this.player
+        delete this.enemies
         
+        
+        this.scene.get("ui").close()
+        this.scene.stop("ui");
+        this.scene.stop("game")
         this.scene.start("gameover",data)
-        this.scene.stop("game");
-      },1500)
+        
+        } catch (er) {console.log(er.message)} 
+        
+      },0)
     })
       
     

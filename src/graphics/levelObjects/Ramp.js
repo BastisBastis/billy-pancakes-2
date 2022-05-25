@@ -2,8 +2,13 @@ import * as THREE from "three"
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
 import gltfURL from "../../assets/models/objects/Ramp.glb"
 
+
+
 export default class RampGraphics {
     constructor(graphicsEngine, position, rotation,scale={xz:1, y:1}) {
+      
+      this.meshes=[]
+      this.hideCounter=0
       
         graphicsEngine.addObject(this);
         this.loadModel(graphicsEngine.scene, position, rotation, scale);
@@ -37,6 +42,7 @@ export default class RampGraphics {
                 
                 gltf.scene.traverse(object=>{
                   if (object.isMesh) {
+                    this.meshes.push(object)
                     object.castShadow=true;
                     object.receiveShadow=true;
                   }
@@ -55,8 +61,54 @@ export default class RampGraphics {
         );
       }
     
-    testObstruction(raycaster) {
+    testObstruction(raycasters,maxDistance) {
+      try { 
+      
+      if (this.model) {
+        let obstructionCount=0;
+        raycasters.forEach((ray,i)=>{
+          const rayHits=ray.intersectObjects(this.meshes)
           
+          
+          
+          rayHits.forEach(rayHit=>{
+            
+            obstructionCount+=rayHit.distance<maxDistance?1:0;
+          })
+        })
+        
+      if (obstructionCount>0) {
+        this.hideCounter=2;
+        
+        //console.log(this.meshes.length)
+        
+        this.meshes.forEach(mesh=>{
+          //console.log("hufe")
+          mesh.material.transparent=true
+          mesh.material.opacity=0.3;
+          //mesh.material.color=0x00ffff
+          mesh.material.needsUpdate=true
+          //console.log(mesh.material.color)
+          
+        })
+      } else {
+        
+        if (this.hideCounter>0) {
+          this.hideCounter--;
+          if (this.hideCounter==0) {
+            this.meshes.forEach(mesh=>{
+          mesh.material.opacity=1;
+          mesh.material.transparent=false
+          mesh.material.needsUpdate=true
+          
+        })
+          }
+        }
+      }
+        
+      }
+      
+      } catch (er) {console.log(er.message)} 
     }
     
     

@@ -1,7 +1,7 @@
 const Levels=[
   
-  {
-    size:{x:8,y:4,z:6},
+  { //Level 1
+    size:{x:10,y:4,z:8},
     objects:[
       {
         type:"palletStack",
@@ -12,10 +12,18 @@ const Levels=[
       },
       {
         type:"palletStack",
-        position:{x:7,y:0,z:5},
+        position:{x:6,y:0,z:6},
         scale:{xz:1,y:1},
         rotation:1.5,
         count:5
+      },
+      {
+        type:"palletStack",
+        position:{x:7,y:0,z:1},
+        scale:{xz:1,y:1},
+        rotation:1.5,
+        rotationRandomness:0.4,
+        count:12
       },
       {
         type:"palletStack",
@@ -27,7 +35,143 @@ const Levels=[
       
       {
         type:"trap1",
-        position:{x:5,y:0,z:3},
+        position:{x:8,y:0,z:5},
+      },
+      
+    ],
+    lighting:[
+      {
+        type:"ambient",
+        options:{
+          //color:0xdddddd
+          color:0x707070
+        }
+      },
+      {
+        type:"point",
+        options:{
+          //color:0xffffff,
+          color:0x707060,
+          position:{
+            x:10,
+            y:30,
+            z:15
+          }
+        }
+      }
+      
+      
+    ],
+    playerStartPosition:{x:2,y:0,z:3},
+    playerStartRotation:0,
+    enemies:[
+        {
+          position:{x:6.1,y:0,z:1.1},
+          rotation:1,
+        }
+    ],
+    labels:[
+      {
+        string:"The rabid carrot munchers are drawn to the smell of carrots and Billy just reeks of it.",
+        start:1000,
+        duration:6500
+      }, 
+      {
+        string:"Billy must try to lure the muncher into the green muncher trap with his scent.",
+        start:8000,
+        duration:8500
+      },
+      {
+        string:"But don’t let the rabid carrot muncher chew on him too much. Billy can only handle so much rabies.",
+        start:17000,
+        duration:9000
+      },
+      {
+        string:"Move Billy by using the W, A, S & D keys or touching and dragging on the screen.",
+        start:26500,
+        duration:8000
+      },
+    ]
+  },
+  
+  
+  
+  
+  { //Level 2
+    size:{x:10,y:4,z:5},
+    objects:[
+      
+      {
+        type:"palletStack",
+        position:{x:4,y:0,z:4},
+        scale:{xz:1,y:1},
+        rotation:2,
+        count:4
+      },
+      {
+        type:"palletStack",
+        position:{x:8,y:0,z:1},
+        scale:{xz:1,y:1},
+        rotation:10,
+        rotationRandomness:0.5,
+        count:7
+      },
+      {
+        type:"palletStack",
+        position:{x:9,y:0,z:0},
+        scale:{xz:1,y:1},
+        rotation:10,
+        rotationRandomness:0.5,
+        count:14
+      },
+      {
+        type:"palletStack",
+        position:{x:1,y:0,z:3},
+        scale:{xz:1,y:1},
+        rotation:2.2,
+        count:9
+      },
+      
+      
+       {
+        type:"platform",
+        position:{x:9,y:0,z:2},
+        rotation:0,
+        scale:{xz:1,y:1}
+      },
+      {
+        type:"platform",
+        position:{x:7 ,y:0,z:2},
+        rotation:0,
+        scale:{xz:1,y:1}
+      },
+      {
+        type:"platform",
+        position:{x:6 ,y:0,z:2},
+        rotation:0,
+        scale:{xz:1,y:1}
+      },
+      {
+        type:"platform",
+        position:{x:5 ,y:0,z:2},
+        rotation:0,
+        scale:{xz:1,y:0.5}
+      },
+      {
+        type:"ramp",
+        position:{x:5 ,y:0.5,z:2},
+        rotation:0,
+        scale:{xz:1,y:1}
+      },
+      {
+        type:"ramp",
+        position:{x:4 ,y:0,z:2},
+        rotation:0,
+        scale:{xz:1,y:1}
+      },
+      {
+        type:"trap1",
+        position:{x:9,y:1,z:2},
       },
       
     ],
@@ -58,13 +202,181 @@ const Levels=[
     playerStartRotation:Math.PI/4,
     enemies:[
         {
-          position:{x:6.1,y:0,z:1.1},
+          position:{x:1.1,y:0,z:1.1},
           rotation:1,
         }
-      ]
+      ],
+    labels:[]
   },
   
-  {
+  
+  
+  
+  
+  { //Level 3
+    size:{x:10,y:4,z:4},
+    objects:[
+      {
+        type:"palletStack",
+        position:{x:3,y:0,z:3},
+        scale:{xz:1,y:1},
+        rotation:2,
+        count:6
+      },
+      {
+        type:"palletStack",
+        position:{x:5,y:0,z:3},
+        scale:{xz:1,y:1},
+        rotation:1.5,
+        count:5
+      },
+      {
+        type:"palletStack",
+        position:{x:7,y:0,z:3},
+        scale:{xz:1,y:1},
+        rotation:1.5,
+        rotationRandomness:0.4,
+        count:10
+      },
+      {
+        type:"palletStack",
+        position:{x:9,y:0,z:3},
+        scale:{xz:1,y:1},
+        rotation:2.2,
+        count:9
+      },
+      {
+        type:"carrotBarrel",
+        position:{x:5,y:0,z:0}
+      },
+      
+      {
+        type:"trap1",
+        position:{x:8,y:0,z:1},
+      },
+      
+    ],
+    lighting:[
+      {
+        type:"ambient",
+        options:{
+          //color:0xdddddd
+          color:0x707070
+        }
+      },
+      {
+        type:"point",
+        options:{
+          //color:0xffffff,
+          color:0x707060,
+          position:{
+            x:10,
+            y:30,
+            z:15
+          }
+        }
+      }
+      
+      
+    ],
+    playerStartPosition:{x:1.5,y:0,z:4},
+    playerStartRotation:-Math.PI*0.3,
+    enemies:[
+        {
+          position:{x:1.1,y:0,z:0.1},
+          rotation:1,
+        }
+      ],
+    labels:[]
+  },
+  
+  
+  { //Level 3
+    size:{x:9,y:4,z:5},
+    objects:[
+      {
+        type:"palletStack",
+        position:{x:2,y:0,z:4},
+        scale:{xz:1,y:1},
+        rotation:2,
+        count:4
+      },
+      {
+        type:"palletStack",
+        position:{x:5,y:0,z:3},
+        scale:{xz:1,y:1},
+        rotation:1.5,
+        count:5
+      },
+      {
+        type:"palletStack",
+        position:{x:5,y:0,z:4},
+        scale:{xz:1,y:1},
+        rotation:1.5,
+        rotationRandomness:0.4,
+        count:12
+      },
+      {
+        type:"palletStack",
+        position:{x:1,y:0,z:3},
+        scale:{xz:1,y:1},
+        rotation:2.2,
+        count:9
+      },
+      {
+        type:"palletWall",
+        position:{x:4,y:0,z:4},
+        count:8
+      },
+      {
+        type:"palletWall",
+        position:{x:4,y:0,z:3},
+        count:4
+      },
+      {
+        type:"carrotBarrel",
+        position:{x:4,y:0,z:1}
+      },
+      {
+        type:"trap1",
+        position:{x:7,y:0,z:3},
+      },
+      
+    ],
+    lighting:[
+      {
+        type:"ambient",
+        options:{
+          //color:0xdddddd
+          color:0x707070
+        }
+      },
+      {
+        type:"point",
+        options:{
+          //color:0xffffff,
+          color:0x707060,
+          position:{
+            x:10,
+            y:30,
+            z:15
+          }
+        }
+      }
+    ],
+    playerStartPosition:{x:2,y:0,z:1},
+    playerStartRotation:0,
+    enemies:[
+        {
+          position:{x:0.1,y:0,z:4.1},
+          rotation:0,
+        }
+      ],
+    labels:[]
+  },
+  
+  
+  { //Test level
     size:{x:16,y:4,z:10},
     objects:[
       {
@@ -114,6 +426,13 @@ const Levels=[
           position:{x:6,y:1,z:9},
           scale:{xz:1,y:1},
           rotation:0
+        },
+        {
+          type:"palletWall",
+          position:{x:5,y:0,z:8},
+          scale:{xz:1,y:1},
+          rotation:0,
+          count:12
         },
         {
           type:"palletStack",
@@ -208,8 +527,10 @@ const Levels=[
         {
           position:{x:4.1,y:0,z:3.2},
           rotation:1,
-        }
-      ]
+        },
+        
+      ],
+    labels:[]
   }
   
  

@@ -10,7 +10,8 @@ import WebFontLoaderPlugin from 'phaser3-rex-plugins/plugins/webfontloader-plugi
 import Game from "./scenes/Game"
 import UI from "./scenes/UI"
 import GameOver from "./scenes/GameOver"
-
+import Demo from "./scenes/Demo"
+import TitleScreen from "./scenes/TitleScreen"
 
 try {
   
@@ -36,9 +37,11 @@ const config = {
       }
   },
     scene: [
+      TitleScreen,
       Game,
       UI,
-      GameOver
+      GameOver,
+      Demo,
     ],
     plugins: {
       global: [{

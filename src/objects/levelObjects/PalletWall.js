@@ -2,24 +2,11 @@ import Pallet1 from "./Pallet1"
 import LevelObject from "./LevelObject"
 import Delaunator from "delaunator"
 
-import PalletStackGraphics from "../../graphics/levelObjects/PalletStack"
 
-const rotatedCorner=(cx,cy,cz,dx,dy,dz,theta) =>{
-  
-  
-  const rotatedX=dx*Math.cos(theta)-dz*Math.sin(theta);
-  const rotatedZ=dx*Math.sin(theta)+dz*Math.cos(theta);
-  
-  const res={
-    x:cx+rotatedX,
-    y:cy,
-    z:cz+rotatedZ
-  }
-  
-  return res
-}
 
-export default class PalletStack  extends LevelObject {
+
+
+export default class PalletWall  extends LevelObject {
   //Should update for pnlu one physics body
   constructor({
     graphicsScene, 
@@ -28,37 +15,66 @@ export default class PalletStack  extends LevelObject {
     rotation, 
     scale={xz:1, y:1},
     count=4,
-    rotationRandomness=0.2
+    
     
     }) {
       super(position,rotation)
       this.pallets=[]
       
-      const rotations=[]
       
+      const positions=[
+        {
+          x:position.x+8*(1/3),
+          z:position.z-2
+        },
+        {
+          x:position.x,
+          z:position.z-2
+        },
+        {
+          x:position.x-8*(1/3),
+          z:position.z-2
+        },
+        {
+          x:position.x+8*(1/3),
+          z:position.z+2
+        },
+        {
+          x:position.x,
+          z:position.z+2
+        },
+        {
+          x:position.x-8*(1/3),
+          z:position.z+2
+        },
+      ]
       
       for (let i=0;i<count;i++) {
-        const pos={x:position.x,y:position.y+0.8*i*scale.y,z:position.z}
+        positions.forEach(pos2d=>{
+          const pos={x:pos2d.x,y:position.y+0.8*i*scale.y,z:pos2d.z}
         this.pallets.push(new Pallet1({
           graphicsScene:graphicsScene, 
     physicsWorld:physicsWorld, 
     position:pos,
-    rotation:rotation+Math.random()*rotationRandomness-rotationRandomness/2, 
+    rotation:0, 
     scale:scale
         }))
+        })
+        
       }
     
-    const palletGraphics=this.pallets.map(pallet=>pallet.graphics)
+    
     
     //console.log(palletGraphics)
     
-    this.palletStackGraphics= new PalletStackGraphics(graphicsScene,palletGraphics)
+    
     
     this.setNavVerts(position,rotation)
       
     }
   
   setNavVerts(pos,rot) {
+    /*
     const w=8
     const d=8
     const iw=3.5;
@@ -170,6 +186,9 @@ export default class PalletStack  extends LevelObject {
           ]
         })
       })
+      
+      
+      */
       /*
       const verts=[
       	 br.x, br.y,  br.z,
@@ -190,7 +209,7 @@ export default class PalletStack  extends LevelObject {
         ]
       */
         
-        
+        /*
         
       this.navVertCollections.push({
         vertY:pos.y+2,
@@ -198,22 +217,7 @@ export default class PalletStack  extends LevelObject {
         vertices:[...verts]
       })
       
-      
+      */
     }
-  
-  set position(value) {
     
-    this._position=value
-    this.graphics.forEach(obj=>obj.position=this._position)
-    this.physics.forEach(obj=>obj.position=this._position)
-  }
-  
-  
-  
-  set rotation(value) {
-    this._rotation=value;
-    this.graphics.forEach(obj=>obj.rotation=value)
-    this.physics.forEach(obj=>obj.rotation=value)
-  }
-  
 }

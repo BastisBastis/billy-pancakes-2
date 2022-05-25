@@ -12,8 +12,10 @@ export default class Player {
     physicsEngine,
     position={x:0,y:0,z:0},
     rotation=0,
-    onLoad=()=>false
+    onLoad=()=>false,
+    demo=false
   }) {
+    this.demo=demo
     this.graphics= new PlayerModel({
       graphicsEngine:graphicsEngine,
       position:position,
@@ -39,7 +41,7 @@ export default class Player {
       height:5.6
     }
     
-    this.attraction=30
+    this.attraction=20
     
     this.rabiesCount=0;
     
@@ -49,6 +51,11 @@ export default class Player {
     EventCenter.on("jump",()=>this.jump())
     EventCenter.on("tryKick",()=>this.kick())
     
+  }
+  
+  destroy() {
+    this.graphics=null;
+    this.physicsBody=null;
   }
   
   getAttacked(delta) {
@@ -63,16 +70,24 @@ export default class Player {
   
   kick() {
     this.graphics.kick()
-    const force=15
-    const height=20
-    EventCenter.emit("kick",{
+    const force=20
+    const height=25
+    setTimeout(
+      ()=>{
+        EventCenter.emit("kick",{
       dir:{
         x:Math.cos(this.rotation)*force,
         y:height,
         z:Math.sin(this.rotation)*force
       },
-      checkKickRange:(pos)=>this.checkKickRange(pos)
+      checkKickRange:this.demo?
+        (()=>true):
+        (pos)=>this.checkKickRange(pos)
     })
+      },
+      100
+    )
+    
   }
   
   setupPhysicsBody(physicsEngine,graphicsEngine) {
@@ -113,7 +128,11 @@ export default class Player {
   set speed(value) {
     this._speed=value;
     
-    this.graphics.movement= Math.ceil(value*2)
+    const movementType = value<0?
+      -1:
+      Math.ceil(value*2);
+    
+    this.graphics.movement= movementType
     
   }
   
@@ -166,8 +185,13 @@ export default class Player {
   updateControls(values){
     if (!isNaN(values.y))
       this.speed=values.y;
-    if (!isNaN(values.x))
-      this.turnFactor=values.x;
+    if (!isNaN(values.x)) {
+      const val= this.speed<0?
+        -values.x/2:
+        values.x;
+      this.turnFactor=values.x
+    }
+      
     
   }
   

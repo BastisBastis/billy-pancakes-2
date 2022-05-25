@@ -7,6 +7,7 @@ import Floor from "./levelObjects/Floor"
 import Platform1 from "./levelObjects/Platform1"
 import Pallet1 from "./levelObjects/Pallet1"
 import PalletStack from "./levelObjects/PalletStack"
+import PalletWall from "./levelObjects/PalletWall"
 import Ramp from "./levelObjects/Ramp"
 import Trap1 from "./levelObjects/Trap1"
 import CarrotBarrel from "./levelObjects/CarrotBarrel"
@@ -26,6 +27,7 @@ const objectTypes={
   ramp:Ramp,
   trap1:Trap1,
   carrotBarrel:CarrotBarrel,
+  palletWall:PalletWall
 }
 
 
@@ -42,7 +44,8 @@ export default class Level {
     playerStartRotation,
     tileSize=8,
     tileHeight=8,
-    enemies
+    enemies,
+    labels
   }) {
     this.graphicsEngine=graphicsEngine;
     this.physicsEngine=physicsEngine;
@@ -109,6 +112,8 @@ export default class Level {
         attractions:this.attractions
       }))
     })
+    
+    this.labels=JSON.parse(JSON.stringify(labels))
   }
   
   setupWalls(size) {
@@ -181,10 +186,11 @@ export default class Level {
   }
   
   setupObjects(objects) {
-    objects.forEach(object=>{
+    objects.forEach(o=>{
+      const object=JSON.parse(JSON.stringify(o))
       if (Object.keys(objectTypes).includes(object.type)) {
         
-        
+        console.log(object.type)
         if (object.position){
           object.position.x=(object.position.x+0.5)*this.tileSize
           object.position.y*=this.tileHeight
@@ -251,6 +257,7 @@ export default class Level {
   }
   
   static fromIndex(graphicsEngine,physicsEngine,index) {
+   
     return new Level({
       graphicsEngine:graphicsEngine,
       physicsEngine:physicsEngine,
@@ -258,150 +265,28 @@ export default class Level {
     })
   }
   
-  static testLevel(graphicsEngine,physicsEngine) {
-    return new Level({
-      graphicsEngine:graphicsEngine,
-      physicsEngine:physicsEngine,
-      size:{x:16,y:4,z:10},
-      objects:[
-        {
-          type:"platform",
-          position:{x:6,y:0,z:6},
-          scale:{xz:1,y:0.5},
-          rotation:0
-        },
-        {
-          type:"platform",
-          position:{x:6,y:0,z:7},
-          scale:{xz:1,y:1},
-          rotation:0
-        },
-        {
-          type:"platform",
-          position:{x:6,y:0,z:8},
-          scale:{xz:1,y:1},
-          rotation:0
-        },
-        {
-          type:"platform",
-          position:{x:6,y:1,z:8},
-          scale:{xz:1,y:0.5},
-          rotation:0
-        },
-        {
-          type:"platform",
-          position:{x:8,y:0,z:9},
-          scale:{xz:1,y:1},
-          rotation:0
-        },
-        {
-          type:"platform",
-          position:{x:8,y:1,z:9},
-          scale:{xz:1,y:1},
-          rotation:0
-        },
-        {
-          type:"platform",
-          position:{x:6,y:0,z:9},
-          scale:{xz:1,y:1},
-          rotation:0
-        },
-        {
-          type:"platform",
-          position:{x:6,y:1,z:9},
-          scale:{xz:1,y:1},
-          rotation:0
-        },
-        {
-          type:"palletStack",
-          position:{x:4,y:0,z:2},
-          scale:{xz:1,y:1},
-          rotation:2,
-          count:4
-        },
-        {
-          type:"palletStack",
-          position:{x:7,y:0,z:8},
-          scale:{xz:1,y:1},
-          rotation:0,
-          count:5
-        },
-        {
-          type:"palletStack",
-          position:{x:1,y:0,z:3},
-          scale:{xz:1,y:1},
-          rotation:0,
-          count:9
-        },
-        {
-          type:"ramp",
-          position:{x:6,y:0,z:5},
-          scale:{xz:1,y:1},
-          rotation:-Math.PI/2,
-        },
-        {
-          type:"ramp",
-          position:{x:6,y:0.5,z:6},
-          scale:{xz:1,y:1},
-          rotation:-Math.PI/2,
-        },
-        {
-          type:"ramp",
-          position:{x:6,y:1,z:7},
-          rotation:-Math.PI/2,
-        },
-        {
-          type:"trap1",
-          position:{x:8,y:0,z:3},
-        },
-        {
-          type:"carrotBarrel",
-          position:{x:9,y:0,z:6},
-        },
-        {
-          type:"carrotBarrel",
-          position:{x:2,y:0,z:4},
-        },
-      ],
-      lighting:[
-        {
-          type:"ambient",
-          options:{
-            //color:0xdddddd
-            color:0x707070
-          }
-        },/*
-        {
-          type:"directional",
-          options:{
-            color:0x606050,
-            direction:{
-              x:0,
-              y:-40,
-              z:-10
-            },
-            intensity:1
-          }
-        },
-        */
-        {
-          type:"point",
-          options:{
-            //color:0xffffff,
-            color:0x707060,
-            position:{
-              x:10,
-              y:30,
-              z:15
-            }
-          }
-        }
-        
-        
-      ],
-      playerStartPosition:{x:2,y:0,z:3},
-      playerStartRotation:Math.PI/4
-    })
+  destroy() {
+    this.graphicsEngine=null;
+    this.physicsEngine=null;
+    
+    
+    //Setup room
+    
+    this.occupiedFloorTiles=null
+    this.itemVertices=null
+    this.attractions=null
+    
+    //objects
+    
+    
+    let navVerts=null
+    this.itemVertices=null
+    this.navMesh=null
+  this.pathfinder= null
+  
+  
+    
+    this.enemies=null
   }
   
 }

@@ -18,8 +18,10 @@ export default class Muncher1 {
     position,
     rotation=0,
     pathfinder,
-    attractions
+    attractions,
+    demo=false
   }) {
+    this.demo=demo
     this.graphics=new Muncher1Graphics(graphicsEngine,position,rotation)
     this.physicsBody=new Muncher1Physics(
       physicsEngine.world,
@@ -74,7 +76,8 @@ export default class Muncher1 {
 				.setTargetPosition( new THREE.Vector3(this.finalTarget.x,this.finalTarget.y,this.finalTarget.z) );
     })
     */
-    this.setCurrentTarget();
+    if (!demo)
+      this.setCurrentTarget();
  }
  
   setFinalTarget(pos) {
@@ -232,7 +235,15 @@ export default class Muncher1 {
   
   update(delta) {
     this.graphics.update(delta)
-
+    
+    if (this.demo) {
+      if (this.physicsBody.canJump) {
+        this.physicsBody.setVelocity({x:-4,y:0,z:0})
+      }
+      this.position=this.physicsBody.position;
+      this.graphics.position=this.physicsBody.position
+      return false
+    }
     
     if (this.trapped) {
       

@@ -211,7 +211,7 @@ export default class NavMeshManager {
     
     this.navMesh=new THREE.Mesh(geo,material)
     
-    //scene.add(this.navMesh)
+    scene.add(this.navMesh)
   }
   
 }
