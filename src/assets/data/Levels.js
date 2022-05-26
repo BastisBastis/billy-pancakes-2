@@ -87,8 +87,15 @@ const Levels=[
         duration:9000
       },
       {
-        string:"Move Billy by using the W, A, S & D keys or touching and dragging on the screen.",
+        mouseOnly:true,
+        string:"Move Billy by using the W, A, S & D keys. Click once to enable turning by moving the mouse.",
         start:26500,
+        duration:8000
+      },
+      {
+        touchOnly:true,
+        string:"Move Billy by touching and dragging on the screen.",
+        start:27500,
         duration:8000
       },
     ]
@@ -202,11 +209,29 @@ const Levels=[
     playerStartRotation:Math.PI/4,
     enemies:[
         {
-          position:{x:1.1,y:0,z:1.1},
+          position:{x:0.1,y:0,z:1.1},
           rotation:1,
         }
       ],
-    labels:[]
+    labels:[
+      {
+        string:"Sometimes Billy has to give the Munchers a little kick.",
+        start:1000,
+        duration:5000
+      }, 
+      {
+        string:"Click the mouse to make Billy kick.",
+        start:5500,
+        duration:5000,
+        mouseOnly:true
+      }, 
+      {
+        string:"Hold on the screen while tapping in the bottom half with another finger to make Billy kick.",
+        start:5500,
+        duration:6500,
+        touchOnly:true
+      }, 
+    ]
   },
   
   
@@ -287,7 +312,18 @@ const Levels=[
           rotation:1,
         }
       ],
-    labels:[]
+    labels:[
+      {
+        string:"Rabid Carrot Munchers love carrots even more than Billy loves scrap booking.",
+        start:1000,
+        duration:6000
+      }, 
+      {
+        string:"Don’t let it get the Muncher get to close to the carrot barrel or there might not be any carrots left to sell tomorrow!",
+        start:6500,
+        duration:6500,
+      }, 
+    ]
   },
   
   
@@ -372,7 +408,116 @@ const Levels=[
           rotation:0,
         }
       ],
-    labels:[]
+    labels:[
+      {
+        string:"If a Muncher is eating from a carrot barrel, simple have Billy give the little one a kick in the right direction.",
+        start:1000,
+        duration:6500
+      }, 
+    ]
+  },
+  
+  
+  
+  { //Level 5
+    size:{x:10,y:4,z:5},
+    objects:[
+      
+      {
+        type:"platform",
+        position:{x:4,y:0,z:4},
+        rotation:0,
+        scale:{xz:1,y:1},
+        
+      },
+      {
+        type:"platform",
+        position:{x:5,y:0,z:4},
+        rotation:0,
+        scale:{xz:1,y:1},
+        
+      },
+      {
+        type:"platform",
+        position:{x:3,y:0,z:4},
+        rotation:0,
+        scale:{xz:1,y:1},
+        
+      },
+      {
+        type:"platform",
+        position:{x:2,y:0,z:4},
+        rotation:0,
+        scale:{xz:1,y:1},
+        
+      },
+      {
+        type:"platform",
+        position:{x:6,y:0,z:4},
+        rotation:0,
+        scale:{xz:1,y:1},
+        
+      },
+      
+      {
+        type:"trap1",
+        position:{x:9,y:0,z:2},
+      },
+      
+      {
+        type:"carrotBarrel",
+        position:{x:5,y:0,z:2}
+      }
+      
+    ],
+    lighting:[
+      {
+        type:"ambient",
+        options:{
+          //color:0xdddddd
+          color:0x707070
+        }
+      },
+      {
+        type:"point",
+        options:{
+          //color:0xffffff,
+          color:0x707060,
+          position:{
+            x:10,
+            y:30,
+            z:15
+          }
+        }
+      }
+      
+      
+    ],
+    playerStartPosition:{x:9,y:0,z:1},
+    playerStartRotation:Math.PI,
+    enemies:[
+        {
+          position:{x:0.1,y:0,z:1.1},
+          rotation:1,
+        },
+        {
+          position:{x:0.1,y:0,z:4.1},
+          rotation:1,
+        }
+      ],
+    labels:[
+      {
+        string:"Sometimes you can feel a bit outnumbered.",
+        start:1000,
+        duration:4000
+      }, 
+      {
+        string:"Like when Billy’s divorce laywer took his wifes side.",
+        start:5500,
+        duration:4000,
+      }, 
+      
+    ]
   },
   
   

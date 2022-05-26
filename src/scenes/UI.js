@@ -69,11 +69,11 @@ export default class UI extends Phaser.Scene {
     this.setupHealth()
     this.createJoystick()
 
-    this.setupMouseControls()
+    
     
     this.input.on("pointerdown",(e)=>{
       if (this.mouseControl) {
-        console.log("mouse")
+        
         if (!this.input.mouse.locked) {
           this.input.mouse.requestPointerLock()
         } else {
@@ -81,7 +81,7 @@ export default class UI extends Phaser.Scene {
         }
         return false
       }
-        
+      
       this.touchCounter++;
       if (this.touchCounter==1) {
         this.touchOrigin={x:e.x,y:e.y+maxY/8*3}
@@ -198,28 +198,7 @@ export default class UI extends Phaser.Scene {
     } catch (er) {console.log(er.message)} 
   }
 
-  setupMouseControls() {
-    this.input.mouse.enabled=true;
-    
-    this.input.mouse.onMouseDown=(e)=>{
-      if (!this.mouseControl) {
-        this.mouseControl=true
-      }
-      if (!this.input.mouse.locked) {
-        this.input.mouse.requestPointerLock()
-      }
-      EventCenter.emit("tryKick")
-    }
-
-    this.input.on("mousemove", e=>{
-      if (this.input.mouse.locked) {
-        console.log(e.movement)
-      }
-    })
-
-
-    console.log(this.input.mouse)
-  }
+  
   
   setupLabel(labels) {
     this.label=this.add.text(this.cameras.main.centerX,this.cameras.main.height-50,"", {
@@ -238,6 +217,12 @@ export default class UI extends Phaser.Scene {
     this.timeouts=[]
     
     labels.forEach(label=>{
+      
+      const touch=DeviceChecker.touch;
+      if ((touch&&label.mouseOnly) || (!touch && label.touchOnly)) {
+        return false
+      }
+      
       this.timeouts.push(setTimeout(()=>{
         this.label.text=label.string
         this.timeouts.push(setTimeout(()=>{

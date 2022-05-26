@@ -8,7 +8,7 @@ import Player from '../objects/Player'
 import Level from "../objects/Level"
 
 import EventCenter from "../helpers/EventCenter"
-
+import SFX from "../helpers/SFX"
 
 
 
@@ -20,11 +20,11 @@ export default class Game extends Phaser.Scene {
   }
   
   preload() {
-    
+    SFX.preload(this)
   }
   
   create({
-    levelIndex=0
+    levelIndex=4
   }) {
     
     
@@ -38,6 +38,8 @@ export default class Game extends Phaser.Scene {
         scale:1.01
       })
     }
+    
+    this.sfx=new SFX(this)
     
     //this.level= Level.testLevel(this.graphics,this.physicsEngine)
     this.level= Level.fromIndex(this.graphics,this.physicsEngine,levelIndex)
@@ -80,19 +82,24 @@ export default class Game extends Phaser.Scene {
       this.enemiesTrapped++;
       if (this.enemiesTrapped>=this.level.enemies.length) {
         let score=0;
+        let health
+        let carrots=0;
         this.level.attractions.forEach(att=>{
           if (att.isPlayer) {
             score+=100-att.rabiesCount
+            health=100-att.rabiesCount
             
           } else {
             score+=att.carrotCount
-            
+            carrots+=att.carrotCount;
           }
         })
         setTimeout(()=>{
           EventCenter.emit("gameover",{
             win:true,
             score:Math.floor(score),
+            health:health,
+            carrots:carrots,
             levelIndex:levelIndex
           })
         },1500)
@@ -172,7 +179,7 @@ export default class Game extends Phaser.Scene {
     })
    
    } catch (er) {
-   //console.log(er.message,er.stack)
+   console.log(er.message,er.stack)
      } 
   }
 }

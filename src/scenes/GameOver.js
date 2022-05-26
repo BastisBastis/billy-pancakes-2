@@ -1,6 +1,7 @@
 import Phaser from "phaser"
 import Levels from "../assets/data/Levels"
 import EventCenter from "../helpers/EventCenter"
+import ScoreManager from "../helpers/ScoreManager"
 
 
 export default class GameOver extends Phaser.Scene {
@@ -23,6 +24,10 @@ export default class GameOver extends Phaser.Scene {
   }
   
   create(data) {
+    if (data.levelIndex===0) {
+      ScoreManager.health=0;
+      ScaleManager.carrots=0;
+    }
     const cam=this.cameras.main;
     //cam.setBackgroundColor("#9090aa")
     this.scene.launch("demo")
@@ -33,6 +38,9 @@ export default class GameOver extends Phaser.Scene {
     let restartString
     
     if (data.win) {
+      ScoreManager.score+=data.score;
+      ScoreManager.health+=data.health;
+      ScoreManager.carrots+=data.carrots
       title="Well done! You trapped all the rabid carrot munchers!"
       resultString=`Score: ${data.score}`
       
@@ -44,7 +52,7 @@ export default class GameOver extends Phaser.Scene {
         "You got a little too much rabies."
       restartString="Try again!"
     }
-    console.log(cam.height,54/cam.height)
+    
     
     const titleLabel=this.add.text(cam.centerX,1+cam.height*0.03,title,{fontFamily:"Acme",
       fill:"black",
@@ -84,5 +92,7 @@ export default class GameOver extends Phaser.Scene {
       }
       
     })
+    
+    console.log(ScoreManager)
   }
 }

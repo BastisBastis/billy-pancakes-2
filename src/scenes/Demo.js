@@ -6,6 +6,7 @@ import Wall from "../objects/levelObjects/Wall"
 import GraphicsEngine from "../graphics/GraphicsEngine"
 import PhysicsEngine from "../physics/PhysicsEngine"
 import Light from "../graphics/Light"
+import EventCenter from "../helpers/EventCenter"
 
 
 export default class Demo extends Phaser.Scene {
@@ -87,6 +88,14 @@ export default class Demo extends Phaser.Scene {
     } 
   }
   
+  destroy() {
+    EventCenter.removeAllListeners()
+    EventCenter.off()
+    this.graphics.destroy()
+    this.player.destroy()
+    this.player=null
+  }
+  
   update(time,delta) {
     try { 
     this.graphics.update(delta,{})
@@ -98,7 +107,7 @@ export default class Demo extends Phaser.Scene {
     this.kickTimer--
     
     if (this.enemy.physicsBody.canJump && this.enemy.position.x<-1.5 && this.kickTimer<0) {
-      console.log(this.kickTimer)
+      
       this.kickTimer=100
       this.player.kick()
     }
