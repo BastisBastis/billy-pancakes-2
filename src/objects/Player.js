@@ -51,9 +51,23 @@ export default class Player {
     EventCenter.on("jump",()=>this.jump())
     EventCenter.on("tryKick",()=>this.kick())
     EventCenter.on("turn", data=>this.turn(data.delta))
-    EventCenter.on("strafe", data=>this.physicsBody.strafe(data.dir))
+    EventCenter.on("strafe", data=>this.strafe(data.dir))
   }
   
+  strafe(dir) {
+    this.physicsBody.strafe(dir)
+    if (dir===0) {
+      this.graphics.setStrafeL(false);
+      this.graphics.setStrafeR(false);
+    } else if (dir<0) {
+      this.graphics.setStrafeL(true);
+      this.graphics.setStrafeR(false);
+    } else {
+      this.graphics.setStrafeL(false);
+      this.graphics.setStrafeR(true);
+    }
+  }
+
   destroy() {
     this.graphics=null;
     this.physicsBody=null;

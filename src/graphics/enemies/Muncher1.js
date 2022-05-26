@@ -118,11 +118,12 @@ export default class Muncher1Graphics {
   set position(value){
     if (this.model) {
       this.model.scene.position.x=value.x
-    this.model.scene.position.y=value.y+this.height/2-0.5
-    this.model.scene.position.z=value.z
+      this.model.scene.position.y=value.y+this.height/2-0.5
+      this.model.scene.position.z=value.z
+      this.model.scene.translateZ(0.6)
+      this.model.scene.translateX(-0.5)
     }
-    this.model.scene.translateZ(0.6)
-    this.model.scene.translateX(-0.5)
+    
   }
   
   update(delta) {

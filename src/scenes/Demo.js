@@ -97,7 +97,7 @@ export default class Demo extends Phaser.Scene {
   }
   
   update(time,delta) {
-    try { 
+    //try { 
     this.graphics.update(delta,{})
     this.physicsEngine.update(delta)
     this.player.update(delta)
@@ -112,7 +112,7 @@ export default class Demo extends Phaser.Scene {
       this.player.kick()
     }
     
-    } catch (er) {console.log(er.message)} 
+    //} catch (er) {console.log(er.message)} 
   }
   
 }

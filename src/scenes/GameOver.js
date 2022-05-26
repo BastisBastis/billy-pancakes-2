@@ -24,9 +24,10 @@ export default class GameOver extends Phaser.Scene {
   }
   
   create(data) {
-    if (data.levelIndex===0) {
+    try 
+    {if (data.levelIndex===0) {
       ScoreManager.health=0;
-      ScaleManager.carrots=0;
+      ScoreManager.carrots=0;
     }
     const cam=this.cameras.main;
     //cam.setBackgroundColor("#9090aa")
@@ -94,5 +95,6 @@ export default class GameOver extends Phaser.Scene {
     })
     
     console.log(ScoreManager)
+    } catch (er) {console.log(er)}
   }
 }

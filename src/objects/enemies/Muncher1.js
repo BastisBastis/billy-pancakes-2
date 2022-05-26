@@ -123,7 +123,7 @@ export default class Muncher1 {
 				//const clamped = new THREE.Vector3();
 				
 
-      console.log("bah")
+      
     }
     
     

@@ -9,7 +9,9 @@ export default class PlayerAnimationManager {
       backing:false,
       jumping:false,
       picking:false,
-      kicking:false
+      kicking:false,
+      strafingR:false,
+      strafingL:false
     }
     
     this.jumpTimeFactor=0.5;
@@ -40,6 +42,7 @@ export default class PlayerAnimationManager {
   }
   
   play(animation) {
+    
     if (animation==="idle") {
       //Idle === not moving
       this.states.running=false;
@@ -55,24 +58,44 @@ export default class PlayerAnimationManager {
       } else {
         this.nextAnimation="idle"
       }
-    } else if (animation==="run"||animation==="walk" || animation==="back") {
+    } else if (animation==="run"||animation==="walk" || animation==="back" || animation==="strafeL" || animation==="strafeR") {
+      
       if (animation==="walk") {
         this.states.running=false;
         this.states.walking=true;
-        this.states.backing=false
+        this.states.backing=false;
+        this.states.strafingR=false;
+        this.states.strafingL=false;
       } else if (animation==="run"){
         this.states.running=true;
         this.states.walking=false
         this.states.backing=false
+        this.states.strafingR=false;
+        this.states.strafingL=false;
       } else if (animation==="back"){
         this.states.running=false;
         this.states.walking=false;
         this.states.backing=true
+        this.states.strafingR=false;
+        this.states.strafingL=false;
+      } else if (animation==="strafeL") {
+        this.states.running=false;
+        this.states.walking=false;
+        this.states.backing=false
+        this.states.strafingR=false;
+        this.states.strafingL=true;
+      } else if (animation==="strafeR") {
+        this.states.running=false;
+        this.states.walking=false;
+        this.states.backing=false
+        this.states.strafingR=true;
+        this.states.strafingL=false;
       }
       
       if (!this.states.jumping && !this.states.kicking) {
         this.animations[animation].reset()
         this.animations[animation].play()
+       
         this.animations[this.currentAnimation].crossFadeTo(this.animations[animation],this.fadeTime)
         this.currentAnimation=animation
         this.nextAnimation=false;

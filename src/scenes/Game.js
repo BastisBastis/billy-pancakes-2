@@ -24,7 +24,7 @@ export default class Game extends Phaser.Scene {
   }
   
   create({
-    levelIndex=4
+    levelIndex=0
   }) {
     
     
@@ -131,7 +131,7 @@ export default class Game extends Phaser.Scene {
         delete this.player
         delete this.enemies
         this.input.mouse.releasePointerLock()
-        
+        console.log(data);
         this.scene.get("ui").close()
         this.scene.stop("ui");
         this.scene.stop("game")

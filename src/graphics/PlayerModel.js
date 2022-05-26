@@ -3,7 +3,7 @@ import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 //models
 //import BillyGLTF from '../assets/models/characters/Billy7.glb'
-import BillyGLTF from '../assets/models/characters/Billy16.glb'
+import BillyGLTF from '../assets/models/characters/Billy19.glb'
 
 //helpers
 import PlayerAnimationManager from "./PlayerAnimationManager"
@@ -25,12 +25,36 @@ export default class PlayerModel {
     this._movement=0;
     
   this.queuedMovement="idle"
+  this.strafingL=false;
+  this.strafingR=false;
   
   }
   
   getRelativePosition(pos) {
     return this.model.scene.worldToLocal(new THREE.Vector3(pos.x,pos.y,pos.z))
     
+  }
+
+  setStrafeL(value) {
+    if (value===this.strafingL)
+      return false;
+    this.strafingL=value;
+    if (this.strafingL && this.movement===0) {
+      this.animationManager.play("strafeL")
+    } else if (!this.strafingL && this.movement===0) {
+      this.animationManager.play("idle")
+    }
+  }
+
+  setStrafeR(value) {
+    if (value===this.strafingR)
+      return false;
+    this.strafingR=value;
+    if (this.strafingR && this.movement===0) {
+      this.animationManager.play("strafeR")
+    } else if (!this.strafingR && this.movement===0) {
+      this.animationManager.play("idle")
+    }
   }
   
   get movement() {
@@ -53,7 +77,12 @@ export default class PlayerModel {
     this._movement=value;
     if (value===0) {
       // Idle
-      this.animationManager.play("idle")
+      if (this.strafingL)
+        this.animationManager.play("strafeL")
+      else if (this.strafingR)
+        this.animationManager.play("strafeR")
+      else
+        this.animationManager.play("idle")
     } else if (value===1) {
       this.animationManager.play("walk")
     } else if (value===2) {
@@ -156,7 +185,7 @@ loadModel(scene,position,rotation) {
     		  if (object.userData.name==="Ctrl_Head") {
     		    
     		    const geo=new THREE.SphereBufferGeometry(0.0014,16,16);
-    		    const mat= new THREE.MeshPhongMaterial({color:"blue"})
+    		    const mat= new THREE.MeshPhongMaterial({color:0xffffff})
     		    
     		    const x=0.0008
     		    const y=0.0065
@@ -173,7 +202,7 @@ loadModel(scene,position,rotation) {
     		    eye2.castShadow=false
     		    object.add(eye1)
     		    object.add(eye2)
-    		    console.log("plupp!")
+
     		  }
     		  
     		  
@@ -183,7 +212,7 @@ loadModel(scene,position,rotation) {
           
           
           
-          if (material) {
+          if (material && object.userData.name) {
             
             object.material=new THREE.MeshPhongMaterial( { color: colors[object.userData.name] } );
           }
@@ -199,7 +228,9 @@ loadModel(scene,position,rotation) {
           kick:this.mixer.clipAction(gltf.animations[3]),
           pickup:this.mixer.clipAction(gltf.animations[4]),
           run:this.mixer.clipAction(gltf.animations[5]),
-          walk:this.mixer.clipAction(gltf.animations[6]),
+          strafeL:this.mixer.clipAction(gltf.animations[6]),
+          strafeR:this.mixer.clipAction(gltf.animations[7]),
+          walk:this.mixer.clipAction(gltf.animations[8]),
         }
         
         

@@ -231,13 +231,12 @@ export default class Trap1Graphics {
     geo.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) )
     
     
-    const material=new THREE.MeshLambertMaterial(
+    const material=new THREE.MeshPhongMaterial(
       {
         color:color,
-        castShadow:true,
-        recieveShadow:true
-        
       })
+    material.castShadow=true;
+    material.receiveShadow=true;
     geo.computeVertexNormals()
     this.mesh=new THREE.Mesh(geo,material);
     
