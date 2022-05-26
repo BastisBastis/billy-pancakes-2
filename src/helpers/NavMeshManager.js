@@ -74,7 +74,7 @@ export default class NavMeshManager {
     
     
     const navMesh=new THREE.Mesh(geo,material)
-    //scene.add(navMesh)
+    scene.add(navMesh)
     navMesh.position.y=0.2
     //console.log("hm")
     return navMesh;

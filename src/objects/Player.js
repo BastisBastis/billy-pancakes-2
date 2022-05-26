@@ -73,6 +73,7 @@ export default class Player {
   }
   
   kick() {
+    
     this.graphics.kick()
     const force=20
     const height=25
@@ -132,6 +133,7 @@ export default class Player {
   }
   
   set speed(value) {
+
     this._speed=value;
     
     const movementType = value<0?
@@ -145,6 +147,7 @@ export default class Player {
   checkKickRange(pos) {
     try { 
     
+    
     const angleToTarget=Math.atan2(pos.z-this.position.z,pos.x-this.position.x)
     let dRot=Math.abs(angleToTarget-this.rotation)
     dRot=mod((dRot + Math.PI) , Math.PI*2) - Math.PI
@@ -156,6 +159,12 @@ export default class Player {
     
     const dist = Math.sqrt(dx*dx+dz*dz)
     
+    /*
+    console.log(`dRot ${dRot} < Math.PI = ${dRot<Math.PI}
+    dist ${dist} < 1 = ${dist<1}
+    dy ${Math.abs(dy)}<1 = ${Math.abs(dy)<1}
+    `)
+    */
     
     if (
       dRot<Math.PI &&
@@ -164,13 +173,10 @@ export default class Player {
     )
       return true
     
-    /*
-    console.log(`dRot ${dRot} < Math.PI = ${dRot<Math.PI}
-    dist ${dist} < 1 = ${dist<1}
-    dy ${Math.abs(dy)}<1 = ${Math.abs(dy)<1}
-    `)
-    */
-    return false
+    
+    
+    
+    
     
     return false
     
@@ -184,6 +190,7 @@ export default class Player {
   jump() {
     const couldJump = this.physicsBody.jump(this.jumpVelocity);
     if (couldJump) {
+      EventCenter.emit("playSound",{sound:"jump"})
       this.graphics.jump()
     }
   }

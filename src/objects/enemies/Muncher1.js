@@ -57,6 +57,12 @@ export default class Muncher1 {
       })
     EventCenter.on("kick",data=>{
       if (data.checkKickRange(this.position)) {
+        
+        EventCenter.emit("playSound",{sound:"kickHit"})
+        
+        EventCenter.emit("playSound",{sound:"fly"})
+        
+        
         this.physicsBody.setVelocity(data.dir)
         this.physicsBody.canJump=false;
         this.flying=true;
@@ -102,7 +108,7 @@ export default class Muncher1 {
       return false
     }
       
-    const path=this.pathfinder.getNextTarget(this.dummyPos,this.finalTarget)
+    let path=this.pathfinder.getNextTarget(this.dummyPos,this.finalTarget)
     
     if (path) {
       this.currentTarget=path
@@ -110,11 +116,14 @@ export default class Muncher1 {
       // this.pathHelper.setPath( path );
     } else {
       
-      /*const closestPlayerNode = this.pathfinder.pathfinder.getClosestNode( playerPosition, "level", groupID );
-				const clamped = new THREE.Vector3();
-				*/
+      //const closestPlayerNode = this.pathfinder.pathfinder.getClosestNode( this.finalTarget, "level", groupID );
+      //console.log(closestPlayerNode)
+      this.currentTarget=this.finalTarget
+      
+				//const clamped = new THREE.Vector3();
+				
 
-      //console.log("bah")
+      console.log("bah")
     }
     
     

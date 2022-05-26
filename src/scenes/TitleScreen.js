@@ -148,6 +148,7 @@ Billy has taken it upon himself to trap all the carrot munchers before they eat 
       strokeThickness:cam.height*0.02,
       fontSize:46+cam.height*0.01
       }).setOrigin(1,0.5).setInteractive().on("pointerup",()=>{
+        this.scene.get("demo").destroy()
         this.scene.stop("demo")
         this.scene.start("game")
       })
