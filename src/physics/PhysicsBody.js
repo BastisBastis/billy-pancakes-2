@@ -33,6 +33,7 @@ export default class PhysicsBody {
     this.jumpTime=1;
 
     this.setupJumpingTester();
+    this.strafeDir=0
   
   
     if (kickBox) {
@@ -80,6 +81,17 @@ export default class PhysicsBody {
       y:result.y,
       z:result.z
     }
+  }
+
+  strafe(dir) {
+  
+    this.strafeDir=dir
+  }
+
+  performStrafe() {
+    const force=-400;
+    const forceDir= new CANNON.Vec3(this.strafeDir*force*Math.cos(this.rotation-Math.PI/2), 0, this.strafeDir*force*Math.sin(this.rotation-Math.PI/2))
+    this.body.applyForce(forceDir, new CANNON.Vec3(0,0,0))
   }
   
   set angularVelocity(vel) {
@@ -215,5 +227,7 @@ export default class PhysicsBody {
     if (!this.canJump) {
       this.body.applyForce(new CANNON.Vec3(0,25,0),new CANNON.Vec3(0,0,0))
     }
+
+    this.performStrafe()
   }
 }

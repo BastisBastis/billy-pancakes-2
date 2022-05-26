@@ -51,6 +51,7 @@ export default class Player {
     EventCenter.on("jump",()=>this.jump())
     EventCenter.on("tryKick",()=>this.kick())
     EventCenter.on("turn", data=>this.turn(data.delta))
+    EventCenter.on("strafe", data=>this.physicsBody.strafe(data.dir))
   }
   
   destroy() {

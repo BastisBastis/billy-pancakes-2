@@ -102,10 +102,10 @@ export default class UI extends Phaser.Scene {
     });
 
     this.input.keyboard.on('keydown-A', e=>{
-      EventCenter.emit("strafe",{x:-1})
+      EventCenter.emit("strafe",{dir:-1})
     })
     this.input.keyboard.on('keydown-D', e=>{
-      EventCenter.emit("strafe",{x:1})
+      EventCenter.emit("strafe",{dir:1})
     })
     this.input.keyboard.on('keyup-A', e=>{
       EventCenter.emit("strafe",{dir:0})
