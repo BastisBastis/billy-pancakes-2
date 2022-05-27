@@ -8,7 +8,7 @@ import LevelObjectGraphics from "./LevelObject"
 
 
 export default class CarrotBarrelGraphics {
-    constructor(graphicsEngine, position, rotation,scale={xz:1, y:1},index,parent) {
+    constructor(graphicsEngine, position, rotation,scale={xz:1, y:1},index,parent,onLoad=()=>false) {
       
       this.meshes=[]
       this.hideCounter=0
@@ -16,13 +16,13 @@ export default class CarrotBarrelGraphics {
       this.graphicsEngine=graphicsEngine
       
         graphicsEngine.addObject(this);
-        this.loadModel(graphicsEngine.scene, position, rotation, scale);
+        this.loadModel(graphicsEngine.scene, position, rotation, scale,onLoad);
         this.index=index;
         this.parent=parent;
         this.destroyed=false;
     }
 
-    loadModel(scene,position,rotation, scale) {
+    loadModel(scene,position,rotation, scale,onLoad) {
         const loader = new GLTFLoader();
         // Load a glTF resource
         loader.load(
@@ -62,6 +62,7 @@ export default class CarrotBarrelGraphics {
                   }
                 })
                 
+                onLoad()
             } catch (er) {console.log(er.message)} 
             },
             // called while loading is progressing

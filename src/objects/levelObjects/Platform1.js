@@ -17,9 +17,16 @@ const getFlatRectVerts=(tl,tr,bl,br,y) =>{
 
 
 export default class Platform1 extends LevelObject {
-    constructor({graphicsScene, physicsWorld, position, rotation, scale={xz:1, y:1}}) {
+    constructor({
+      graphicsScene, 
+      physicsWorld, 
+      position,
+      rotation, 
+      scale={xz:1, y:1},
+      onLoad
+    }) {
       super(position,rotation)
-        this.graphics = new Platform1Graphics(graphicsScene, position, rotation, scale);
+        this.graphics = new Platform1Graphics(graphicsScene, position, rotation, scale,onLoad);
         this.physics = new Platform1Physics(physicsWorld, position, rotation, scale);
       
       

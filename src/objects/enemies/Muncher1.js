@@ -19,10 +19,11 @@ export default class Muncher1 {
     rotation=0,
     pathfinder,
     attractions,
-    demo=false
+    demo=false,
+    onLoad=()=>false
   }) {
     this.demo=demo
-    this.graphics=new Muncher1Graphics(graphicsEngine,position,rotation)
+    this.graphics=new Muncher1Graphics(graphicsEngine,position,rotation,onLoad)
     this.physicsBody=new Muncher1Physics(
       physicsEngine.world,
       position,
@@ -123,7 +124,7 @@ export default class Muncher1 {
 				//const clamped = new THREE.Vector3();
 				
 
-      console.log("bah")
+      //console.log("bah")
     }
     
     

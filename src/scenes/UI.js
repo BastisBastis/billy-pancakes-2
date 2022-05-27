@@ -7,6 +7,8 @@ import RoundRectangle from 'phaser3-rex-plugins/plugins/roundrectangle.js';
 
 import DeviceChecker from "../helpers/DeviceChecker"
 
+
+
 export default class UI extends Phaser.Scene {
   
   constructor() {
@@ -47,6 +49,7 @@ export default class UI extends Phaser.Scene {
   
   create (data) {
     try { 
+    
     
     this.mouseControl=!DeviceChecker.touch;
 
@@ -189,7 +192,9 @@ export default class UI extends Phaser.Scene {
     } catch (er) {console.log(er.message)} 
   }
 
-  
+  onLoad() {
+    
+  }
   
   setupLabel(labels) {
     this.label=this.add.text(this.cameras.main.centerX,this.cameras.main.height-50,"", {

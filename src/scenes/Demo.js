@@ -7,6 +7,7 @@ import GraphicsEngine from "../graphics/GraphicsEngine"
 import PhysicsEngine from "../physics/PhysicsEngine"
 import Light from "../graphics/Light"
 import EventCenter from "../helpers/EventCenter"
+import LoadingScreen from "../graphics/LoadingScreen"
 
 
 export default class Demo extends Phaser.Scene {
@@ -16,7 +17,7 @@ export default class Demo extends Phaser.Scene {
   }
   
   preload() {
-    
+    LoadingScreen.preload(this)
   }
   
   create() {
@@ -26,6 +27,8 @@ export default class Demo extends Phaser.Scene {
     
     this.graphics=new GraphicsEngine()
     this.physicsEngine=new PhysicsEngine()
+    
+    this.loadItems=2
     
     new Floor({
       graphicsScene:this.graphics.scene,
@@ -65,7 +68,8 @@ export default class Demo extends Phaser.Scene {
       physicsEngine:this.physicsEngine,
       position:{x:this.playerX,y:0,z:0},
       rotation:0,
-      demo:true
+      demo:true,
+      onLoad:(()=>this.itemLoaded())
     })
     
     
@@ -77,10 +81,13 @@ export default class Demo extends Phaser.Scene {
       physicsEngine:this.physicsEngine,
       position:{x:27,y:0,z:0},
       rotation:Math.PI/2,
-      demo:true
+      demo:true,
+      onLoad:(()=>this.itemLoaded())
     })
     
     this.kickTimer=0;
+    
+    this.loadingScreen=new LoadingScreen(this)
     
     } catch (er) {
       console.log(er.message);
@@ -88,16 +95,26 @@ export default class Demo extends Phaser.Scene {
     } 
   }
   
+  itemLoaded() {
+    this.loadItems--;
+    if (this.loadItems===0) {
+      this.loadingScreen.destroy()
+    }
+  }
+  
   destroy() {
+    try { 
     EventCenter.removeAllListeners()
     EventCenter.off()
     this.graphics.destroy()
     this.player.destroy()
     this.player=null
+    } catch (er) {console.log(er.message)} 
   }
   
   update(time,delta) {
     try { 
+    
     this.graphics.update(delta,{})
     this.physicsEngine.update(delta)
     this.player.update(delta)

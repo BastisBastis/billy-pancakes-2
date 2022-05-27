@@ -5,16 +5,22 @@ import gltfURL from "../../assets/models/objects/Ramp.glb"
 
 
 export default class RampGraphics {
-    constructor(graphicsEngine, position, rotation,scale={xz:1, y:1}) {
+    constructor(
+      graphicsEngine, 
+      position, 
+      rotation,
+      scale={xz:1, y:1},
+      onLoad
+    ) {
       
       this.meshes=[]
       this.hideCounter=0
       
         graphicsEngine.addObject(this);
-        this.loadModel(graphicsEngine.scene, position, rotation, scale);
+        this.loadModel(graphicsEngine.scene, position, rotation, scale,onLoad);
     }
 
-    loadModel(scene,position,rotation, scale) {
+    loadModel(scene,position,rotation, scale,onLoad) {
         const loader = new GLTFLoader();
         // Load a glTF resource
         loader.load(
@@ -47,6 +53,8 @@ export default class RampGraphics {
                     object.receiveShadow=true;
                   }
                 })
+                
+              onLoad()
                 
             } catch (er) {console.log(er.message)} 
             },

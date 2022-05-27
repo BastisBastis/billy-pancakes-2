@@ -37,6 +37,7 @@ const config = {
       }
   },
     scene: [
+      
       TitleScreen,
       Game,
       UI,
@@ -54,6 +55,7 @@ const config = {
     }
 };
 
+  //console.log("hipp")
 
 
   const game = new Phaser.Game(config);

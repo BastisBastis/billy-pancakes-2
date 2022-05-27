@@ -3,14 +3,20 @@ import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
 import gltfURL from "../../assets/models/objects/Pallet1.glb"
 
 export default class Pallet1Graphics {
-    constructor(graphicsEngine, position, rotation,scale={xz:1, y:1}) {
+    constructor(
+      graphicsEngine, 
+      position, 
+      rotation,
+      scale={xz:1, y:1},
+      onLoad=()=>false
+    ) {
       
       this.meshes=[]
         //graphicsEngine.addObject(this);
-        this.loadModel(graphicsEngine.scene, position, rotation, scale);
+        this.loadModel(graphicsEngine.scene, position, rotation, scale,onLoad);
     }
 
-    loadModel(scene,position,rotation, scale) {
+    loadModel(scene,position,rotation, scale,onLoad) {
         const loader = new GLTFLoader();
         // Load a glTF resource
         loader.load(
@@ -48,6 +54,7 @@ export default class Pallet1Graphics {
                   }
                 })
                 
+                onLoad()
             } catch (er) {console.log(er.message)} 
             },
             // called while loading is progressing

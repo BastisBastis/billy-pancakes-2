@@ -19,7 +19,8 @@ export default class Player {
     this.graphics= new PlayerModel({
       graphicsEngine:graphicsEngine,
       position:position,
-      rotation:rotation
+      rotation:rotation,
+      onLoaded:onLoad
     });
     this.position=position;
     this.rotation=rotation;

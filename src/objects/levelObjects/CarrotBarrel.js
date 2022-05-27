@@ -23,10 +23,19 @@ const rotatedCorner=(cx,cy,cz,dx,dy,dz,theta) =>{
 }
 
 export default class CarrotBarrel extends LevelObject {
-    constructor({graphicsScene, physicsWorld, position, rotation=0, scale={xz:1, y:1},index=0}) {
+    constructor({
+      graphicsScene, 
+      physicsWorld, 
+      position, 
+      rotation=0, 
+      scale={xz:1, y:1},
+      index=0,
+      onLoad
+      
+    }) {
       
       super(position,rotation)
-      this.graphics = new CarrotBarrelGraphics(graphicsScene, position, rotation, scale,index,this);
+      this.graphics = new CarrotBarrelGraphics(graphicsScene, position, rotation, scale,index,this,onLoad);
       this.physics = new CarrotBarrelPhysics(physicsWorld, position, rotation, scale);
         
       this.attraction = 30;
