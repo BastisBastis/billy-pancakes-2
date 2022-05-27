@@ -15,12 +15,12 @@ export default class PalletWall  extends LevelObject {
     rotation, 
     scale={xz:1, y:1},
     count=4,
-    
+    onLoad=()=>false
     
     }) {
       super(position,rotation)
       this.pallets=[]
-      
+      this.onLoad=onLoad
       
       const positions=[
         {
@@ -49,6 +49,8 @@ export default class PalletWall  extends LevelObject {
         },
       ]
       
+      this.palletsToLoad=count*6
+      
       for (let i=0;i<count;i++) {
         positions.forEach(pos2d=>{
           const pos={x:pos2d.x,y:position.y+0.8*i*scale.y,z:pos2d.z}
@@ -57,7 +59,8 @@ export default class PalletWall  extends LevelObject {
     physicsWorld:physicsWorld, 
     position:pos,
     rotation:0, 
-    scale:scale
+    scale:scale,
+    onLoad:()=>this.palletLoaded()
         }))
         })
         
@@ -72,6 +75,14 @@ export default class PalletWall  extends LevelObject {
     this.setNavVerts(position,rotation)
       
     }
+    
+  palletLoaded() {
+    this.palletsToLoad--
+    if (this.palletsToLoad===0) {
+      
+      this.onLoad()
+    }
+  }
   
   setNavVerts(pos,rot) {
     /*

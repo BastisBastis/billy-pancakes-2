@@ -9,13 +9,14 @@ export default class Muncher1Graphics {
   constructor(
     graphicsEngine,
     position,
-    rotation
+    rotation,
+    onLoad=()=>false
   ) {
     this.xDiff=0.6
-  this.loadModel(graphicsEngine.scene, position, rotation, {xz:1,y:1});
+  this.loadModel(graphicsEngine.scene, position, rotation, {xz:1,y:1},onLoad);
     }
 
-    loadModel(scene,position,rotation, scale) {
+    loadModel(scene,position,rotation, scale,onLoad) {
         const loader = new GLTFLoader();
         
         // Load a glTF resource
@@ -58,9 +59,10 @@ export default class Muncher1Graphics {
                 })
                 
                 this.mixer=new THREE.AnimationMixer(gltf.scene)
-        this.anim=this.mixer.clipAction(gltf.animations[0])
-          this.anim.play()
+                this.anim=this.mixer.clipAction(gltf.animations[0])
+                this.anim.play()
           
+                onLoad()
                 
             } catch (er) {console.log(er.message)} 
             },

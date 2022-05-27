@@ -18,7 +18,7 @@ export default class PlayerModel {
   }) {
     
     
-    this.loadModel(graphicsEngine.scene,position,rotation)
+    this.loadModel(graphicsEngine.scene,position,rotation,onLoaded)
     
     this._isRunning=false;
     
@@ -140,7 +140,7 @@ export default class PlayerModel {
     
   }
   
-loadModel(scene,position,rotation) {
+loadModel(scene,position,rotation,onLoaded) {
     const loader = new GLTFLoader();
 
 
@@ -217,6 +217,7 @@ loadModel(scene,position,rotation) {
             object.material=new THREE.MeshPhongMaterial( { color: colors[object.userData.name] } );
           }
           
+          
         });
 
         
@@ -238,7 +239,7 @@ loadModel(scene,position,rotation) {
         
         this.animationManager = new PlayerAnimationManager(this.animations,this.queuedMovement)
         
-        
+        onLoaded()
     		
         } catch (er) {console.log(er.message)} 
     	},

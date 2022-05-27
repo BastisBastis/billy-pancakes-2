@@ -22,7 +22,7 @@ export default class Trap1Graphics {
     const size={
       x:8*scale.xz,
       y:1.5*scale.y,
-      z:8*scale.xz
+      z:8*scale.xz,
       }
       
     const ow=8*scale.xz/2
@@ -249,6 +249,8 @@ export default class Trap1Graphics {
     scene.add(this.mesh)
     
     this.vertices=tempVerts
+    
+    
   }
   
   

@@ -5,7 +5,13 @@ import gltfURL from "../../assets/models/objects/Platform1.glb"
 import LevelObjectGraphics from "./LevelObject"
 
 export default class Platform1Graphics extends LevelObjectGraphics {
-    constructor(graphicsEngine, position, rotation,scale={xz:1, y:1}) {
+    constructor(
+      graphicsEngine, 
+      position, 
+      rotation,
+      scale={xz:1, y:1},
+      onLoad=()=>false
+    ) {
       
         super(
           graphicsEngine,
@@ -24,6 +30,7 @@ export default class Platform1Graphics extends LevelObjectGraphics {
             this.meshes.forEach(mesh=>{
               mesh.material=newMaterial
             })
+            onLoad()
           }
         )
       /*

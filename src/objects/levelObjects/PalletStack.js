@@ -28,11 +28,17 @@ export default class PalletStack  extends LevelObject {
     rotation, 
     scale={xz:1, y:1},
     count=4,
-    rotationRandomness=0.2
+    rotationRandomness=0.2,
+    onLoad
     
     }) {
+      
+      
+      
       super(position,rotation)
       this.pallets=[]
+      this.palletsToLoad=count;
+      this.onLoad=onLoad
       
       const rotations=[]
       
@@ -44,7 +50,8 @@ export default class PalletStack  extends LevelObject {
     physicsWorld:physicsWorld, 
     position:pos,
     rotation:rotation+Math.random()*rotationRandomness-rotationRandomness/2, 
-    scale:scale
+    scale:scale,
+    onLoad:()=>this.loadedPallet()
         }))
       }
     
@@ -57,6 +64,12 @@ export default class PalletStack  extends LevelObject {
     this.setNavVerts(position,rotation)
       
     }
+    
+  loadedPallet() {
+    this.palletsToLoad--;
+    if (this.palletsToLoad===0)
+      this.onLoad()
+  }
   
   setNavVerts(pos,rot) {
     const w=8

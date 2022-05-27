@@ -150,7 +150,9 @@ Billy has taken it upon himself to trap all the carrot munchers before they eat 
       }).setOrigin(1,0.5).setInteractive().on("pointerup",()=>{
         this.scene.get("demo").destroy()
         this.scene.stop("demo")
+        this.scene.stop("TitleScreen")
         this.scene.start("game")
+        
       })
     
     

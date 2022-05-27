@@ -45,15 +45,18 @@ export default class Level {
     tileSize=8,
     tileHeight=8,
     enemies,
-    labels
+    labels,
+    onLoad=()=>false
   }) {
+    
+    this.onLoad=onLoad
     this.graphicsEngine=graphicsEngine;
     this.physicsEngine=physicsEngine;
     
     this.tileSize=tileSize
     this.tileHeight=tileHeight
     
-    
+    this.objectsToLoad=objects.length
     
     //Setup room
     this.setupFloor(size)
@@ -114,6 +117,15 @@ export default class Level {
     })
     
     this.labels=JSON.parse(JSON.stringify(labels))
+  }
+  
+  objectLoaded() {
+    this.objectsToLoad--;
+    if (this.objectsToLoad===0) {
+      console.log("pw",this.onLoad)
+      this.onLoad()
+    }
+    //console.log(this.objectsToLoad)
   }
   
   setupWalls(size) {
@@ -190,7 +202,7 @@ export default class Level {
       const object=JSON.parse(JSON.stringify(o))
       if (Object.keys(objectTypes).includes(object.type)) {
         
-        console.log(object.type)
+        //console.log(object.type)
         if (object.position){
           object.position.x=(object.position.x+0.5)*this.tileSize
           object.position.y*=this.tileHeight
@@ -204,6 +216,7 @@ export default class Level {
         const item=new objectTypes[object.type]({
           graphicsScene:this.graphicsEngine,
           physicsWorld:this.physicsEngine.world,
+          onLoad:()=>this.objectLoaded(),
           ...object
         })
         
@@ -256,12 +269,13 @@ export default class Level {
     })
   }
   
-  static fromIndex(graphicsEngine,physicsEngine,index) {
+  static fromIndex(graphicsEngine,physicsEngine,index,onLoad) {
    
     return new Level({
       graphicsEngine:graphicsEngine,
       physicsEngine:physicsEngine,
-      ...Levels[index]
+      ...Levels[index],
+      onLoad:onLoad
     })
   }
   
