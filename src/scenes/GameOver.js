@@ -25,8 +25,9 @@ export default class GameOver extends Phaser.Scene {
   }
   
   create(data) {
-    try 
-    {if (data.levelIndex===0) {
+    try {
+    console.log("in create: data: ",data)
+    if (data.levelIndex===0) {
       ScoreManager.health=0;
       ScoreManager.carrots=0;
     }
@@ -42,7 +43,7 @@ export default class GameOver extends Phaser.Scene {
       this.setupGameNotFinished(data)
     }
     
-    
+    } catch (er) {console.log(er)}
   }
   
   setupGameFinished(data) {

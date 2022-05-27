@@ -154,7 +154,7 @@ export default class Game extends Phaser.Scene {
         this.scene.stop("ui");
         //this.scene.stop("game")
         
-        this.scene.start("gameover")
+        this.scene.start("gameover", data)
         console.log(2)
         
         } catch (er) {console.log(er.message)} 
