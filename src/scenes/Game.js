@@ -34,7 +34,7 @@ export default class Game extends Phaser.Scene {
       //this.onLoad=onLoad
     //console.log("li",levelIndex)
     this.loadingScreen=new LoadingScreen(this)
-    this.graphics=new GraphicsEngine()
+    this.graphics=new GraphicsEngine({})
     this.physicsEngine=new PhysicsEngine()
     if (showDebugPhysics) {
       this.physicsDebugger = new CannonDebugger(this.graphics.scene, this.physicsEngine.world.bodies, {

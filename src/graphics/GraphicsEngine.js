@@ -33,7 +33,7 @@ function download(filename, text) {
 export default class GraphicsEngine {
   
   constructor ({
-    demo=true
+    demo=false
   }) {
     
      
