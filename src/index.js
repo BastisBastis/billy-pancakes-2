@@ -22,6 +22,9 @@ const config = {
     type: Phaser.AUTO,
     parent: 'phaserContainer',
     transparent:true,
+    audio: {
+        noAudio: true
+    },
     scale: {
       mode: Phaser.Scale.FIT,
       //autoCenter: Phaser.Scale.CENTER_BOTH,

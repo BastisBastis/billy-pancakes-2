@@ -122,7 +122,7 @@ export default class Level {
   objectLoaded() {
     this.objectsToLoad--;
     if (this.objectsToLoad===0) {
-      console.log("pw",this.onLoad)
+      
       this.onLoad()
     }
     //console.log(this.objectsToLoad)

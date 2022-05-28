@@ -57,12 +57,13 @@ export default class Muncher1 {
       //this.setFinalTarget(data.position)
       })
     EventCenter.on("kick",data=>{
-      if (data.checkKickRange(this.position)) {
+      if (data.checkKickRange(this.physicsBody.position)) {
         
         EventCenter.emit("playSound",{sound:"kickHit"})
         
-        EventCenter.emit("playSound",{sound:"fly"})
-        
+        //EventCenter.emit("playSound",{sound:"fly"})
+        //this.graphics.sounds.fly.play()
+        console.log(this.graphics.sounds.fly.play())
         
         this.physicsBody.setVelocity(data.dir)
         this.physicsBody.canJump=false;

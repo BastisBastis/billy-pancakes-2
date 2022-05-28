@@ -4,6 +4,8 @@ import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
 //models
 import gltfURL from '../../assets/models/characters/cm2.glb'
 //import gltfURL from '../../assets/models/characters/Billy1.glb'
+import flySound from "../../assets/audio/Fly.m4a"
+import munchSound from "../../assets/audio/Munch.m4a"
 
 export default class Muncher1Graphics {
   constructor(
@@ -13,11 +15,12 @@ export default class Muncher1Graphics {
     onLoad=()=>false
   ) {
     this.xDiff=0.6
-  this.loadModel(graphicsEngine.scene, position, rotation, {xz:1,y:1},onLoad);
+  this.loadModel(graphicsEngine, position, rotation, {xz:1,y:1},onLoad);
     }
 
-    loadModel(scene,position,rotation, scale,onLoad) {
+    loadModel(graphicsEngine,position,rotation, scale, onLoad) {
         const loader = new GLTFLoader();
+        const scene=graphicsEngine.scene
         
         // Load a glTF resource
         loader.load(
@@ -62,6 +65,26 @@ export default class Muncher1Graphics {
                 this.anim=this.mixer.clipAction(gltf.animations[0])
                 this.anim.play()
           
+          
+                /*
+                this.sounds={
+                  munch:new THREE.PositionalAudio(graphicsEngine.listener),
+                  fly:new THREE.PositionalAudio(graphicsEngine.listener)
+                }
+                
+                console.log(graphicsEngine.listener)
+          
+                const audioLoader = new THREE.AudioLoader()
+                audioLoader.load(flySound,buffer=>{
+                  this.sounds.fly.setBuffer(buffer)
+                  this.sounds.fly.setRefDistance(10)
+                  this.sounds.fly.setVolume(1)
+                  this.sounds.fly.play()
+                })
+          
+              gltf.scene.add(this.sounds.fly)
+              //gltf.scene.add(this.sounds.munch)
+                */
                 onLoad()
                 
             } catch (er) {console.log(er.message)} 

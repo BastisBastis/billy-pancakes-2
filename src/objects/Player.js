@@ -91,6 +91,7 @@ export default class Player {
   kick() {
     
     this.graphics.kick()
+    EventCenter.emit("playSound",{sound:"kick"})
     const force=20
     const height=25
     setTimeout(

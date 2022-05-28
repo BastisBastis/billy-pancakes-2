@@ -106,7 +106,7 @@ Total score: ${ScoreManager.score}`
   }
   
   setupGameNotFinished(data) {
-    console.log(data,"bah")
+    
     
     const cam=this.cameras.main;
     let resultString
@@ -159,7 +159,7 @@ Total score: ${ScoreManager.score}`
       
     }).setOrigin(0.5,0).setInteractive().on("pointerup",()=>{
       const nextIndex=data.levelIndex+ (data.win?1:0)
-      console.log(data)
+      
       if (nextIndex<Levels.length) {
         EventCenter.off()
         this.scene.stop("demo")
@@ -171,7 +171,7 @@ Total score: ${ScoreManager.score}`
     })
     
 
-    console.log(ScoreManager)
+    
 
 
   }

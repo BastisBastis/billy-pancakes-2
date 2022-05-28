@@ -9,6 +9,8 @@ import PlayerModel from "./PlayerModel"
 
 import NavMeshManager from "./NavMeshManager"
 
+import flyer from "../assets/audio/Billys bounce.mp3"
+
 const orbit=false;
 
 
@@ -30,7 +32,9 @@ function download(filename, text) {
 
 export default class GraphicsEngine {
   
-  constructor () {
+  constructor ({
+    demo=true
+  }) {
     
      
   try {
@@ -51,7 +55,7 @@ export default class GraphicsEngine {
     this.renderer.shadowMap.enabled = true;
     this.scene.background = new THREE.Color( 0x87CEFA );
     
-    
+    //this.listener= new THREE.AudioListener();
     
     
     if (orbit){
@@ -85,6 +89,38 @@ export default class GraphicsEngine {
     
     //this.navmeshtest2()
     //this.navMeshManager= new NavMeshManager(this.scene)
+    
+    if (!demo) {
+      
+      const listener = new THREE.AudioListener();
+    this.camera.add( listener );
+    
+    const sound = new THREE.Audio( listener );
+    this.scene.add(sound)
+    
+    const audioLoader = new THREE.AudioLoader();
+audioLoader.load( flyer, function( buffer ) {
+  console.log(JSON.stringify(buffer))
+    	sound.setBuffer( buffer );
+    	sound.setLoop( true );
+    	sound.setVolume( 0.5 );
+    	sound.play();
+  },
+  function ( xhr ) {
+		console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+	},
+
+	// onError callback
+	function ( err ) {
+		console.log( 'An error happened' );
+	});
+    console.log(listener.context.resume())
+      
+      
+      
+    }
+    
+    
     
     //this.test()
     } catch (er) {console.log(er.message)}

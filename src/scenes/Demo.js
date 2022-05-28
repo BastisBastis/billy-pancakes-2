@@ -25,7 +25,7 @@ export default class Demo extends Phaser.Scene {
     
     this.playerX=-4
     
-    this.graphics=new GraphicsEngine()
+    this.graphics=new GraphicsEngine({demo:true})
     this.physicsEngine=new PhysicsEngine()
     
     this.loadItems=2

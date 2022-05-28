@@ -18,15 +18,17 @@ export default class PlayerModel {
   }) {
     
     
-    this.loadModel(graphicsEngine.scene,position,rotation,onLoaded)
+    this.loadModel(graphicsEngine,position,rotation,onLoaded)
     
     this._isRunning=false;
     
     this._movement=0;
     
-  this.queuedMovement="idle"
-  this.strafingL=false;
-  this.strafingR=false;
+    this.queuedMovement="idle"
+    this.strafingL=false;
+    this.strafingR=false;
+    
+    
   
   }
   
@@ -140,9 +142,9 @@ export default class PlayerModel {
     
   }
   
-loadModel(scene,position,rotation,onLoaded) {
+loadModel(graphicsEngine,position,rotation,onLoaded) {
     const loader = new GLTFLoader();
-
+    const scene=graphicsEngine.scene;
 
 
     // Load a glTF resource
@@ -160,6 +162,8 @@ loadModel(scene,position,rotation,onLoaded) {
     		gltf.scene.rotation.y=rotation
     		scene.player=gltf.scene
     		
+    		//gltf.scene.add(graphicsEngine.listener)
+    		//console.log(graphicsEngine.listener)
     		
     		const colors={
     		  "ArmL":0x006600,
